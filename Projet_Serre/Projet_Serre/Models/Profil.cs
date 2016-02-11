@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Projet_Serre.Models;
+using System.Linq;
+
 public class Profil {
 	private int id;
 	public int Id {
@@ -6,7 +10,7 @@ public class Profil {
 			return id;
 		}
 	}
-	private Reglage[] conditions;
+	private List<Reglage> conditions;
 	private string nom;
 	public string Nom {
 		get {
@@ -18,31 +22,44 @@ public class Profil {
 	}
 
 	public Profil() {
+        conditions = new List<Reglage>();
+	}
+	public Profil(string nom, List<Reglage> conditions) {
+        this.nom = nom;
+        this.conditions = conditions;
+	}
+	public Reglage GetReglage(double lumiere, DateTime date) {
 		throw new System.Exception("Not implemented");
 	}
-	public Profil(ref string nom, ref Reglage[] conditions) {
-		throw new System.Exception("Not implemented");
+	public bool AjouterReglage(Reglage reglage) {
+        conditions.Add(reglage);
+        ConnectionSQL test = new ConnectionSQL();
+        test.AjouterReglage(reglage);
+        return true;
 	}
-	public Reglage GetReglage(ref double lumiere, ref DateTime date) {
-		throw new System.Exception("Not implemented");
-	}
-	public bool AjouterReglage(ref Reglage reglage) {
-		throw new System.Exception("Not implemented");
-	}
-	public bool ModifierReglage(ref int idReglage, ref Reglage reglage) {
-		throw new System.Exception("Not implemented");
-	}
-	public bool SupprimerReglage(ref int idReglage) {
-		throw new System.Exception("Not implemented");
-	}
-	public Reglage[] ListerReglage() {
-		throw new System.Exception("Not implemented");
-	}
-	public Reglage SelectionnerReglage(ref int idReglage) {
-		throw new System.Exception("Not implemented");
-	}
+	public bool ModifierReglage(int idReglage, Reglage reglage) {
+        Reglage temp = conditions.Single(r => r.Id == idReglage);
+        temp.Humidite = reglage.Humidite;
+        temp.Date = reglage.Date;
+        temp.Lumiere = reglage.Lumiere;
+        temp.Temperature = reglage.Temperature;
+        temp.Vent = reglage.Vent;
 
-	private Reglage[] reglages;
-
+        ConnectionSQL test = new ConnectionSQL();
+        test.ModifierReglage(idReglage, reglage);
+        return true;
+	}
+	public bool SupprimerReglage(int idReglage) {
+        conditions.Remove(conditions.Single(r => r.Id == idReglage));
+        ConnectionSQL test = new ConnectionSQL();
+        test.SupprimerReglage(idReglage);
+        return true;
+	}
+	public List<Reglage> ListerReglage() {
+		return conditions;
+	}
+	public Reglage SelectionnerReglage(int idReglage) {
+        return conditions.Single(r => r.Id == idReglage);
+	}
 
 }

@@ -13,8 +13,10 @@ public class RegulerSerre {
 	private GestionActionneur gestionActionneur;
 	private GestionProfil gestionProfil;
 
-	public RegulerSerre(ref GestionProfil gestionProfil) {
-		throw new System.Exception("Not implemented");
+	public RegulerSerre(GestionProfil gestionProfil) {
+        this.gestionProfil = gestionProfil;
+        this.gestionCapteur = new GestionCapteur();
+        this.gestionActionneur = new GestionActionneur();
 	}
 	public void Reguler() {
 		throw new System.Exception("Not implemented");

@@ -1,25 +1,40 @@
 using System;
+using System.Collections.Generic;
+using Projet_Serre.Models;
+using System.Linq;
+
 public class GestionProfil {
-	private Profil[] profils;
+	private List<Profil> profils;
 
 	public GestionProfil() {
-		throw new System.Exception("Not implemented");
+        profils = new List<Profil>();
 	}
-	public bool Ajouter(ref Profil profil) {
-		throw new System.Exception("Not implemented");
+	public bool Ajouter(Profil profil) {
+
+        profils.Add(profil);
+        ConnectionSQL test = new ConnectionSQL();
+        test.AjouterProfil(profil);
+        return true;
+    }
+	public bool Modifier(int idProfil, Profil profil) {
+        profils.Remove(profil);
+        profils.Add(profil);
+        ConnectionSQL test = new ConnectionSQL();
+        test.ModifierProfil(profil);
+        return true;
+    }
+	public bool Supprimer(Profil profil) {
+        profils.Remove(profil);
+        ConnectionSQL test = new ConnectionSQL();
+        test.SupprimerProfil(profil);
+        return true;
+    }
+	public List<Profil> Lister() {
+        return profils;
 	}
-	public bool Modifier(ref int idProfil, ref Profil profil) {
-		throw new System.Exception("Not implemented");
-	}
-	public bool Supprimer(ref int idProfil) {
-		throw new System.Exception("Not implemented");
-	}
-	public Profil[] Lister() {
-		throw new System.Exception("Not implemented");
-	}
-	public Profil Selectionner(ref int idProfil) {
-		throw new System.Exception("Not implemented");
-	}
+	public Profil Selectionner(int idProfil) {
+		return profils.Single(r => r.Id == idProfil);
+    }
 
 
 }
