@@ -101,9 +101,9 @@ namespace Projet_Serre.Models
             }
         }
 
-        public void SupprimerProfil(Profil profil)
+        public void SupprimerProfil(int idProfil)
         {
-            string query = "DELETE FROM profil WHERE nom='"+ profil.Nom + "'";
+            string query = "DELETE FROM profil WHERE id='"+ idProfil + "'";
 
             if (this.OuvrirConnection() == true)
             {

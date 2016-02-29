@@ -23,10 +23,10 @@ public class GestionProfil {
         test.ModifierProfil(profil);
         return true;
     }
-	public bool Supprimer(Profil profil) {
+	public bool Supprimer(int idProfil, Profil profil) {
         profils.Remove(profil);
         ConnectionSQL test = new ConnectionSQL();
-        test.SupprimerProfil(profil);
+        test.SupprimerProfil(idProfil);
         return true;
     }
 	public List<Profil> Lister() {
