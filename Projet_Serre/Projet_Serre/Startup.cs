@@ -7,13 +7,25 @@ namespace Projet_Serre
 {
     public partial class Startup
     {
+        private static GestionProfil gestionProfil;
+        public static GestionProfil GestionProfil
+        {
+            get { return Startup.gestionProfil; }
+            private set { Startup.gestionProfil = value; }
+        }
+
+        private static RegulerSerre regulerSerre;
+        public static RegulerSerre RegulerSerre
+        {
+            get { return Startup.regulerSerre; }
+            private set { Startup.regulerSerre = value; }
+        }
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            Profil p = new Profil();
-            p.Nom = "radis";
-            GestionProfil gp = new GestionProfil();
-            gp.Supprimer(p);
+            gestionProfil = new GestionProfil();
+            regulerSerre = new RegulerSerre(gestionProfil);
         }
     }
 }

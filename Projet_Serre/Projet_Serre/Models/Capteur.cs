@@ -17,7 +17,7 @@ public class Capteur {
 	}
 
 	public Capteur() {
-		throw new System.Exception("Not implemented");
+		//throw new System.Exception("Not implemented");
 	}
 
 

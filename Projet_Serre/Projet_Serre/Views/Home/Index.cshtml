@@ -1,9 +1,10 @@
-﻿@{
+﻿@model Projet_Serre.Models.ApercuViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron text-center">
-    <h2>Profil actuel : <a href="#"><strong>Radis</strong></a></h2>
+    <h2>Profil actuel : <a href="@Model.lienProfilActuel"><strong>@Model.nomProfilActuel</strong></a></h2>
 </div>
 
 <div class="row text-center">
@@ -22,10 +23,10 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="huge">0°</div>
+                        <div class="huge">@Model.temperatureCapteur°</div>
                     </div>
                     <div class="col-md-6">
-                        <div class="huge">0°</div>
+                        <div class="huge">@Model.temperatureProfil°</div>
                     </div>
                 </div>
             </div>
@@ -46,10 +47,10 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="huge">0%</div>
+                        <div class="huge">@Model.humiditeCapteur%</div>
                     </div>
                     <div class="col-md-6">
-                        <div class="huge">0%</div>
+                        <div class="huge">@Model.humiditeProfil%</div>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                 Lumière mesurée :
             </div>
             <div class="panel-body">
-                  <div class="huge">0 lm</div>
+                  <div class="huge">@Model.lumiereCapteur lm</div>
             </div>
         </div>
     </div>
@@ -71,8 +72,11 @@
                 Vent mesuré :
             </div>
             <div class="panel-body">
-                  <div class="huge">0 km/h</div>
+                  <div class="huge">@Model.ventCapteur km/h</div>
             </div>
         </div>
+    </div>
+    <div>
+        <em>Mesures faite à @Model.dateDerniereMaJ</em>
     </div>
 </div>

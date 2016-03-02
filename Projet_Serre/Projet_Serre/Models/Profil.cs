@@ -24,7 +24,8 @@ public class Profil {
 	public Profil() {
         conditions = new List<Reglage>();
 	}
-	public Profil(string nom, List<Reglage> conditions) {
+	public Profil(int id, string nom, List<Reglage> conditions) {
+        this.id = id;
         this.nom = nom;
         this.conditions = conditions;
 	}
