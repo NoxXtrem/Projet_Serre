@@ -1,4 +1,4 @@
-﻿@model List<Profil>
+﻿@model Projet_Serre.Models.ListeProfilViewModel
 @{
     ViewBag.Title = "ListeProfil";
 }
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Profil p in @Model)
+        @foreach (Profil p in @Model.Profils)
         {
             <tr>
                 <th>@p.Nom</th>

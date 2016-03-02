@@ -7,5 +7,8 @@ namespace Projet_Serre.Models
 {
     public class ListeProfilViewModel
     {
+        public string NomProfilActuel { get; set; }
+        public string LienProfilActuel { get; set; }
+        public List<Profil> Profils { get; set; }
     }
 }

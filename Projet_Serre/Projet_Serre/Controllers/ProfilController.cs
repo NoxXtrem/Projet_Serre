@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet_Serre.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -90,7 +91,26 @@ namespace Projet_Serre.Controllers
 
         public ActionResult ListeProfil()
         {
-            return View(rs.GestionProfil.Lister());
+            ListeProfilViewModel viewModel;
+
+            try
+            {
+                viewModel = new ListeProfilViewModel()
+                {
+                    NomProfilActuel = rs.GestionProfil.Selectionner(rs.IdProfil).Nom,
+                    LienProfilActuel = "#",
+                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
+                };
+            }
+            catch (Exception)
+            {
+                viewModel = new ListeProfilViewModel()
+                {
+                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
+                };
+            }
+
+            return View(viewModel);
         }
     }
 }
