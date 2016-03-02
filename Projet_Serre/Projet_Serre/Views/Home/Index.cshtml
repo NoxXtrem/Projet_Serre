@@ -4,13 +4,23 @@
 }
 
 <div class="jumbotron text-center">
+@if (Model.nomProfilActuel.IsEmpty())
+{
+    <h2>Aucun profil sélectionné.</h2>
+    <button class="btn btn-default">Choisir un profil</button>
+}
+else
+{
     <h2>Profil actuel : <a href="@Model.lienProfilActuel"><strong>@Model.nomProfilActuel</strong></a></h2>
+}
 </div>
 
 <div class="row text-center">
     <div class="col-md-6">
         <div class="panel panel-red">
-            <div class="panel-heading">
+            <div class="panel-heading container-fluid">
+            @if (!Model.nomProfilActuel.IsEmpty())
+            {
                 <div class="row">
                     <div class="col-md-6">
                         Temperature mesurée :
@@ -19,8 +29,16 @@
                         Temperature cible :
                     </div>
                 </div>
+            }
+            else
+            {
+                <text>Temperature mesurée :</text>
+            }
+                
             </div>
-            <div class="panel-body">
+            <div class="panel-body container-fluid">
+            @if (!Model.nomProfilActuel.IsEmpty())
+            {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="huge">@Model.temperatureCapteur°</div>
@@ -29,12 +47,19 @@
                         <div class="huge">@Model.temperatureProfil°</div>
                     </div>
                 </div>
+            }
+            else
+            {
+                <div class="huge">@Model.temperatureCapteur°</div>
+            }
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-primary">
-            <div class="panel-heading">
+            <div class="panel-heading container-fluid">
+            @if (!Model.nomProfilActuel.IsEmpty())
+            {
                 <div class="row">
                     <div class="col-md-6">
                         Humidité mesurée :
@@ -43,16 +68,29 @@
                         Humidité cible :
                     </div>
                 </div>
+            }
+            else
+            {
+                <text>Humidité mesurée :</text>
+            }
             </div>
             <div class="panel-body">
+            @if (!Model.nomProfilActuel.IsEmpty())
+            {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="huge">@Model.humiditeCapteur%</div>
                     </div>
+                    
                     <div class="col-md-6">
                         <div class="huge">@Model.humiditeProfil%</div>
                     </div>
                 </div>
+            }
+            else
+            {
+                <div class="huge">@Model.humiditeCapteur%</div>
+            }
             </div>
         </div>
     </div>

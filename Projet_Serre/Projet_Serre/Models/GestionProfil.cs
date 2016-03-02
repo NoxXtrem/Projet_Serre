@@ -11,8 +11,6 @@ public class GestionProfil {
 
     public GestionProfil() {
         profils = new List<Profil>();
-
-        profils.Add(new Profil(-1, "Radis", new List<Reglage>()));
 	}
 	public bool Ajouter(Profil profil) {
         int idProfil = test.AjouterProfil(profil);

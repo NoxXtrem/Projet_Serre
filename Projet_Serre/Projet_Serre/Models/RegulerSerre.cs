@@ -49,8 +49,6 @@ public class RegulerSerre {
         this.gestionProfil = gestionProfil;
         this.gestionCapteur = new GestionCapteur();
         this.gestionActionneur = new GestionActionneur();
-
-        idProfil = -1;
 	}
 
 	public void Reguler() {
