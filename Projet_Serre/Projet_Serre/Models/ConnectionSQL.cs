@@ -129,6 +129,31 @@ namespace Projet_Serre.Models
 
         }
 
+        public List<Profil> ListerProfil()
+        {
+            string query = "SELECT * FROM profil";
+            List<Profil> profils = null;
+            if (this.OuvrirConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+
+               profils = new List<Profil>();
+                while (msdr.Read())
+                {
+                    Profil profil = new Profil()
+                    {
+                        Id = msdr.GetInt32(0),
+                        Nom = msdr.GetString(1),
+                    };
+                    profils.Add(profil);
+                }
+                
+                this.FermerConnection();
+            }
+            return profils;
+        }
+
        public void AjouterReglage(Reglage reglage)
         {
             string query = "INSERT INTO reglage (date,lumiere,temperature,humidite,vent,id_profil) VALUES('"

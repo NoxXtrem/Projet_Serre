@@ -27,6 +27,9 @@ namespace Projet_Serre
             gestionProfil = new GestionProfil();
             gestionProfil.Ajouter(new Profil("Test", new System.Collections.Generic.List<Reglage>()));
             regulerSerre = new RegulerSerre(gestionProfil);
+            gestionProfil.MajProfil();
         }
+
+        
     }
 }
