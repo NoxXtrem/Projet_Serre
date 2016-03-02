@@ -5,10 +5,15 @@ using System.Linq;
 
 public class Profil {
 	private int id;
-	public int Id {
+    ConnectionSQL test = new ConnectionSQL();
+    public int Id {
 		get {
 			return id;
 		}
+        set
+        {
+            id = value; 
+        }
 	}
 	private List<Reglage> conditions;
 	private string nom;
@@ -33,7 +38,7 @@ public class Profil {
 	}
 	public bool AjouterReglage(Reglage reglage) {
         conditions.Add(reglage);
-        ConnectionSQL test = new ConnectionSQL();
+
         test.AjouterReglage(reglage);
         return true;
 	}
@@ -45,13 +50,12 @@ public class Profil {
         temp.Temperature = reglage.Temperature;
         temp.Vent = reglage.Vent;
 
-        ConnectionSQL test = new ConnectionSQL();
         test.ModifierReglage(idReglage, reglage);
         return true;
 	}
 	public bool SupprimerReglage(int idReglage) {
         conditions.Remove(conditions.Single(r => r.Id == idReglage));
-        ConnectionSQL test = new ConnectionSQL();
+
         test.SupprimerReglage(idReglage);
         return true;
 	}

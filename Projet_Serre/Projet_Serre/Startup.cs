@@ -13,7 +13,8 @@ namespace Projet_Serre
             Profil p = new Profil();
             p.Nom = "radis";
             GestionProfil gp = new GestionProfil();
-            gp.Supprimer(p);
+            gp.Ajouter(p);
+            gp.Supprimer(p.Id);
         }
     }
 }
