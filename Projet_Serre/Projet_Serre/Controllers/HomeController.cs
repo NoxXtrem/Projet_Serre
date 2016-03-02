@@ -13,20 +13,35 @@ namespace Projet_Serre.Controllers
 
         public ActionResult Index()
         {
-            Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
-            ApercuViewModel viewModel = new ApercuViewModel()
+            ApercuViewModel viewModel;
+            try
             {
-                nomProfilActuel = p.Nom,
-                lienProfilActuel = "#",
-                //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
-                //temperatureProfil = rs.DernierReglage.Temperature,
-                //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
-                //humiditeProfil = rs.DernierReglage.Humidite,
-                //lumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
-                //ventCapteur = rs.GestionCapteur.Anemometre.Valeur,
-                //dateDerniereMaJ = rs.DateDernierReglage.ToString(),
-            };
-
+                Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
+                viewModel = new ApercuViewModel()
+                {
+                    nomProfilActuel = p.Nom,
+                    lienProfilActuel = "#",
+                    //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
+                    //temperatureProfil = rs.DernierReglage.Temperature,
+                    //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
+                    //humiditeProfil = rs.DernierReglage.Humidite,
+                    //lumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
+                    //ventCapteur = rs.GestionCapteur.Anemometre.Valeur,
+                    //dateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                };
+            }
+            catch (Exception)
+            {
+                viewModel = new ApercuViewModel()
+                {
+                    //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
+                    //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
+                    //lumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
+                    //ventCapteur = rs.GestionCapteur.Anemometre.Valeur,
+                    //dateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                };
+            }
+            
             return View(viewModel);
         }
 
