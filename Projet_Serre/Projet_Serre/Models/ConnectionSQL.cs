@@ -70,19 +70,22 @@ namespace Projet_Serre.Models
             }
         }
 
-        public void AjouterProfil(Profil profil)
+        public int AjouterProfil(Profil profil)
         {
 
-            string query = "INSERT INTO profil (nom) VALUES('"+profil.Nom+"')";
-
+            string query = "INSERT INTO projet_serre.profil (nom) VALUES ('" + profil.Nom+ "'); SELECT LAST_INSERT_ID();";
+            int idProfil = 0;
             if (this.OuvrirConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
-
-                cmd.ExecuteNonQuery();
+                 
+                MySqlDataReader msdr = cmd.ExecuteReader();
+                msdr.Read();
+                idProfil = msdr.GetInt32(0);
 
                 this.FermerConnection();
             }
+            return idProfil;
         }
 
         public void ModifierProfil(Profil profil)
@@ -101,9 +104,9 @@ namespace Projet_Serre.Models
             }
         }
 
-        public void SupprimerProfil(Profil profil)
+        public void SupprimerProfil(int idProfil)
         {
-            string query = "DELETE FROM profil WHERE nom='"+ profil.Nom + "'";
+            string query = "DELETE FROM profil WHERE id='"+ idProfil + "'";
 
             if (this.OuvrirConnection() == true)
             {
@@ -111,6 +114,19 @@ namespace Projet_Serre.Models
                 cmd.ExecuteNonQuery();
                 this.FermerConnection();
             }
+        }
+
+        public void SelectionnerIdProfil(int idProfil)
+        {
+            string query = "SELECT * FROM profil WHERE id='" + idProfil + "'";
+
+            if (this.OuvrirConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteReader();
+                this.FermerConnection();
+            }
+
         }
 
        public void AjouterReglage(Reglage reglage)

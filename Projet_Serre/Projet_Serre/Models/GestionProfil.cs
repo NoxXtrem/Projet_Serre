@@ -5,30 +5,32 @@ using System.Linq;
 
 public class GestionProfil {
 	private List<Profil> profils;
+    ConnectionSQL test = new ConnectionSQL();
 
-	public GestionProfil() {
+    public GestionProfil() {
         profils = new List<Profil>();
 
         profils.Add(new Profil(-1, "Radis", new List<Reglage>()));
 	}
 	public bool Ajouter(Profil profil) {
+        int idProfil = test.AjouterProfil(profil);
 
         profils.Add(profil);
-        ConnectionSQL test = new ConnectionSQL();
-        test.AjouterProfil(profil);
+        profil.Id = idProfil;
+
         return true;
     }
 	public bool Modifier(int idProfil, Profil profil) {
         profils.Remove(profil);
         profils.Add(profil);
-        ConnectionSQL test = new ConnectionSQL();
+
         test.ModifierProfil(profil);
         return true;
     }
-	public bool Supprimer(Profil profil) {
-        profils.Remove(profil);
-        ConnectionSQL test = new ConnectionSQL();
-        test.SupprimerProfil(profil);
+	public bool Supprimer(int idProfil) {
+        profils.Remove(profils.Single(p => p.Id == idProfil));
+
+        test.SupprimerProfil(idProfil);
         return true;
     }
 	public List<Profil> Lister() {
