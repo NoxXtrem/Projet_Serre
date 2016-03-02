@@ -25,6 +25,7 @@ namespace Projet_Serre
         {
             ConfigureAuth(app);
             gestionProfil = new GestionProfil();
+            gestionProfil.Ajouter(new Profil("Test", new System.Collections.Generic.List<Reglage>()));
             regulerSerre = new RegulerSerre(gestionProfil);
         }
     }
