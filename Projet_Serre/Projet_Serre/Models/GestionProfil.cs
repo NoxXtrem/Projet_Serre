@@ -7,6 +7,8 @@ public class GestionProfil {
 	private List<Profil> profils;
     ConnectionSQL test = new ConnectionSQL();
 
+    
+
     public GestionProfil() {
         profils = new List<Profil>();
 
@@ -38,5 +40,11 @@ public class GestionProfil {
 	}
 	public Profil Selectionner(int idProfil) {
 		return profils.Single(r => r.Id == idProfil);
+    }
+
+    public bool MajProfil()
+    {
+        profils = test.ListerProfil();
+        return true;
     }
 }

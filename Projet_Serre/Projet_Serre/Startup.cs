@@ -26,6 +26,9 @@ namespace Projet_Serre
             ConfigureAuth(app);
             gestionProfil = new GestionProfil();
             regulerSerre = new RegulerSerre(gestionProfil);
+            gestionProfil.MajProfil();
         }
+
+        
     }
 }
