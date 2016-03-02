@@ -10,7 +10,7 @@ public class GestionProfil {
     public GestionProfil() {
         profils = new List<Profil>();
 
-        profils.Add(new Profil(-1, "Radis", new List<Reglage>()));
+        profils.Add(new Profil("Radis", new List<Reglage>()){ Id = -1});
 	}
 	public bool Ajouter(Profil profil) {
         int idProfil = test.AjouterProfil(profil);

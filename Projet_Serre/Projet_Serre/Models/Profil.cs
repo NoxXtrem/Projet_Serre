@@ -29,8 +29,7 @@ public class Profil {
 	public Profil() {
         conditions = new List<Reglage>();
 	}
-	public Profil(int id, string nom, List<Reglage> conditions) {
-        this.id = id;
+	public Profil(string nom, List<Reglage> conditions) {
         this.nom = nom;
         this.conditions = conditions;
 	}
