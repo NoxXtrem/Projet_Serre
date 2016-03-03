@@ -4,14 +4,14 @@
 }
 
 <div class="jumbotron text-center">
-    @if (Model.nomProfilActuel.IsEmpty())
+    @if (Model.NomProfilActuel.IsEmpty())
     {
         <h2>Aucun profil sélectionné.</h2>
         <button class="btn btn-default">Choisir un profil</button>
     }
     else
     {
-        <h2>Profil actuel : <a href="@Model.lienProfilActuel"><strong>@Model.nomProfilActuel</strong></a></h2>
+        <h2>Profil actuel : <a href="@Model.LienProfilActuel"><strong>@Model.NomProfilActuel</strong></a></h2>
     }
 </div>
 
@@ -19,7 +19,7 @@
     <div class="col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading container-fluid">
-                @if (!Model.nomProfilActuel.IsEmpty())
+                @if (!Model.NomProfilActuel.IsEmpty())
                 {
                     <div class="row">
                         <div class="col-md-6">
@@ -36,20 +36,20 @@
                 }
             </div>
             <div class="panel-body container-fluid">
-                @if (!Model.nomProfilActuel.IsEmpty())
+                @if (!Model.NomProfilActuel.IsEmpty())
                 {
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="huge">@Model.temperatureCapteur°</div>
+                            <div class="huge">@Model.TemperatureCapteur°</div>
                         </div>
                         <div class="col-md-6">
-                            <div class="huge">@Model.temperatureProfil°</div>
+                            <div class="huge">@Model.TemperatureProfil°</div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <div class="huge">@Model.temperatureCapteur°</div>
+                    <div class="huge">@Model.TemperatureCapteur°</div>
                 }
             </div>
         </div>
@@ -57,7 +57,7 @@
     <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading container-fluid">
-                @if (!Model.nomProfilActuel.IsEmpty())
+                @if (!Model.NomProfilActuel.IsEmpty())
                 {
                     <div class="row">
                         <div class="col-md-6">
@@ -74,21 +74,21 @@
                 }
             </div>
             <div class="panel-body">
-                @if (!Model.nomProfilActuel.IsEmpty())
+                @if (!Model.NomProfilActuel.IsEmpty())
                 {
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="huge">@Model.humiditeCapteur%</div>
+                            <div class="huge">@Model.HumiditeCapteur%</div>
                         </div>
 
                         <div class="col-md-6">
-                            <div class="huge">@Model.humiditeProfil%</div>
+                            <div class="huge">@Model.HumiditeProfil%</div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <div class="huge">@Model.humiditeCapteur%</div>
+                    <div class="huge">@Model.HumiditeCapteur%</div>
                 }
             </div>
         </div>
@@ -99,7 +99,7 @@
                 Lumière mesurée :
             </div>
             <div class="panel-body">
-                <div class="huge">@Model.lumiereCapteur lm</div>
+                <div class="huge">@Model.LumiereCapteur lm</div>
             </div>
         </div>
     </div>
@@ -109,11 +109,11 @@
                 Vent mesuré :
             </div>
             <div class="panel-body">
-                <div class="huge">@Model.ventCapteur km/h</div>
+                <div class="huge">@Model.VentCapteur km/h</div>
             </div>
         </div>
     </div>
     <div>
-        <em>Mesures faite à @Model.dateDerniereMaJ</em>
+        <em>Mesures faite à @Model.DateDerniereMaJ</em>
     </div>
 </div>

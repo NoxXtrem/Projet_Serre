@@ -14,7 +14,26 @@ namespace Projet_Serre.Controllers
         // GET: Profil
         public ActionResult Index()
         {
-            return View();
+            ListProfilViewModel viewModel;
+
+            try
+            {
+                viewModel = new ListProfilViewModel()
+                {
+                    NomProfilActuel = rs.GestionProfil.Selectionner(rs.IdProfil).Nom,
+                    LienProfilActuel = "#",
+                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
+                };
+            }
+            catch (Exception)
+            {
+                viewModel = new ListProfilViewModel()
+                {
+                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
+                };
+            }
+
+            return View(viewModel);
         }
 
         // GET: Profil/Details/5
@@ -35,8 +54,11 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
+                Profil p = new Profil()
+                {
+                    Nom = collection["Nom"],
+                };
+                rs.GestionProfil.Ajouter(p);
                 return RedirectToAction("Index");
             }
             catch
@@ -87,30 +109,6 @@ namespace Projet_Serre.Controllers
             {
                 return View();
             }
-        }
-
-        public ActionResult ListeProfil()
-        {
-            ListeProfilViewModel viewModel;
-
-            try
-            {
-                viewModel = new ListeProfilViewModel()
-                {
-                    NomProfilActuel = rs.GestionProfil.Selectionner(rs.IdProfil).Nom,
-                    LienProfilActuel = "#",
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
-            catch (Exception)
-            {
-                viewModel = new ListeProfilViewModel()
-                {
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
-
-            return View(viewModel);
         }
     }
 }

@@ -29,5 +29,7 @@ namespace Projet_Serre.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Projet_Serre.Models.ProfilViewModel> ProfilViewModels { get; set; }
     }
 }
