@@ -26,7 +26,10 @@ public class GestionCapteur {
 	}
 
 	public GestionCapteur() {
-		throw new System.Exception("Not implemented");
+        capteurEnso = new CapteurEnso();
+        anemometre = new Anemometre();
+        capteurTemperature = new CapteurTemp();
+        capteurHumidite = new CapteurHumi();
 	}
 
 	private Capteur[] capteur;

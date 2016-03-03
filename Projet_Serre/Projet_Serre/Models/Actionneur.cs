@@ -20,7 +20,7 @@ public class Actionneur {
 	}
 
 	public Actionneur() {
-		throw new System.Exception("Not implemented");
+		//throw new System.Exception("Not implemented");
 	}
 
 

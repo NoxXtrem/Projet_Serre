@@ -52,12 +52,14 @@ public class Reglage {
 		}
 	}
 
-	public Reglage() {
-		throw new System.Exception("Not implemented");
+    public Reglage() {
+        
 	}
-	public Reglage(ref DateTime date, ref double lumiere, ref double temperature, ref double humidite, ref double vent) {
-		throw new System.Exception("Not implemented");
-	}
-
-
+	public Reglage(DateTime date, double lumiere, double temperature, double humidite, double vent) {
+        this.date = date;
+        this.lumiere = lumiere;
+        this.temperature = temperature;
+        this.humidite = humidite;
+        this.vent = vent;
+    }
 }

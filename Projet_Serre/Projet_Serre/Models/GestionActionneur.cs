@@ -26,10 +26,12 @@ public class GestionActionneur {
 	}
 
 	public GestionActionneur() {
-		throw new System.Exception("Not implemented");
+        extracteur = new Extracteurs();
+        trappe = new Trappe();
+        chauffage = new Chauffage();
+        vannes = new Vannes();
 	}
 
 	private Actionneur[] actionneur;
-
 
 }

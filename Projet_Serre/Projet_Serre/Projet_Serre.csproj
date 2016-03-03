@@ -35,6 +35,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,6 +82,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Data.Entity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -85,11 +101,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -191,45 +203,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actionneur.cs" />
-    <Compile Include="Anemometre.cs" />
+    <Compile Include="Controllers\ProfilController.cs" />
+    <Compile Include="Models\Actionneur.cs" />
+    <Compile Include="Models\Anemometre.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Capteur.cs" />
-    <Compile Include="CapteurEnso.cs" />
-    <Compile Include="CapteurHumi.cs" />
-    <Compile Include="CapteurTemp.cs" />
-    <Compile Include="Chauffage.cs" />
+    <Compile Include="Models\ApercuViewModel.cs" />
+    <Compile Include="Models\Capteur.cs" />
+    <Compile Include="Models\CapteurEnso.cs" />
+    <Compile Include="Models\CapteurHumi.cs" />
+    <Compile Include="Models\CapteurTemp.cs" />
+    <Compile Include="Models\Chauffage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Extracteurs.cs" />
-    <Compile Include="GestionActionneur.cs" />
-    <Compile Include="GestionCapteur.cs" />
-    <Compile Include="GestionProfil.cs" />
+    <Compile Include="Models\ConnectionSQL.cs" />
+    <Compile Include="Models\Extracteurs.cs" />
+    <Compile Include="Models\GestionActionneur.cs" />
+    <Compile Include="Models\GestionCapteur.cs" />
+    <Compile Include="Models\GestionProfil.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IHM.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ListeProfilViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Profil.cs" />
+    <Compile Include="Models\Profil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reglage.cs" />
-    <Compile Include="RegulerSerre.cs" />
+    <Compile Include="Models\Reglage.cs" />
+    <Compile Include="Models\RegulerSerre.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Trappe.cs" />
-    <Compile Include="Vannes.cs" />
+    <Compile Include="Models\Trappe.cs" />
+    <Compile Include="Models\Vannes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\sb-admin-2.css" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -297,6 +313,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Profil\ListeProfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
