@@ -1,0 +1,154 @@
+﻿<Page
+    x:Class="Application_Windows_Phone_Serre.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Application_Windows_Phone_Serre"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <Style x:Key="styleVoyant" TargetType="Ellipse">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Fill" Value="DarkRed"/>
+        </Style>
+        <Style x:Key="stylePanelCapteur" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,20,0,10"/>
+            <Setter Property="Background" Value="#FF784410"/>
+        </Style>
+        <Style x:Key="stylePanelProfilCapteur" TargetType="StackPanel">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="#FF669E0F"/>
+        </Style>
+        <Style x:Key="styleTexteCapteur" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
+        </Style>
+        <Style x:Key="styleValeur" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="25,5,25,25"/>
+        </Style>
+        <Style x:Key="styleTexteProfil" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- <BitmapImage x:Key="Goutte" UriSource="Assets/GoutteEauLogo.bmp" />  -->
+            
+
+    </Page.Resources>
+    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="75*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalAlignment="Right" Content="Etat de la Serre" MinWidth="200"/>
+            <Button Grid.Column="1" HorizontalAlignment="Left" Content="Gestion de la Serre" MinWidth="200"/>
+        </Grid>
+
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.Column="1" Source="Assets/Logo.png" />
+            <Image Grid.Row="0" Grid.Column="2" Source="Assets/Logo.png"/>
+            <Image Grid.Row="0" Grid.Column="3" Source="Assets/Logo.png"/>
+            <Image Grid.Row="0" Grid.Column="4" Source="Assets/Logo.png"/>
+            
+            <Ellipse Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
+            
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Style="{StaticResource stylePanelCapteur}">
+                    <TextBlock Text="Anémomètre" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Style="{StaticResource stylePanelCapteur}">
+                    <TextBlock Text="Capteur de Température" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Style="{StaticResource stylePanelCapteur}">
+                    <TextBlock Text="Capteur d'Humidité" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Style="{StaticResource stylePanelCapteur}">
+                    <TextBlock Text="Capteur d'Ensoleillement" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="10" Background="#FF0B4B0E">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Style="{StaticResource stylePanelProfilCapteur}">
+                    <TextBlock Text="Température recommandé" Style="{StaticResource styleTexteProfil}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+
+                </StackPanel>
+                <StackPanel Grid.Row="2" Style="{StaticResource stylePanelProfilCapteur}">
+                    <TextBlock Text="   Humidité recommandé" Style="{StaticResource styleTexteProfil}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Style="{StaticResource stylePanelProfilCapteur}">
+                    <TextBlock Text="Ensoleillement recommandé" Style="{StaticResource styleTexteProfil}"/>
+                    <TextBlock Text="Faible" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+
+            </Grid>
+
+
+        </Grid>
+
+
+
+    </Grid>
+</Page>
