@@ -19,8 +19,8 @@ namespace Projet_Serre.Controllers
                 Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
                 viewModel = new ApercuViewModel()
                 {
-                    nomProfilActuel = p.Nom,
-                    lienProfilActuel = "#",
+                    NomProfilActuel = p.Nom,
+                    LienProfilActuel = "#",
                     //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
                     //temperatureProfil = rs.DernierReglage.Temperature,
                     //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
