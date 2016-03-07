@@ -1,6 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
-
+using System.Threading;
 
 [assembly: OwinStartupAttribute(typeof(Projet_Serre.Startup))]
 namespace Projet_Serre
@@ -27,8 +27,13 @@ namespace Projet_Serre
             gestionProfil = new GestionProfil();
             regulerSerre = new RegulerSerre(gestionProfil);
             gestionProfil.MajProfil();
+            Thread regulerThread = new Thread(regulerSerre.Reguler);
+
+            regulerThread.Start();
+            System.Console.WriteLine("main thread: Starting worker thread...");
+
         }
 
-        
+
     }
 }

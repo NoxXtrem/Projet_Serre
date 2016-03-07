@@ -1,7 +1,9 @@
 using System;
+using System.Threading;
 public class RegulerSerre {
 	private int idProfil;
-	public int IdProfil {
+    private volatile bool _shouldStop;
+    public int IdProfil {
 		get {
 			return idProfil;
 		}
@@ -52,8 +54,26 @@ public class RegulerSerre {
 	}
 
 	public void Reguler() {
-		throw new System.Exception("Not implemented");
+        while (!_shouldStop)
+        {
+            Console.WriteLine("worker thread: working...");
+
+
+
+
+
+
+
+
+            Thread.Sleep(10000);
+        }
+        Console.WriteLine("worker thread: terminating gracefully."); ;
 	}
+
+    public void RegulerStop()
+    {
+        _shouldStop = true;
+    }
 
 
 }
