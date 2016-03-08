@@ -39,7 +39,7 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Index", "Reglage", id);
         }
 
         // GET: Profil/Create
@@ -54,12 +54,16 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                Profil p = new Profil()
+                if (ModelState.IsValid)
                 {
-                    Nom = collection["Nom"],
-                };
-                rs.GestionProfil.Ajouter(p);
-                return RedirectToAction("Index");
+                    Profil p = new Profil()
+                    {
+                        Nom = collection["Nom"],
+                    };
+                    rs.GestionProfil.Ajouter(p);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -70,7 +74,13 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Profil p = rs.GestionProfil.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel()
+            {
+                Id = id,
+                Nom = p.Nom,
+            };
+            return View(model);
         }
 
         // POST: Profil/Edit/5
@@ -79,9 +89,16 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Profil p = new Profil()
+                    {
+                        Nom = collection["Nom"],
+                    };
+                    rs.GestionProfil.Modifier(id, p);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -101,8 +118,7 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                rs.GestionProfil.Supprimer(id);
                 return RedirectToAction("Index");
             }
             catch

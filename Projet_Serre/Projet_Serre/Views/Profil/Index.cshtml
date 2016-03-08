@@ -6,7 +6,6 @@
     @if (Model.NomProfilActuel.IsEmpty())
     {
         <h2>Aucun profil sélectionné.</h2>
-        <button class="btn btn-default">Choisir un profil</button>
     }
     else
     {
@@ -25,10 +24,11 @@
         @foreach (Profil p in @Model.Profils)
         {
             <tr>
-                <th><a href="@Url.Action("Index", "Reglage", @p.Id)">@p.Nom</a></th>
+                <th><a href="@Url.Action("Details", "Profil", @p.Id)">@p.Nom</a></th>
                 <th>
-                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Profil", @p.Id)">Modifier</a>
-                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Profil", @p.Id)">Supprimer</a>
+                    <a class="btn btn-primary btn-xs" href="@Url.Action("Select", "Profil", new { p.Id })">Selectionner</a>
+                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Profil", new { p.Id })">Renommer</a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Profil", new { p.Id })">Supprimer</a>
                 </th>
             </tr>
         }

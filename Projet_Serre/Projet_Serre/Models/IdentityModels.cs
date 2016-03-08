@@ -31,5 +31,7 @@ namespace Projet_Serre.Models
         }
 
         public System.Data.Entity.DbSet<Projet_Serre.Models.ProfilViewModel> ProfilViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<Projet_Serre.Models.ReglageViewModel> ReglageViewModels { get; set; }
     }
 }

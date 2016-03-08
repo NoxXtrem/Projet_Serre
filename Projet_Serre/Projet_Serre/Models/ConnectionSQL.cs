@@ -88,9 +88,9 @@ namespace Projet_Serre.Models
             return idProfil;
         }
 
-        public void ModifierProfil(Profil profil)
+        public void ModifierProfil(int id, Profil profil)
         {
-            string query = "UPDATE profil SET nom='"+ profil.Nom + "', WHERE name='"+ profil.Nom + "'";
+            string query = "UPDATE profil SET nom='"+ profil.Nom + "'WHERE id='"+ id + "'";
 
             if (this.OuvrirConnection() == true)
             {

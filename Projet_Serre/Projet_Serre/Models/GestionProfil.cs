@@ -24,7 +24,7 @@ public class GestionProfil {
         profils.Remove(profil);
         profils.Add(profil);
 
-        test.ModifierProfil(profil);
+        test.ModifierProfil(idProfil, profil);
         return true;
     }
 	public bool Supprimer(int idProfil) {
