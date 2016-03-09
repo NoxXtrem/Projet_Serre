@@ -20,10 +20,9 @@ public class GestionProfil {
 
         return true;
     }
-	public bool Modifier(int idProfil, Profil profil) {
-        profils.Remove(profils.Single(p => p.Id == idProfil));
-        profils.Add(profil);
-        profil.Id = idProfil;
+	public bool Renommer(int idProfil, string nouveauNom) {
+        Profil profil = profils.Single(p => p.Id == idProfil);
+        profil.Nom = nouveauNom;
         test.ModifierProfil(idProfil, profil);
         return true;
     }

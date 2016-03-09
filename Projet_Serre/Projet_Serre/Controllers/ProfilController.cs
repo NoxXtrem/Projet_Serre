@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
+    //TODO: Gestion des erreurs
+    //TODO: Validation coté client (jQuery)
     public class ProfilController : Controller
     {
         RegulerSerre rs = Startup.RegulerSerre;
@@ -50,7 +52,7 @@ namespace Projet_Serre.Controllers
 
         // POST: Profil/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProfilViewModel model)
         {
             try
             {
@@ -58,7 +60,7 @@ namespace Projet_Serre.Controllers
                 {
                     Profil p = new Profil()
                     {
-                        Nom = collection["Nom"],
+                        Nom = model.Nom,
                     };
                     rs.GestionProfil.Ajouter(p);
                     return RedirectToAction("Index");
@@ -85,17 +87,13 @@ namespace Projet_Serre.Controllers
 
         // POST: Profil/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProfilViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Profil p = new Profil()
-                    {
-                        Nom = collection["Nom"],
-                    };
-                    rs.GestionProfil.Modifier(id, p);
+                    rs.GestionProfil.Renommer(model.Id, model.Nom);
                     return RedirectToAction("Index");
                 }
                 return View();
@@ -109,12 +107,18 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Profil p = rs.GestionProfil.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel()
+            {
+                Id = id,
+                Nom = p.Nom,
+            };
+            return View(model);
         }
 
         // POST: Profil/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, ProfilViewModel collection)
         {
             try
             {
