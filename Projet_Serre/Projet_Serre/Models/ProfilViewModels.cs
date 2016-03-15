@@ -11,7 +11,7 @@ namespace Projet_Serre.Models
     {
         public string NomProfilActuel { get; set; }
         public string LienProfilActuel { get; set; }
-        public List<Profil> Profils { get; set; }
+        public List<ProfilViewModel> Profils { get; set; }
     }
 
     public class ProfilViewModel

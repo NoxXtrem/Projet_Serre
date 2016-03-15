@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ProfilController.cs" />
+    <Compile Include="Controllers\ReglageController.cs" />
     <Compile Include="Models\Actionneur.cs" />
     <Compile Include="Models\Anemometre.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -318,6 +319,7 @@
     <Content Include="Views\Profil\Create.cshtml" />
     <Content Include="Views\Profil\Edit.cshtml" />
     <Content Include="Views\Profil\Delete.cshtml" />
+    <Content Include="Views\Reglage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

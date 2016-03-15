@@ -16,24 +16,23 @@ namespace Projet_Serre.Controllers
         // GET: Profil
         public ActionResult Index()
         {
-            ListProfilViewModel viewModel;
+            List<ProfilViewModel> liste = new List<ProfilViewModel>();
+            rs.GestionProfil.Lister().ForEach(
+                p => liste.Add(new ProfilViewModel()
+                {
+                    Id = p.Id,
+                    Nom = p.Nom,
+                })
+            );
+            
 
-            try
+            Profil profilActuel = rs.GestionProfil.Selectionner(rs.IdProfil);
+            ListProfilViewModel viewModel = new ListProfilViewModel()
             {
-                viewModel = new ListProfilViewModel()
-                {
-                    NomProfilActuel = rs.GestionProfil.Selectionner(rs.IdProfil).Nom,
-                    LienProfilActuel = "#",
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
-            catch (Exception)
-            {
-                viewModel = new ListProfilViewModel()
-                {
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
+                NomProfilActuel = (profilActuel != null) ? profilActuel.Nom : null,
+                LienProfilActuel = "#",
+                Profils = liste ?? new List<ProfilViewModel>(),
+            };
 
             return View(viewModel);
         }
@@ -41,7 +40,7 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Details/5
         public ActionResult Details(int id)
         {
-            return View("Index", "Reglage", id);
+            return RedirectToAction("Index", "Reglage", new { id });
         }
 
         // GET: Profil/Create
@@ -129,6 +128,12 @@ namespace Projet_Serre.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Select(int id)
+        {
+            rs.IdProfil = id;
+            return RedirectToAction("Index");
         }
     }
 }

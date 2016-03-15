@@ -132,13 +132,12 @@ namespace Projet_Serre.Models
         public List<Profil> ListerProfil()
         {
             string query = "SELECT * FROM profil";
-            List<Profil> profils = null;
+            List<Profil> profils = new List<Profil>();
             if (this.OuvrirConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
 
-               profils = new List<Profil>();
                 while (msdr.Read())
                 {
                     Profil profil = new Profil()

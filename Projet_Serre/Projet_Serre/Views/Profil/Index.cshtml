@@ -21,10 +21,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Profil p in @Model.Profils)
+        @foreach (Projet_Serre.Models.ProfilViewModel p in @Model.Profils)
         {
             <tr>
-                <th><a href="@Url.Action("Details", "Profil", @p.Id)">@p.Nom</a></th>
+                <th><a href="@Url.Action("Details", "Profil", new { p.Id })">@p.Nom</a></th>
                 <th>
                     <a class="btn btn-primary btn-xs" href="@Url.Action("Select", "Profil", new { p.Id })">Selectionner</a>
                     <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Profil", new { p.Id })">Renommer</a>

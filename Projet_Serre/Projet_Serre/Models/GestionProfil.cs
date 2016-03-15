@@ -4,13 +4,13 @@ using Projet_Serre.Models;
 using System.Linq;
 
 public class GestionProfil {
-	private List<Profil> profils;
+	private List<Profil> profils = new List<Profil>();
     ConnectionSQL test = new ConnectionSQL();
 
     
 
     public GestionProfil() {
-        profils = new List<Profil>();
+        this.profils = new List<Profil>();
 	}
 	public bool Ajouter(Profil profil) {
         int idProfil = test.AjouterProfil(profil);
@@ -36,7 +36,7 @@ public class GestionProfil {
         return profils;
 	}
 	public Profil Selectionner(int idProfil) {
-		return profils.Single(r => r.Id == idProfil);
+		return profils.SingleOrDefault(r => r.Id == idProfil);
     }
 
     public bool MajProfil()

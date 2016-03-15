@@ -29,8 +29,8 @@ namespace Projet_Serre
             gestionProfil.MajProfil();
             Thread regulerThread = new Thread(regulerSerre.Reguler);
 
-            regulerThread.Start();
-            System.Console.WriteLine("main thread: Starting worker thread...");
+            //regulerThread.Start();
+            //System.Console.WriteLine("main thread: Starting worker thread...");
 
         }
 
