@@ -88,9 +88,9 @@ namespace Projet_Serre.Models
             return idProfil;
         }
 
-        public void ModifierProfil(Profil profil)
+        public void ModifierProfil(int id, Profil profil)
         {
-            string query = "UPDATE profil SET nom='"+ profil.Nom + "', WHERE name='"+ profil.Nom + "'";
+            string query = "UPDATE profil SET nom='"+ profil.Nom + "'WHERE id='"+ id + "'";
 
             if (this.OuvrirConnection() == true)
             {
@@ -132,13 +132,12 @@ namespace Projet_Serre.Models
         public List<Profil> ListerProfil()
         {
             string query = "SELECT * FROM profil";
-            List<Profil> profils = null;
+            List<Profil> profils = new List<Profil>();
             if (this.OuvrirConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
 
-               profils = new List<Profil>();
                 while (msdr.Read())
                 {
                     Profil profil = new Profil()

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 public class Reglage {
 	private int id;
 	public int Id {

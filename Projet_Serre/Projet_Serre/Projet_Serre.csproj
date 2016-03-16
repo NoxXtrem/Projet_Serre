@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ProfilController.cs" />
+    <Compile Include="Controllers\ReglageController.cs" />
     <Compile Include="Models\Actionneur.cs" />
     <Compile Include="Models\Anemometre.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Models\ProfilViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Profil.cs" />
+    <Compile Include="Models\ReglageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Reglage.cs" />
     <Compile Include="Models\RegulerSerre.cs" />
@@ -315,6 +317,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Profil\Index.cshtml" />
     <Content Include="Views\Profil\Create.cshtml" />
+    <Content Include="Views\Profil\Edit.cshtml" />
+    <Content Include="Views\Profil\Delete.cshtml" />
+    <Content Include="Views\Reglage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

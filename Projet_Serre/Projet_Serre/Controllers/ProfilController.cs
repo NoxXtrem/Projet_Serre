@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
+    //TODO: Gestion des erreurs
+    //TODO: Validation coté client (jQuery)
     public class ProfilController : Controller
     {
         RegulerSerre rs = Startup.RegulerSerre;
@@ -14,24 +16,23 @@ namespace Projet_Serre.Controllers
         // GET: Profil
         public ActionResult Index()
         {
-            ListProfilViewModel viewModel;
+            List<ProfilViewModel> liste = new List<ProfilViewModel>();
+            rs.GestionProfil.Lister().ForEach(
+                p => liste.Add(new ProfilViewModel()
+                {
+                    Id = p.Id,
+                    Nom = p.Nom,
+                })
+            );
+            
 
-            try
+            Profil profilActuel = rs.GestionProfil.Selectionner(rs.IdProfil);
+            ListProfilViewModel viewModel = new ListProfilViewModel()
             {
-                viewModel = new ListProfilViewModel()
-                {
-                    NomProfilActuel = rs.GestionProfil.Selectionner(rs.IdProfil).Nom,
-                    LienProfilActuel = "#",
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
-            catch (Exception)
-            {
-                viewModel = new ListProfilViewModel()
-                {
-                    Profils = rs.GestionProfil.Lister() ?? new List<Profil>(),
-                };
-            }
+                NomProfilActuel = (profilActuel != null) ? profilActuel.Nom : null,
+                LienProfilActuel = "#",
+                Profils = liste ?? new List<ProfilViewModel>(),
+            };
 
             return View(viewModel);
         }
@@ -39,7 +40,7 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return RedirectToAction("Index", "Reglage", new { id });
         }
 
         // GET: Profil/Create
@@ -50,16 +51,20 @@ namespace Projet_Serre.Controllers
 
         // POST: Profil/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProfilViewModel model)
         {
             try
             {
-                Profil p = new Profil()
+                if (ModelState.IsValid)
                 {
-                    Nom = collection["Nom"],
-                };
-                rs.GestionProfil.Ajouter(p);
-                return RedirectToAction("Index");
+                    Profil p = new Profil()
+                    {
+                        Nom = model.Nom,
+                    };
+                    rs.GestionProfil.Ajouter(p);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -70,18 +75,27 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Profil p = rs.GestionProfil.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel()
+            {
+                Id = id,
+                Nom = p.Nom,
+            };
+            return View(model);
         }
 
         // POST: Profil/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProfilViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    rs.GestionProfil.Renommer(model.Id, model.Nom);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -92,23 +106,34 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Profil p = rs.GestionProfil.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel()
+            {
+                Id = id,
+                Nom = p.Nom,
+            };
+            return View(model);
         }
 
         // POST: Profil/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, ProfilViewModel collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                rs.GestionProfil.Supprimer(id);
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult Select(int id)
+        {
+            rs.IdProfil = id;
+            return RedirectToAction("Index");
         }
     }
 }

@@ -7,7 +7,7 @@
     @if (Model.NomProfilActuel.IsEmpty())
     {
         <h2>Aucun profil sélectionné.</h2>
-        <button class="btn btn-default">Choisir un profil</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Profil")">Choisir un profil</a>
     }
     else
     {

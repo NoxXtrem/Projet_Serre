@@ -1,0 +1,37 @@
+﻿@model Projet_Serre.Models.ListReglageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron text-center">
+    <h2>Réglages du profil <strong>@Model.NomProfil</strong></h2>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Lumière</th>
+            <th>Temperature</th>
+            <th>Humidité</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Projet_Serre.Models.ReglageViewModel r in @Model.Reglages)
+        {
+            <tr>
+                <th>@r.Date</th>
+                <th>@r.Lumiere</th>
+                <th>@r.Temperature</th>
+                <th>@r.Humidite</th>
+                <th>
+                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { r.Id })">Modifier</a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { r.Id })">Supprimer</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-success" href="@Url.Action("Create", "Reglage")">Ajouter un profil</a>
