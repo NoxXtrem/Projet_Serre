@@ -54,6 +54,10 @@ namespace Projet_Serre.Models
                 }
                 return false;
             }
+            catch (InvalidOperationException ex)
+            {
+                return true;
+            }
         }
 
         private bool FermerConnection()
@@ -137,7 +141,6 @@ namespace Projet_Serre.Models
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
-
                 while (msdr.Read())
                 {
                     Profil profil = new Profil()
@@ -147,7 +150,9 @@ namespace Projet_Serre.Models
                     };
                     profils.Add(profil);
                 }
-                
+                msdr.Close();
+
+                profils.ForEach(p => p.Conditions = ListerReglage(p.Id));
                 this.FermerConnection();
             }
             return profils;
@@ -209,6 +214,37 @@ namespace Projet_Serre.Models
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
 
+                reglages = new List<Reglage>();
+                while (msdr.Read())
+                {
+                    Reglage reglage = new Reglage()
+                    {
+                        Date = msdr.GetDateTime(1),
+                        Lumiere = msdr.GetDouble(2),
+                        Temperature = msdr.GetDouble(3),
+                        Humidite = msdr.GetDouble(4),
+                        Vent = msdr.GetDouble(5),
+
+                    };
+                    reglages.Add(reglage);
+                }
+
+                this.FermerConnection();
+            }
+
+            return reglages;
+        }
+
+        public List<Reglage> ListerReglage(int idProfil)
+        {
+
+            string query = "SELECT * FROM reglage WHERE id_profil = '" + idProfil + "'";
+            List<Reglage> reglages = null;
+            if (this.OuvrirConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+                
                 reglages = new List<Reglage>();
                 while (msdr.Read())
                 {

@@ -36,17 +36,16 @@ namespace Projet_Serre
             ConfigureAuth(app);
 
             gestionProfil = new GestionProfil();
-            profil = new Profil("Test", new System.Collections.Generic.List<Reglage>());
-            gestionProfil.Ajouter(profil);
-
-
-            profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
-
             regulerSerre = new RegulerSerre(gestionProfil);
-            gestionProfil.MajProfil();
-            profil.MajReglage();
-            Thread regulerThread = new Thread(regulerSerre.Reguler);
 
+            //profil = new Profil("Test", new System.Collections.Generic.List<Reglage>());
+            //gestionProfil.Ajouter(profil);
+            //profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
+
+            gestionProfil.MajProfil();
+            //profil.MajReglage();
+
+            Thread regulerThread = new Thread(regulerSerre.Reguler);
             regulerThread.Start();
             System.Console.WriteLine("main thread: Starting worker thread...");
 

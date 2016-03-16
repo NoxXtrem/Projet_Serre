@@ -16,6 +16,11 @@ public class Profil {
         }
 	}
 	private List<Reglage> conditions;
+    public List<Reglage> Conditions { 
+        set { 
+            conditions = value;
+        }
+    }
 	private string nom;
 	public string Nom {
 		get {
