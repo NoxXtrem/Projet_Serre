@@ -39,7 +39,7 @@ public class Profil {
 	public bool AjouterReglage(Reglage reglage) {
         conditions.Add(reglage);
 
-        test.AjouterReglage(reglage);
+        test.AjouterReglage(reglage,id);
         return true;
 	}
 	public bool ModifierReglage(int idReglage, Reglage reglage) {
@@ -65,5 +65,9 @@ public class Profil {
 	public Reglage SelectionnerReglage(int idReglage) {
         return conditions.Single(r => r.Id == idReglage);
 	}
-
+    public bool MajReglage()
+    {
+        conditions = test.ListerReglage();
+        return true;
+    }
 }
