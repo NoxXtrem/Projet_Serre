@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
+    //TODO: Un selecteur de date pour le champ Date
+    //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
         RegulerSerre rs = Startup.RegulerSerre;
@@ -41,20 +43,31 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Create/5
-        public ActionResult Create(int idProfil)
+        public ActionResult Create(int id)
         {
             return View();
         }
 
         // POST: Reglage/Create/5
         [HttpPost]
-        public ActionResult Create(int idProfil, FormCollection collection)
+        public ActionResult Create(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Profil p = rs.GestionProfil.Selectionner(id);
+                    Reglage r = new Reglage()
+                    {
+                        Date = DateTime.Parse(model.Date),
+                        Lumiere = model.Lumiere,
+                        Temperature = model.Temperature,
+                        Humidite = model.Humidite,
+                    };
+                    p.AjouterReglage(r);
+                    return RedirectToAction("Index",  new { id });
+                }
+                return View();
             }
             catch
             {
@@ -63,20 +76,41 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Edit/5
-        public ActionResult Edit(int idReglage)
+        public ActionResult Edit(int id)
         {
-            return View();
+            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id); //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                Id = id,
+                Date = reglage.Date.ToShortDateString(),
+                Lumiere = reglage.Lumiere,
+                Temperature = reglage.Temperature,
+                Humidite = reglage.Humidite,
+            };
+
+            return View(model);
         }
 
         // POST: Reglage/Edit/5
         [HttpPost]
-        public ActionResult Edit(int idReglage, FormCollection collection)
+        public ActionResult Edit(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Profil p = rs.GestionProfil.Selectionner(id);
+                    Reglage r = new Reglage()
+                    {
+                        Date = DateTime.Parse(model.Date),
+                        Lumiere = model.Lumiere,
+                        Temperature = model.Temperature,
+                        Humidite = model.Humidite,
+                    };
+                    p.AjouterReglage(r);
+                    return RedirectToAction("Index", new { id });
+                }
+                return View();
             }
             catch
             {

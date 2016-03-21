@@ -117,7 +117,7 @@ namespace Projet_Serre.Controllers
 
         // POST: Profil/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, ProfilViewModel collection)
+        public ActionResult Delete(int id, ProfilViewModel model)
         {
             try
             {
@@ -130,6 +130,7 @@ namespace Projet_Serre.Controllers
             }
         }
 
+        // GET: Profil/Select/5
         public ActionResult Select(int id)
         {
             rs.IdProfil = id;
