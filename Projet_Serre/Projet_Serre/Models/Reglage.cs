@@ -6,7 +6,11 @@ public class Reglage {
 		get {
 			return id;
 		}
-	}
+        set
+        {
+            id = value;
+        }
+    }
 	private DateTime date;
 	public DateTime Date {
 		get {

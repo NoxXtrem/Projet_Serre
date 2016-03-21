@@ -223,6 +223,7 @@ namespace Projet_Serre.Models
                 {
                     Reglage reglage = new Reglage()
                     {
+                        Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
                         Temperature = msdr.GetDouble(3),
@@ -255,6 +256,7 @@ namespace Projet_Serre.Models
                 {
                     Reglage reglage = new Reglage()
                     {
+                        Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
                         Temperature = msdr.GetDouble(3),
