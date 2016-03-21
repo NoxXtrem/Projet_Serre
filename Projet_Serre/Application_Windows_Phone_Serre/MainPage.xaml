@@ -6,63 +6,89 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
+
+
     <Page.Resources>
         <Style x:Key="styleVoyant" TargetType="Ellipse">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="25"/>
             <Setter Property="Fill" Value="DarkRed"/>
         </Style>
         <Style x:Key="stylePanelCapteur" TargetType="StackPanel">
-            <Setter Property="Margin" Value="0,20,0,10"/>
-            <Setter Property="Background" Value="#FF784410"/>
-        </Style>
-        <Style x:Key="stylePanelProfilCapteur" TargetType="StackPanel">
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Background" Value="#FF669E0F"/>
+            <Setter Property="Margin" Value="15"/>
         </Style>
         <Style x:Key="styleTexteCapteur" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,10,0,5"/>
         </Style>
         <Style x:Key="styleValeur" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="FontSize" Value="30"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="25,5,25,25"/>
         </Style>
         <Style x:Key="styleTexteProfil" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,10,0,0"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
+        <Style x:Key="styleRectangle" TargetType="Rectangle">
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="RadiusX" Value="20"/>
+            <Setter Property="RadiusY" Value="45"/>
+        </Style>
+        <Style x:Key="styleRectangleFond" TargetType="Rectangle">
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="RadiusX" Value="15"/>
+            <Setter Property="RadiusY" Value="25"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="Opacity" Value="0.80"/>
+        </Style>
+        <Style x:Key="styleRectangleProfil" TargetType="Rectangle">
+            <Setter Property="Fill" Value="#FF669E0F"/>
+            <Setter Property="RadiusX" Value="15"/>
+            <Setter Property="RadiusY" Value="25"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="Opacity" Value="0.85"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
 
-        <!-- <BitmapImage x:Key="Goutte" UriSource="Assets/GoutteEauLogo.bmp" />  -->
-            
+        <BitmapImage x:Key="Goutte" UriSource="Assets/GoutteEauLogo.png"/>
+        <BitmapImage x:Key="Soleil" UriSource="Assets/SoleilLogo.png"/>
+        <BitmapImage x:Key="Temperature" UriSource="Assets/TemperatureLogo.png"/>
+        <BitmapImage x:Key="Vent" UriSource="Assets/VentLogo.png"/>
 
     </Page.Resources>
-    
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF4F4F4F"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid>
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="15*"/>
             <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" HorizontalAlignment="Right" Content="Etat de la Serre" MinWidth="200"/>
-            <Button Grid.Column="1" HorizontalAlignment="Left" Content="Gestion de la Serre" MinWidth="200"/>
+            <Button Name="buttonEtat" Grid.Column="0" HorizontalAlignment="Right" Content="Etat de la Serre" MinWidth="200" IsEnabled="False" Background="Gray"/>
+            <Button Name="buttonGestion" Grid.Column="1" HorizontalAlignment="Left" Content="Gestion de la Serre" MinWidth="200" Click="buttonGestion_Click" Background="Black"/>
         </Grid>
 
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -76,50 +102,63 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Row="0" Grid.Column="1" Source="Assets/Logo.png" />
-            <Image Grid.Row="0" Grid.Column="2" Source="Assets/Logo.png"/>
-            <Image Grid.Row="0" Grid.Column="3" Source="Assets/Logo.png"/>
-            <Image Grid.Row="0" Grid.Column="4" Source="Assets/Logo.png"/>
-            
+
+
+
+            <Image Grid.Row="0" Grid.Column="1" Source="{StaticResource Goutte}"/>
+            <Image Grid.Row="0" Grid.Column="2" Source="{StaticResource Soleil}"/>
+            <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Vent}"/>
+            <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Temperature}"/>
+
             <Ellipse Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
             <Ellipse Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
             <Ellipse Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
             <Ellipse Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
-            
+
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Margin="15">
+
+            <Rectangle Grid.Column="0" Margin="5" Style="{StaticResource styleRectangleFond}"/>
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Style="{StaticResource stylePanelCapteur}">
+
+                <Rectangle Grid.Row="0" Fill="#FF5AB45A" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="0" Style="{StaticResource stylePanelCapteur}" >
+
                     <TextBlock Text="Anémomètre" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
+                <Rectangle Grid.Row="1" Fill="#FFDC5050" Style="{StaticResource styleRectangle}"/>
                 <StackPanel Grid.Row="1" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur de Température" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
+                <Rectangle Grid.Row="2" Fill="#FF3278B9" Style="{StaticResource styleRectangle}"/>
                 <StackPanel Grid.Row="2" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur d'Humidité" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
+                <Rectangle Grid.Row="3" Fill="#FFF0A050" Style="{StaticResource styleRectangle}"/>
                 <StackPanel Grid.Row="3" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur d'Ensoleillement" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Margin="10" Background="#FF0B4B0E">
+
+            <Rectangle Grid.Column="1" Margin="10"  Style="{StaticResource styleRectangleFond}"/>
+            <Grid Grid.Column="1" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -127,18 +166,20 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Style="{StaticResource stylePanelProfilCapteur}">
+                <Rectangle Grid.Row="1" Style="{StaticResource styleRectangleProfil}"/>
+                <StackPanel Grid.Row="1" Margin="10">
                     <TextBlock Text="Température recommandé" Style="{StaticResource styleTexteProfil}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
-
                 </StackPanel>
-                <StackPanel Grid.Row="2" Style="{StaticResource stylePanelProfilCapteur}">
+                <Rectangle Grid.Row="2" Style="{StaticResource styleRectangleProfil}"/>
+                <StackPanel Grid.Row="2" Margin="10">
                     <TextBlock Text="   Humidité recommandé" Style="{StaticResource styleTexteProfil}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
-                <StackPanel Grid.Row="3" Style="{StaticResource stylePanelProfilCapteur}">
+                <Rectangle Grid.Row="3" Style="{StaticResource styleRectangleProfil}"/>
+                <StackPanel Grid.Row="3" Margin="10">
                     <TextBlock Text="Ensoleillement recommandé" Style="{StaticResource styleTexteProfil}"/>
                     <TextBlock Text="Faible" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
