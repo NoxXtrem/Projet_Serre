@@ -44,5 +44,25 @@ namespace Application_Windows_Phone_Serre
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+
+        private void buttonGestion_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GererEtatSerre));
+        }
+
+        /*
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            DisplayProperties.OrientationChanged += Page_OrientationChanged;
+        }
+
+        private void Page_OrientationChanged(object sender)
+        {
+            //The orientation of the device is ...
+            var orientation = DisplayProperties.CurrentOrientation;
+        }
+        */
+
     }
+         
 }
