@@ -36,5 +36,10 @@ namespace Application_Windows_Phone_Serre
         {
         }
 
+        private void buttonEtat_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
     }
 }
