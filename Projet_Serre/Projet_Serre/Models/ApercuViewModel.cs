@@ -8,14 +8,14 @@ namespace Projet_Serre.Models
 {
     public class ApercuViewModel
     {
-        public string nomProfilActuel { get; set; }
-        public string lienProfilActuel { get; set; }
-        public double temperatureCapteur { get; set; }
-        public double temperatureProfil { get; set; }
-        public double humiditeCapteur { get; set; }
-        public double humiditeProfil { get; set; }
-        public double lumiereCapteur { get; set; }
-        public double ventCapteur { get; set; }
-        public string dateDerniereMaJ { get; set; }
+        public string NomProfilActuel { get; set; }
+        public string LienProfilActuel { get; set; }
+        public double TemperatureCapteur { get; set; }
+        public double TemperatureProfil { get; set; }
+        public double HumiditeCapteur { get; set; }
+        public double HumiditeProfil { get; set; }
+        public double LumiereCapteur { get; set; }
+        public double VentCapteur { get; set; }
+        public string DateDerniereMaJ { get; set; }
     }
 }

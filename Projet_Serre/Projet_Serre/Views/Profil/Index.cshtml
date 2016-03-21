@@ -1,0 +1,37 @@
+﻿@model Projet_Serre.Models.ListProfilViewModel
+@{
+    ViewBag.Title = "Profils";
+}
+<div class="jumbotron text-center">
+    @if (Model.NomProfilActuel.IsEmpty())
+    {
+        <h2>Aucun profil sélectionné.</h2>
+    }
+    else
+    {
+        <h2>Profil actuel : <a href="@Model.LienProfilActuel"><strong>@Model.NomProfilActuel</strong></a></h2>
+    }
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Projet_Serre.Models.ProfilViewModel p in @Model.Profils)
+        {
+            <tr>
+                <th><a href="@Url.Action("Details", "Profil", new { p.Id })">@p.Nom</a></th>
+                <th>
+                    <a class="btn btn-primary btn-xs" href="@Url.Action("Select", "Profil", new { p.Id })">Selectionner</a>
+                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Profil", new { p.Id })">Renommer</a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Profil", new { p.Id })">Supprimer</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-success" href="@Url.Action("Create", "Profil")">Ajouter un profil</a>
