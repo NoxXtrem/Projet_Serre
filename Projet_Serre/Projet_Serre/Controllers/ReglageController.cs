@@ -99,16 +99,17 @@ namespace Projet_Serre.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Profil p = rs.GestionProfil.Selectionner(id);
-                    Reglage r = new Reglage()
+                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));
+                    Reglage reglage = new Reglage()
                     {
+                        Id = model.Id,
                         Date = DateTime.Parse(model.Date),
                         Lumiere = model.Lumiere,
                         Temperature = model.Temperature,
                         Humidite = model.Humidite,
                     };
-                    p.AjouterReglage(r);
-                    return RedirectToAction("Index", new { id });
+                    profil.ModifierReglage(id, reglage);
+                    return RedirectToAction("Index", new { profil.Id });
                 }
                 return View();
             }

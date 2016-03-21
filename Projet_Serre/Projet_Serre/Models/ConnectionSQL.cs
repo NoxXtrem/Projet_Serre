@@ -169,7 +169,7 @@ namespace Projet_Serre.Models
 
         public void ModifierReglage(int id, Reglage reglage)
         {
-            string query = "UPDATE reglage SET date='" + reglage.Date + "', lumiere='" + reglage.Lumiere + "', temperature='" + reglage.Temperature + "', humidite='" + reglage.Humidite + "', vent='" + reglage.Vent + "', WHERE id='" + id + "'";
+            string query = "UPDATE reglage SET date='" + reglage.Date.ToString("yyyy-MM-dd") + "', lumiere='" + reglage.Lumiere + "', temperature='" + reglage.Temperature + "', humidite='" + reglage.Humidite + "', vent='" + reglage.Vent + "' WHERE id='" + id + "'";
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
