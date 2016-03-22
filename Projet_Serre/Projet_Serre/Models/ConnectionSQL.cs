@@ -57,11 +57,9 @@ namespace Projet_Serre.Models
             }
         }
 
-        public int AjouterProfil(Profil profil)
-        {
-
-            string query = "INSERT INTO projet_serre.profil (nom) VALUES ('" + profil.Nom+ "'); SELECT LAST_INSERT_ID();";
-            int idProfil = 0;
+        public int Ajouter(string query)
+        {      
+            int id = 0;
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
@@ -69,16 +67,15 @@ namespace Projet_Serre.Models
                  
                 MySqlDataReader msdr = cmd.ExecuteReader();
                 msdr.Read();
-                idProfil = msdr.GetInt32(0);
+                id = msdr.GetInt32(0);
 
                 connection.Close();
             }
-            return idProfil;
+            return id;
         }
 
-        public void ModifierProfil(int id, Profil profil)
+        public void Modifier(string query)
         {
-            string query = "UPDATE profil SET nom='"+ profil.Nom + "'WHERE id='"+ id + "'";
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
@@ -92,21 +89,15 @@ namespace Projet_Serre.Models
             }
         }
 
-        public void SupprimerProfil(int idProfil)
+        public void Supprimer(string query)
         {
-            string query = "DELETE FROM profil WHERE id='"+ idProfil + "'; DELETE FROM reglage WHERE id_profil='"+idProfil+"'";
-            List<Profil> profils = new List<Profil>();
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
 
-                profils.ForEach(p => SupprimerListReglage(p.Id));
-
                 connection.Close();
-
-
             }
         }
 
@@ -147,52 +138,6 @@ namespace Projet_Serre.Models
                 connection.Close();
             }
             return profils;
-        }
-
-       public int AjouterReglage(Reglage reglage,int idProfil)
-        {
-            int idReglage = 0;
-            string query = "INSERT INTO reglage (date,lumiere,temperature,humidite,vent,id_profil) VALUES('"
-                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere + "','" + reglage.Temperature + "','" + reglage.Humidite + "','" + reglage.Vent + "','"+idProfil+"'); SELECT LAST_INSERT_ID();";
-            MySqlConnection connection = OuvrirConnection();
-            if (connection != null)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-
-                MySqlDataReader msdr = cmd.ExecuteReader();
-                msdr.Read();
-                idReglage = msdr.GetInt32(0); ;
-                connection.Close();
-            }
-            return idReglage;
-        }
-
-        public void ModifierReglage(int id, Reglage reglage)
-        {
-            string query = "UPDATE reglage SET date='" + reglage.Date.ToString("yyyy-MM-dd") + "', lumiere='" + reglage.Lumiere + "', temperature='" + reglage.Temperature + "', humidite='" + reglage.Humidite + "', vent='" + reglage.Vent + "' WHERE id='" + id + "'";
-            MySqlConnection connection = OuvrirConnection();
-            if (connection != null)
-            {
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = query;
-                cmd.Connection = connection;
-
-                cmd.ExecuteNonQuery();
-
-                connection.Close();
-            }
-        }
-
-        public void SupprimerReglage(int id)
-        {
-            string query = "DELETE FROM reglage WHERE nom='" + id + "'";
-            MySqlConnection connection = OuvrirConnection();
-            if (connection != null)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.ExecuteNonQuery();
-                connection.Close();
-            }
         }
 
         public void SupprimerListReglage(int idProfil)

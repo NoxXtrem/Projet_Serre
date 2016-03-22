@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Profil {
 	private int id;
-    ConnectionSQL test = new ConnectionSQL();
+    ConnectionReglage connection = new ConnectionReglage();
     public int Id {
 		get {
 			return id;
@@ -44,7 +44,7 @@ public class Profil {
 	public bool AjouterReglage(Reglage reglage) {
         conditions.Add(reglage);
 
-        test.AjouterReglage(reglage,id);
+        connection.Ajouter(reglage,id);
         return true;
 	}
 	public bool ModifierReglage(int idReglage, Reglage reglage) {
@@ -55,13 +55,13 @@ public class Profil {
         temp.Temperature = reglage.Temperature;
         temp.Vent = reglage.Vent;
 
-        test.ModifierReglage(idReglage, reglage);
+        connection.Modifier(idReglage, reglage);
         return true;
 	}
 	public bool SupprimerReglage(int idReglage) {
         conditions.Remove(conditions.Single(r => r.Id == idReglage));
 
-        test.SupprimerReglage(idReglage);
+        connection.Supprimer(idReglage);
         return true;
 	}
 	public List<Reglage> ListerReglage() {
@@ -72,7 +72,7 @@ public class Profil {
 	}
     public bool MajReglage()
     {
-        conditions = test.ListerReglage();
+        conditions = connection.ListerReglage();
         return true;
     }
 }

@@ -221,6 +221,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\ConnectionProfil.cs" />
+    <Compile Include="Models\ConnectionReglage.cs" />
     <Compile Include="Models\ConnectionSQL.cs" />
     <Compile Include="Models\Extracteurs.cs" />
     <Compile Include="Models\GestionActionneur.cs" />

@@ -38,9 +38,9 @@ namespace Projet_Serre
             gestionProfil = new GestionProfil();
             regulerSerre = new RegulerSerre(gestionProfil);
 
-            //profil = new Profil("Test", new System.Collections.Generic.List<Reglage>());
-            //gestionProfil.Ajouter(profil);
-            //profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
+           // profil = new Profil("Test", new System.Collections.Generic.List<Reglage>());
+           // gestionProfil.Ajouter(profil);
+           // profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
 
             gestionProfil.MajProfil();
             //profil.MajReglage();
