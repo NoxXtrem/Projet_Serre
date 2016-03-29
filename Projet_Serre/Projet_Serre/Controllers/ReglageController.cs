@@ -11,7 +11,7 @@ namespace Projet_Serre.Controllers
     //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        RegulerSerre rs = MvcApplication.RegulerSerre;
 
         // GET: Reglage/5
         public ActionResult Index(int id)

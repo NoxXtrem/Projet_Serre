@@ -11,7 +11,7 @@ namespace Projet_Serre.Controllers
     //TODO: Validation coté client (jQuery)
     public class ProfilController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        RegulerSerre rs = MvcApplication.RegulerSerre;
 
         // GET: Profil
         public ActionResult Index()
