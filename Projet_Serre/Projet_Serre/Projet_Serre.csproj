@@ -324,6 +324,7 @@
     <Content Include="Views\Reglage\Index.cshtml" />
     <Content Include="Views\Reglage\Create.cshtml" />
     <Content Include="Views\Reglage\Edit.cshtml" />
+    <Content Include="Views\Reglage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

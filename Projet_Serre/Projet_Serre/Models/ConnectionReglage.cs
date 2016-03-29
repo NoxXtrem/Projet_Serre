@@ -28,7 +28,7 @@ namespace Projet_Serre.Models
 
         public void Supprimer(int id)
         {
-            string query = "DELETE FROM reglage WHERE nom='" + id + "'";
+            string query = "DELETE FROM reglage WHERE id='" + id + "'";
             connection.Supprimer(query);
         }
 

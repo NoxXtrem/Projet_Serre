@@ -78,7 +78,7 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Edit/5
         public ActionResult Edit(int id)
         {
-            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id); //TODO: Meilleur façon de faire ça?
+            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
             ReglageViewModel model = new ReglageViewModel()
             {
                 Id = id,
@@ -99,7 +99,7 @@ namespace Projet_Serre.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));
+                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                     Reglage reglage = new Reglage()
                     {
                         Id = model.Id,
@@ -120,24 +120,34 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Delete/5
-        public ActionResult Delete(int idReglage)
+        public ActionResult Delete(int id)
         {
-            return View();
+            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                Id = id,
+                Date = reglage.Date.ToShortDateString(),
+                Lumiere = reglage.Lumiere,
+                Temperature = reglage.Temperature,
+                Humidite = reglage.Humidite,
+            };
+
+            return View(model);
         }
 
         // POST: Reglage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int idReglage, FormCollection collection)
+        public ActionResult Delete(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                profil.SupprimerReglage(id);
+                return RedirectToAction("Index", new { profil.Id });
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
     }

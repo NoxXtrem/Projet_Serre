@@ -27,14 +27,14 @@ namespace Projet_Serre.Controllers
             
 
             Profil profilActuel = rs.GestionProfil.Selectionner(rs.IdProfil);
-            ListProfilViewModel viewModel = new ListProfilViewModel()
+            ListProfilViewModel model = new ListProfilViewModel()
             {
                 NomProfilActuel = (profilActuel != null) ? profilActuel.Nom : null,
                 LienProfilActuel = "#",
                 Profils = liste ?? new List<ProfilViewModel>(),
             };
 
-            return View(viewModel);
+            return View(model);
         }
 
         // GET: Profil/Details/5
