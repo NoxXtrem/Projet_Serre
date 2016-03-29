@@ -9,7 +9,7 @@ namespace Projet_Serre.Controllers
 {
     public class HomeController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        RegulerSerre rs = MvcApplication.RegulerSerre;
 
         public ActionResult Index()
         {
