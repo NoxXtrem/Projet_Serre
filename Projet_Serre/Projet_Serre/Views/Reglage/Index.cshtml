@@ -27,8 +27,8 @@
                 <th>@r.Temperature</th>
                 <th>@r.Humidite</th>
                 <th>
-                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { r.Id })">Modifier</a>
-                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { r.Id })">Supprimer</a>
+                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { Id = r.IdReglage })">Modifier</a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { Id = r.IdReglage })">Supprimer</a>
                 </th>
             </tr>
         }

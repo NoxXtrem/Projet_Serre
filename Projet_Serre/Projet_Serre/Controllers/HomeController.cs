@@ -17,17 +17,18 @@ namespace Projet_Serre.Controllers
             try
             {
                 Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
+                Reglage r = rs.DernierReglage ?? new Reglage();
                 viewModel = new ApercuViewModel()
                 {
                     NomProfilActuel = p.Nom,
-                    LienProfilActuel = "#",
-                    //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
-                    //temperatureProfil = rs.DernierReglage.Temperature,
-                    //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
-                    //humiditeProfil = rs.DernierReglage.Humidite,
-                    //lumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
-                    //ventCapteur = rs.GestionCapteur.Anemometre.Valeur,
-                    //dateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                    IdProfilActuel = p.Id,
+                    TemperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
+                    TemperatureProfil = r.Temperature,
+                    HumiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
+                    HumiditeProfil = r.Humidite,
+                    LumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
+                    VentCapteur = rs.GestionCapteur.Anemometre.Valeur,
+                    DateDerniereMaJ = rs.DateDernierReglage.ToString(),
                 };
             }
             catch (Exception)

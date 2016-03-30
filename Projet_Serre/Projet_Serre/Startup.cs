@@ -30,7 +30,6 @@ namespace Projet_Serre
             private set { Startup.regulerSerre = value; }
         }
         
-
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
@@ -50,7 +49,5 @@ namespace Projet_Serre
             System.Console.WriteLine("main thread: Starting worker thread...");
 
         }
-
-
     }
 }
