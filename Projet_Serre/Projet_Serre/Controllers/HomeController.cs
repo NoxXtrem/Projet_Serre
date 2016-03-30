@@ -33,14 +33,7 @@ namespace Projet_Serre.Controllers
             }
             catch (Exception)
             {
-                viewModel = new ApercuViewModel()
-                {
-                    //temperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
-                    //humiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
-                    //lumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
-                    //ventCapteur = rs.GestionCapteur.Anemometre.Valeur,
-                    //dateDerniereMaJ = rs.DateDernierReglage.ToString(),
-                };
+                viewModel = new ApercuViewModel();
             }
             
             return View(viewModel);

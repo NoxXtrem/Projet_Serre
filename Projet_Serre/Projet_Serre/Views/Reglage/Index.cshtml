@@ -23,9 +23,9 @@
         {
             <tr>
                 <th>@r.Date</th>
-                <th>@r.Lumiere</th>
-                <th>@r.Temperature</th>
-                <th>@r.Humidite</th>
+                <th>@r.Lumiere lx</th>
+                <th>@r.Temperature C°</th>
+                <th>@r.Humidite %</th>
                 <th>
                     <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { Id = r.IdReglage })">Modifier</a>
                     <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { Id = r.IdReglage })">Supprimer</a>
