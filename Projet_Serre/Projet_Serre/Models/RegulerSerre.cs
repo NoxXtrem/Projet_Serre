@@ -11,7 +11,7 @@ public class RegulerSerre {
 			idProfil = value;
 		}
 	}
-
+    
     private Reglage dernierReglage;
     public Reglage DernierReglage
     {

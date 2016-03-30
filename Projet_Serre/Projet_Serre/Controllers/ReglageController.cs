@@ -1,6 +1,7 @@
 ﻿using Projet_Serre.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -64,9 +65,9 @@ namespace Projet_Serre.Controllers
                     Reglage r = new Reglage()
                     {
                         Date = DateTime.Parse(model.Date),
-                        Lumiere = model.Lumiere,
-                        Temperature = model.Temperature,
-                        Humidite = model.Humidite,
+                        Lumiere = Math.Round(model.Lumiere,2),
+                        Temperature = Math.Round(model.Temperature,2),
+                        Humidite = Math.Round(model.Humidite,2),
                     };
                     p.AjouterReglage(r);
                     return RedirectToAction("Index",  new { id });
@@ -110,9 +111,9 @@ namespace Projet_Serre.Controllers
                     {
                         Id = model.IdReglage,
                         Date = DateTime.Parse(model.Date),
-                        Lumiere = model.Lumiere,
-                        Temperature = model.Temperature,
-                        Humidite = model.Humidite,
+                        Lumiere = Math.Round(model.Lumiere,2),
+                        Temperature = Math.Round(model.Temperature,2),
+                        Humidite = Math.Round(model.Humidite,2),
                     };
                     profil.ModifierReglage(id, reglage);
                     return RedirectToAction("Index", new { profil.Id });
