@@ -44,7 +44,7 @@ public class Profil {
 	public bool AjouterReglage(Reglage reglage) {
         conditions.Add(reglage);
 
-        connection.Ajouter(reglage,id);
+        reglage.Id = connection.Ajouter(reglage,id);
         return true;
 	}
 	public bool ModifierReglage(int idReglage, Reglage reglage) {
