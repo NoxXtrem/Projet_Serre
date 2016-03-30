@@ -3,13 +3,13 @@
     ViewBag.Title = "Profils";
 }
 <div class="jumbotron text-center">
-    @if (Model.NomProfilActuel.IsEmpty())
+    @if (Model.IdProfilActuel <= 0)
     {
         <h2>Aucun profil sélectionné.</h2>
     }
     else
     {
-        <h2>Profil actuel : <a href="@Model.LienProfilActuel"><strong>@Model.NomProfilActuel</strong></a></h2>
+        <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
     }
 </div>
 

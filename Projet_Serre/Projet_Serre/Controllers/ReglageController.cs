@@ -21,7 +21,7 @@ namespace Projet_Serre.Controllers
             p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
                 {
                     Date = r.Date.ToShortDateString(),
-                    Id = r.Id,
+                    IdReglage = r.Id,
                     Lumiere = r.Lumiere,
                     Temperature = r.Temperature,
                     Humidite = r.Humidite,
@@ -45,7 +45,11 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Create/5
         public ActionResult Create(int id)
         {
-            return View();
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                IdProfil = id,
+            };
+            return View(model);
         }
 
         // POST: Reglage/Create/5
@@ -78,10 +82,12 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Edit/5
         public ActionResult Edit(int id)
         {
+            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
             Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
             ReglageViewModel model = new ReglageViewModel()
             {
-                Id = id,
+                IdReglage = id,
+                IdProfil = profil.Id,
                 Date = reglage.Date.ToShortDateString(),
                 Lumiere = reglage.Lumiere,
                 Temperature = reglage.Temperature,
@@ -102,7 +108,7 @@ namespace Projet_Serre.Controllers
                     Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                     Reglage reglage = new Reglage()
                     {
-                        Id = model.Id,
+                        Id = model.IdReglage,
                         Date = DateTime.Parse(model.Date),
                         Lumiere = model.Lumiere,
                         Temperature = model.Temperature,
@@ -122,10 +128,12 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Delete/5
         public ActionResult Delete(int id)
         {
+            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
             Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
             ReglageViewModel model = new ReglageViewModel()
             {
-                Id = id,
+                IdReglage = id,
+                IdProfil = profil.Id,
                 Date = reglage.Date.ToShortDateString(),
                 Lumiere = reglage.Lumiere,
                 Temperature = reglage.Temperature,

@@ -30,7 +30,7 @@ namespace Projet_Serre.Controllers
             ListProfilViewModel model = new ListProfilViewModel()
             {
                 NomProfilActuel = (profilActuel != null) ? profilActuel.Nom : null,
-                LienProfilActuel = "#",
+                IdProfilActuel = (profilActuel != null) ? profilActuel.Id : 0,
                 Profils = liste ?? new List<ProfilViewModel>(),
             };
 
