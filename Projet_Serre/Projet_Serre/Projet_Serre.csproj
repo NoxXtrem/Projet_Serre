@@ -94,6 +94,9 @@
       <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Phidget21.NET">
+      <HintPath>phidget21-windevel\Phidget21.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -255,6 +258,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="phidget21-windevel\IA32\phidget21.dll" />
+    <Content Include="phidget21-windevel\phidget21.h" />
+    <Content Include="phidget21-windevel\Phidget21.NET.dll" />
+    <Content Include="phidget21-windevel\Phidget21.NET1.1.dll" />
+    <Content Include="phidget21-windevel\x64\phidget21.dll" />
+    <Content Include="phidget21-windevel\x64\Phidget21COM.dll" />
+    <Content Include="phidget21-windevel\x64\PhidgetWebservice21.exe" />
+    <Content Include="phidget21-windevel\x86\phidget21.dll" />
+    <Content Include="phidget21-windevel\x86\Phidget21COM.dll" />
+    <Content Include="phidget21-windevel\x86\PhidgetWebservice21.exe" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -268,6 +281,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="phidget21-windevel\IA32\phidget21.lib" />
+    <Content Include="phidget21-windevel\x64\phidget21.lib" />
+    <Content Include="phidget21-windevel\x86\phidget21.lib" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
