@@ -64,11 +64,21 @@
             <Setter Property="Opacity" Value="0.80"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
+        <Style x:Key="styleOnglet" TargetType="Button">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
 
         <BitmapImage x:Key="Goutte" UriSource="Assets/GoutteEauLogo.png"/>
         <BitmapImage x:Key="Soleil" UriSource="Assets/SoleilLogo.png"/>
         <BitmapImage x:Key="Temperature" UriSource="Assets/TemperatureLogo.png"/>
         <BitmapImage x:Key="Vent" UriSource="Assets/VentLogo.png"/>
+        
+        <BitmapImage x:Key="Chauffage" UriSource="Assets/ChauffageLogo.png"/>
+        <BitmapImage x:Key="Arrosage" UriSource="Assets/ArrosageLogo.png"/>
+        <BitmapImage x:Key="Extracteur" UriSource="Assets/ExtracteurLogo.png"/>
+        <BitmapImage x:Key="Trappe" UriSource="Assets/TrappeLogo.png"/>
 
     </Page.Resources>
     <Page.Background>
@@ -82,8 +92,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="15*"/>
-            <RowDefinition Height="75*"/>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
 
 
@@ -91,9 +102,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="buttonEtat" Grid.Column="0" HorizontalAlignment="Right" Content="Etat de la Serre" MinWidth="200" Click="buttonEtat_Click" Background="Black"/>
-            <Button Name="buttonGestion" Grid.Column="1" HorizontalAlignment="Left" Content="Gestion de la Serre" MinWidth="200" IsEnabled="False" Background="Gray"/>
+            <Button Name="buttonEtat" Grid.Column="0"  Content="Etat Serre"  Click="buttonEtat_Click" Style="{StaticResource styleOnglet}"/>
+            <Button Name="buttonGestion" Grid.Column="1"  Content="Gestion Serre"  IsEnabled="False" Background="Gray" Style="{StaticResource styleOnglet}"/>
+            <Button Name="buttonProfil" Grid.Column="2" Content="Gestion Profils" Click="buttonProfil_Click" Style="{StaticResource styleOnglet}"/>
         </Grid>
 
 
@@ -111,14 +124,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Row="0" Grid.Column="1" Source="{StaticResource Goutte}"/>
-            <Image Grid.Row="0" Grid.Column="2" Source="{StaticResource Soleil}"/>
-            <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Vent}"/>
-            <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Temperature}"/>
-            <Ellipse Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
+            <Image Grid.Row="0" Grid.Column="1" Source="{StaticResource Chauffage}"/>
+            <Image Grid.Row="0" Grid.Column="2" Source="{StaticResource Arrosage}"/>
+            <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Extracteur}"/>
+            <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Trappe}"/>
+            <Ellipse  Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
+            <Ellipse  Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
+            <Ellipse  Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
+            <Ellipse  Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
 
 
         </Grid>
@@ -138,47 +151,102 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Chauffage" Style="{StaticResource styleTexteCapteur}"/>
-                    <Grid>
+                    <ComboBox Width="70" Background="Red">
+                        <x:String>0 °C</x:String>
+                        <x:String>1 °C</x:String>
+                        <x:String>2 °C</x:String>
+                        <x:String>3 °C</x:String>
+                        <x:String>4 °C</x:String>
+                        <x:String>5 °C</x:String>
+                        <x:String>6 °C</x:String>
+                        <x:String>7 °C</x:String>
+                        <x:String>8 °C</x:String>
+                        <x:String>9 °C</x:String>
+                        <x:String>10 °C</x:String>
+                        <x:String>11 °C</x:String>
+                        <x:String>12 °C</x:String>
+                        <x:String>13 °C</x:String>
+                        <x:String>14 °C</x:String>
+                        <x:String>15 °C</x:String>
+                        <x:String>16 °C</x:String>
+                        <x:String>17 °C</x:String>
+                        <x:String>18 °C</x:String>
+                        <x:String>19 °C</x:String>
+                        <x:String>20 °C</x:String>
+                        <x:String>21 °C</x:String>
+                        <x:String>22 °C</x:String>
+                        <x:String>23 °C</x:String>
+                        <x:String>24 °C</x:String>
+                        <x:String>25 °C</x:String>
+                        <x:String>26 °C</x:String>
+                        <x:String>27 °C</x:String>
+                        <x:String>28 °C</x:String>
+                        <x:String>29 °C</x:String>
+                        <x:String>30 °C</x:String>
+                        <x:String>31 °C</x:String>
+                        <x:String>32 °C</x:String>
+                        <x:String>33 °C</x:String>
+                        <x:String>34 °C</x:String>
+                        <x:String>35 °C</x:String>
+                        <x:String>36 °C</x:String>
+                        <x:String>37 °C</x:String>
+                        <x:String>38 °C</x:String>
+                        <x:String>39 °C</x:String>
+                        <x:String>40 °C</x:String>
+                        <x:String>41 °C</x:String>
+                        <x:String>42 °C</x:String>
+                        <x:String>43 °C</x:String>
+                        <x:String>44 °C</x:String>
+                        <x:String>45 °C</x:String>
+                        <x:String>46 °C</x:String>
+                        <x:String>47 °C</x:String>
+                        <x:String>48 °C</x:String>
+                        <x:String>49 °C</x:String>
+                        <x:String>50 °C</x:String>
+                    </ComboBox>
+
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource styleBoutonON}" Name="boutonChauffageON"/>
-                        <Button Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Name="boutonChauffageFF"/>
-                    </Grid>
+                        <Button Name="buttonChauffageON" Grid.Column="0" Style="{StaticResource styleBoutonON}" Click="buttonChauffageON_Click" Background="#FF004100"/>
+                        <Button Name="buttonChauffageOFF" Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Click="buttonChauffageOFF_Click" />
+                    </Grid>-->
                 </StackPanel>
                 <StackPanel Grid.Row="1" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Vannes d'Arrosage" Style="{StaticResource styleTexteCapteur}"/>
-                    <Grid>
+                    <TextBox />
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource styleBoutonON}" Name="boutonArrosageON"/>
-                        <Button Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Name="boutonArrosageOFF"/>
-                    </Grid>
+                        <Button Name="buttonArrosageON" Grid.Column="0" Style="{StaticResource styleBoutonON}" Click="buttonArrosageON_Click" Background="#FF004100"/>
+                        <Button Name="buttonArrosageOFF" Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Click="buttonArrosageOFF_Click" />
+                    </Grid>-->
                 </StackPanel>
                 <StackPanel Grid.Row="2" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Trappe de Toit" Style="{StaticResource styleTexteCapteur}"/>
-                    <Grid>
+                   <!-- <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource styleBoutonON}" Name="boutonTrappeToitON"/>
-                        <Button Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Name="boutonTrappeToitOFF"/>
-                    </Grid>
+                        <Button Name="buttonTrappeON" Grid.Column="0" Style="{StaticResource styleBoutonON}" Click="buttonTrappeON_Click" Background="#FF004100"/>
+                        <Button Name="buttonTrappeOFF" Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Click="buttonTrappeOFF_Click" />
+                    </Grid>-->
                 </StackPanel>
                 <StackPanel Grid.Row="3" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Extracteurs d'Air" Style="{StaticResource styleTexteCapteur}"/>
-                    <Grid>
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource styleBoutonON}" Name="boutonExtracteurON"/>
-                        <Button Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Name="boutonExtracteurOFF"/>
-                    </Grid>
+                        <Button Name="buttonExtracteurON" Grid.Column="0" Style="{StaticResource styleBoutonON}" Click="buttonExtracteurON_Click" Background="#FF004100"/>
+                        <Button Name="buttonExtracteurOFF" Grid.Column="1" Style="{StaticResource styleBoutonOFF}" Click="buttonExtracteurOFF_Click" />
+                    </Grid>-->
                 </StackPanel>
             </Grid>
 
@@ -215,7 +283,7 @@
 
 
         </Grid>
-
+        
 
     </Grid>
 
