@@ -52,8 +52,8 @@ public class Profil {
         temp.Humidite = reglage.Humidite;
         temp.Date = reglage.Date;
         temp.Lumiere = reglage.Lumiere;
-        temp.Temperature = reglage.Temperature;
-        temp.TemperatureExt = reglage.TemperatureExt;
+        temp.TemperatureInterieur = reglage.TemperatureInterieur;
+        temp.TemperatureExterieur = reglage.TemperatureExterieur;
         temp.Vent = reglage.Vent;
 
         connection.Modifier(idReglage, reglage);

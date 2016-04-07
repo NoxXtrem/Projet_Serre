@@ -29,27 +29,27 @@ public class Reglage {
 			lumiere = value;
 		}
 	}
-	private double temperature;
-	public double Temperature {
+	private double temperatureInterieur;
+	public double TemperatureInterieur {
 		get {
-			return temperature;
+			return temperatureInterieur;
 		}
 		set {
-			temperature = value;
+			temperatureInterieur = value;
 		}
 	}
 
-    private double temperatureExt;
-    public double TemperatureExt
+    private double temperatureExterieur;
+    public double TemperatureExterieur
     {
         get
         {
-            return temperatureExt;
+            return temperatureExterieur;
         }
 
         set
         {
-            temperatureExt = value;
+            temperatureExterieur = value;
         }
     }
 
@@ -77,11 +77,11 @@ public class Reglage {
     public Reglage() {
         
 	}
-	public Reglage(DateTime date, double lumiere, double temperature, double temperatureExt, double humidite, double vent) {
+	public Reglage(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, double vent) {
         this.date = date;
         this.lumiere = lumiere;
-        this.temperature = temperature;
-        this.temperatureExt = temperatureExt;
+        this.temperatureInterieur = temperatureInterieur;
+        this.temperatureExterieur = temperatureExterieur;
         this.humidite = humidite;
         this.vent = vent;
     }

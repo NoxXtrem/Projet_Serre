@@ -16,14 +16,14 @@ namespace Projet_Serre.Models
 
         public int Ajouter(Reglage reglage, int idProfil)
         {
-            string query = "INSERT INTO reglage (date,lumiere,temperature,humidite,vent,id_profil) VALUES('"
-                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Temperature.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.TemperatureExt.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "','" + idProfil + "'); SELECT LAST_INSERT_ID();";
+            string query = "INSERT INTO reglage (date,lumiere,temperatureInterieur,humidite,vent,id_profil) VALUES('"
+                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.TemperatureExterieur.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "','" + idProfil + "'); SELECT LAST_INSERT_ID();";
             return connection.Ajouter(query);
         }
 
         public void Modifier(int id, Reglage reglage)
         {
-            string query = "UPDATE reglage SET date='" + reglage.Date.ToString("yyyy-MM-dd") + "', lumiere='" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "', temperature='" + reglage.Temperature.ToString("F", CultureInfo.InvariantCulture) + "', temperatureExt='"+reglage.TemperatureExt.ToString("F", CultureInfo.InvariantCulture) + "', humidite='" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "', vent='" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "' WHERE id='" + id + "'";
+            string query = "UPDATE reglage SET date='" + reglage.Date.ToString("yyyy-MM-dd") + "', lumiere='" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "', temperatureInterieur='" + reglage.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture) + "', temperatureExterieur='"+reglage.TemperatureExterieur.ToString("F", CultureInfo.InvariantCulture) + "', humidite='" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "', vent='" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "' WHERE id='" + id + "'";
             connection.Modifier(query);
         }
 
