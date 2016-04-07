@@ -53,6 +53,7 @@ public class Profil {
         temp.Date = reglage.Date;
         temp.Lumiere = reglage.Lumiere;
         temp.Temperature = reglage.Temperature;
+        temp.TemperatureExt = reglage.TemperatureExt;
         temp.Vent = reglage.Vent;
 
         connection.Modifier(idReglage, reglage);
