@@ -9,7 +9,7 @@ namespace Projet_Serre.Models
     public class ApercuViewModel
     {
         public string NomProfilActuel { get; set; }
-        public string LienProfilActuel { get; set; }
+        public int IdProfilActuel { get; set; }
         public double TemperatureCapteur { get; set; }
         public double TemperatureProfil { get; set; }
         public double HumiditeCapteur { get; set; }

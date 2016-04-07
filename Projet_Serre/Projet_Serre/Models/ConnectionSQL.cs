@@ -8,18 +8,16 @@ namespace Projet_Serre.Models
 {
     public class ConnectionSQL
     {
-
-        private MySqlConnection connection;
         private string serveur;
         private string baseDeDonnée;
         private string utilisateur;
         private string motDePasse;
 
-        public ConnectionSQL() { Initialisation(); }
-       
+        public ConnectionSQL()
+        {
+        }
 
-
-        private void Initialisation()
+        private MySqlConnection Initialisation()
         {
 
             serveur = "localhost";
@@ -27,18 +25,21 @@ namespace Projet_Serre.Models
             utilisateur = "projet";
             motDePasse = "serre";
             string connectionString;
-            connectionString = "SERVER=" + serveur + ";" + "DATABASE=" +
+            connectionString =  "SERVER=" + serveur + ";" + "DATABASE=" +
             baseDeDonnée + ";" + "UID=" + utilisateur + ";" + "PASSWORD=" + motDePasse + ";"+ "Convert Zero Datetime = True;"; 
             
-            connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            return connection;
         }
 
-        private bool OuvrirConnection()
+        private MySqlConnection OuvrirConnection()
         {
             try
             {
+                MySqlConnection connection = Initialisation();
                 connection.Open();
-                return true;
+                return connection;
             }
             catch (MySqlException ex)
             {
@@ -52,51 +53,31 @@ namespace Projet_Serre.Models
                         Console.WriteLine("nom d'utilisateur/mot de passe invalide, s'il vous plaît réessayer");
                         break;
                 }
-                return false;
-            }
-            catch (InvalidOperationException ex)
-            {
-                return true;
+                return null;
             }
         }
 
-        private bool FermerConnection()
-        {
-            try
-            {
-                connection.Close();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
-
-        public int AjouterProfil(Profil profil)
-        {
-
-            string query = "INSERT INTO projet_serre.profil (nom) VALUES ('" + profil.Nom+ "'); SELECT LAST_INSERT_ID();";
-            int idProfil = 0;
-            if (this.OuvrirConnection() == true)
+        public int Ajouter(string query)
+        {      
+            int id = 0;
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                  
                 MySqlDataReader msdr = cmd.ExecuteReader();
                 msdr.Read();
-                idProfil = msdr.GetInt32(0);
+                id = msdr.GetInt32(0);
 
-                this.FermerConnection();
+                connection.Close();
             }
-            return idProfil;
+            return id;
         }
 
-        public void ModifierProfil(int id, Profil profil)
+        public void Modifier(string query)
         {
-            string query = "UPDATE profil SET nom='"+ profil.Nom + "'WHERE id='"+ id + "'";
-
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = query;
@@ -104,31 +85,31 @@ namespace Projet_Serre.Models
 
                 cmd.ExecuteNonQuery();
 
-                this.FermerConnection();
+                connection.Close();
             }
         }
 
-        public void SupprimerProfil(int idProfil)
+        public void Supprimer(string query)
         {
-            string query = "DELETE FROM profil WHERE id='"+ idProfil + "'";
-
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
-                this.FermerConnection();
+
+                connection.Close();
             }
         }
 
         public void SelectionnerIdProfil(int idProfil)
         {
             string query = "SELECT * FROM profil WHERE id='" + idProfil + "'";
-
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteReader();
-                this.FermerConnection();
+                connection.Close();
             }
 
         }
@@ -137,7 +118,8 @@ namespace Projet_Serre.Models
         {
             string query = "SELECT * FROM profil";
             List<Profil> profils = new List<Profil>();
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
@@ -153,54 +135,20 @@ namespace Projet_Serre.Models
                 msdr.Close();
 
                 profils.ForEach(p => p.Conditions = ListerReglage(p.Id));
-                this.FermerConnection();
+                connection.Close();
             }
             return profils;
         }
 
-       public int AjouterReglage(Reglage reglage,int idProfil)
+        public void SupprimerListReglage(int idProfil)
         {
-            int idReglage = 0;
-            string query = "INSERT INTO reglage (date,lumiere,temperature,humidite,vent,id_profil) VALUES('"
-                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere + "','" + reglage.Temperature + "','" + reglage.Humidite + "','" + reglage.Vent + "','"+idProfil+"'); SELECT LAST_INSERT_ID();";
-
-            if (this.OuvrirConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-
-                MySqlDataReader msdr = cmd.ExecuteReader();
-                msdr.Read();
-                idReglage = msdr.GetInt32(0); ;
-                this.FermerConnection();
-            }
-            return idReglage;
-        }
-
-        public void ModifierReglage(int id, Reglage reglage)
-        {
-            string query = "UPDATE reglage SET date='" + reglage.Date + "', lumiere='" + reglage.Lumiere + "', temperature='" + reglage.Temperature + "', humidite='" + reglage.Humidite + "', vent='" + reglage.Vent + "', WHERE id='" + id + "'";
-
-            if (this.OuvrirConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = query;
-                cmd.Connection = connection;
-
-                cmd.ExecuteNonQuery();
-
-                this.FermerConnection();
-            }
-        }
-
-        public void SupprimerReglage(int id)
-        {
-            string query = "DELETE FROM reglage WHERE nom='" + id + "'";
-
-            if (this.OuvrirConnection() == true)
+            string query = "DELETE FROM reglage WHERE id_profil='" + idProfil + "'";
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
-                this.FermerConnection();
+                connection.Close();
             }
         }
 
@@ -209,7 +157,8 @@ namespace Projet_Serre.Models
 
             string query = "SELECT * FROM reglage";
             List<Reglage> reglages = null;
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
@@ -219,17 +168,19 @@ namespace Projet_Serre.Models
                 {
                     Reglage reglage = new Reglage()
                     {
+                        Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
-                        Temperature = msdr.GetDouble(3),
-                        Humidite = msdr.GetDouble(4),
-                        Vent = msdr.GetDouble(5),
+                        TemperatureInterieur = msdr.GetDouble(3),
+                        TemperatureExterieur = msdr.GetDouble(4),
+                        Humidite = msdr.GetDouble(5),
+                        Vent = msdr.GetDouble(6),
 
                     };
                     reglages.Add(reglage);
                 }
 
-                this.FermerConnection();
+                connection.Close();
             }
 
             return reglages;
@@ -240,7 +191,8 @@ namespace Projet_Serre.Models
 
             string query = "SELECT * FROM reglage WHERE id_profil = '" + idProfil + "'";
             List<Reglage> reglages = null;
-            if (this.OuvrirConnection() == true)
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
@@ -250,17 +202,19 @@ namespace Projet_Serre.Models
                 {
                     Reglage reglage = new Reglage()
                     {
+                        Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
-                        Temperature = msdr.GetDouble(3),
-                        Humidite = msdr.GetDouble(4),
-                        Vent = msdr.GetDouble(5),
+                        TemperatureInterieur = msdr.GetDouble(3),
+                        TemperatureExterieur = msdr.GetDouble(4),
+                        Humidite = msdr.GetDouble(5),
+                        Vent = msdr.GetDouble(6),
 
                     };
                     reglages.Add(reglage);
                 }
 
-                this.FermerConnection();
+                connection.Close();
             }
 
             return reglages;

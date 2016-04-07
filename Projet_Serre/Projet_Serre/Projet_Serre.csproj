@@ -203,6 +203,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\API_Profil.cs" />
+    <Compile Include="API\API_Reglage.cs" />
     <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Controllers\ReglageController.cs" />
     <Compile Include="Models\Actionneur.cs" />
@@ -221,6 +223,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\ConnectionProfil.cs" />
+    <Compile Include="Models\ConnectionReglage.cs" />
     <Compile Include="Models\ConnectionSQL.cs" />
     <Compile Include="Models\Extracteurs.cs" />
     <Compile Include="Models\GestionActionneur.cs" />
@@ -320,6 +324,9 @@
     <Content Include="Views\Profil\Edit.cshtml" />
     <Content Include="Views\Profil\Delete.cshtml" />
     <Content Include="Views\Reglage\Index.cshtml" />
+    <Content Include="Views\Reglage\Create.cshtml" />
+    <Content Include="Views\Reglage\Edit.cshtml" />
+    <Content Include="Views\Reglage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

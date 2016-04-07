@@ -1,12 +1,15 @@
 ﻿using Projet_Serre.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
+    //TODO: Un selecteur de date pour le champ Date
+    //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
         RegulerSerre rs = Startup.RegulerSerre;
@@ -19,9 +22,10 @@ namespace Projet_Serre.Controllers
             p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
                 {
                     Date = r.Date.ToShortDateString(),
-                    Id = r.Id,
+                    IdReglage = r.Id,
                     Lumiere = r.Lumiere,
-                    Temperature = r.Temperature,
+                    TemperatureInterieur = r.TemperatureInterieur,
+                    TemperatureExterieur = r.TemperatureExterieur,
                     Humidite = r.Humidite,
                 })
             );
@@ -41,20 +45,36 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Create/5
-        public ActionResult Create(int idProfil)
+        public ActionResult Create(int id)
         {
-            return View();
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                IdProfil = id,
+            };
+            return View(model);
         }
 
         // POST: Reglage/Create/5
         [HttpPost]
-        public ActionResult Create(int idProfil, FormCollection collection)
+        public ActionResult Create(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Profil p = rs.GestionProfil.Selectionner(id);
+                    Reglage r = new Reglage()
+                    {
+                        Date = DateTime.Parse(model.Date),
+                        Lumiere = Math.Round(model.Lumiere,2),
+                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
+                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
+                        Humidite = Math.Round(model.Humidite,2),
+                    };
+                    p.AjouterReglage(r);
+                    return RedirectToAction("Index",  new { id });
+                }
+                return View();
             }
             catch
             {
@@ -63,20 +83,46 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Edit/5
-        public ActionResult Edit(int idReglage)
+        public ActionResult Edit(int id)
         {
-            return View();
+            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                IdReglage = id,
+                IdProfil = profil.Id,
+                Date = reglage.Date.ToShortDateString(),
+                Lumiere = reglage.Lumiere,
+                TemperatureInterieur = reglage.TemperatureInterieur,
+                TemperatureExterieur = reglage.TemperatureExterieur,
+                Humidite = reglage.Humidite,
+            };
+
+            return View(model);
         }
 
         // POST: Reglage/Edit/5
         [HttpPost]
-        public ActionResult Edit(int idReglage, FormCollection collection)
+        public ActionResult Edit(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                    Reglage reglage = new Reglage()
+                    {
+                        Id = model.IdReglage,
+                        Date = DateTime.Parse(model.Date),
+                        Lumiere = Math.Round(model.Lumiere,2),
+                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
+                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
+                        Humidite = Math.Round(model.Humidite,2),
+                    };
+                    profil.ModifierReglage(id, reglage);
+                    return RedirectToAction("Index", new { profil.Id });
+                }
+                return View();
             }
             catch
             {
@@ -85,24 +131,37 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Delete/5
-        public ActionResult Delete(int idReglage)
+        public ActionResult Delete(int id)
         {
-            return View();
+            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel()
+            {
+                IdReglage = id,
+                IdProfil = profil.Id,
+                Date = reglage.Date.ToShortDateString(),
+                Lumiere = reglage.Lumiere,
+                TemperatureInterieur = reglage.TemperatureInterieur,
+                TemperatureExterieur = reglage.TemperatureExterieur,
+                Humidite = reglage.Humidite,
+            };
+
+            return View(model);
         }
 
         // POST: Reglage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int idReglage, FormCollection collection)
+        public ActionResult Delete(int id, ReglageViewModel model)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                profil.SupprimerReglage(id);
+                return RedirectToAction("Index", new { profil.Id });
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
     }

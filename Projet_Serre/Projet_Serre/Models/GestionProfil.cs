@@ -5,15 +5,14 @@ using System.Linq;
 
 public class GestionProfil {
 	private List<Profil> profils = new List<Profil>();
-    ConnectionSQL test = new ConnectionSQL();
-
+    ConnectionProfil connection = new ConnectionProfil();
     
 
     public GestionProfil() {
         this.profils = new List<Profil>();
 	}
 	public bool Ajouter(Profil profil) {
-        int idProfil = test.AjouterProfil(profil);
+        int idProfil = connection.Ajouter(profil);
 
         profils.Add(profil);
         profil.Id = idProfil;
@@ -23,13 +22,13 @@ public class GestionProfil {
 	public bool Renommer(int idProfil, string nouveauNom) {
         Profil profil = profils.Single(p => p.Id == idProfil);
         profil.Nom = nouveauNom;
-        test.ModifierProfil(idProfil, profil);
+        connection.Modifier(idProfil, profil);
         return true;
     }
 	public bool Supprimer(int idProfil) {
         profils.Remove(profils.Single(p => p.Id == idProfil));
 
-        test.SupprimerProfil(idProfil);
+        connection.Supprimer(idProfil);
         return true;
     }
 	public List<Profil> Lister() {
@@ -41,7 +40,7 @@ public class GestionProfil {
 
     public bool MajProfil()
     {
-        profils = test.ListerProfil();
+        profils = connection.ListerProfil();
         return true;
     }
 }

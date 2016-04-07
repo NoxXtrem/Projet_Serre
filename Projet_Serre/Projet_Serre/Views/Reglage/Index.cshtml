@@ -13,7 +13,8 @@
         <tr>
             <th>Date</th>
             <th>Lumière</th>
-            <th>Temperature</th>
+            <th>Temperature Intérieur</th>
+            <th>Temperature Extérieur</th>
             <th>Humidité</th>
             <th>Actions</th>
         </tr>
@@ -23,15 +24,16 @@
         {
             <tr>
                 <th>@r.Date</th>
-                <th>@r.Lumiere</th>
-                <th>@r.Temperature</th>
-                <th>@r.Humidite</th>
+                <th>@r.Lumiere lx</th>
+                <th>@r.TemperatureInterieur C°</th>
+                <th>@r.TemperatureExterieur C°</th>
+                <th>@r.Humidite %</th>
                 <th>
-                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { r.Id })">Modifier</a>
-                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { r.Id })">Supprimer</a>
+                    <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { Id = r.IdReglage })">Modifier</a>
+                    <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Reglage", new { Id = r.IdReglage })">Supprimer</a>
                 </th>
             </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-success" href="@Url.Action("Create", "Reglage")">Ajouter un profil</a>
+<a class="btn btn-success" href="@Url.Action("Create", "Reglage", new { id = Model.IdProfil })">Ajouter un réglage</a>

@@ -6,7 +6,11 @@ public class Reglage {
 		get {
 			return id;
 		}
-	}
+        set
+        {
+            id = value;
+        }
+    }
 	private DateTime date;
 	public DateTime Date {
 		get {
@@ -25,16 +29,31 @@ public class Reglage {
 			lumiere = value;
 		}
 	}
-	private double temperature;
-	public double Temperature {
+	private double temperatureInterieur;
+	public double TemperatureInterieur {
 		get {
-			return temperature;
+			return temperatureInterieur;
 		}
 		set {
-			temperature = value;
+			temperatureInterieur = value;
 		}
 	}
-	private double humidite;
+
+    private double temperatureExterieur;
+    public double TemperatureExterieur
+    {
+        get
+        {
+            return temperatureExterieur;
+        }
+
+        set
+        {
+            temperatureExterieur = value;
+        }
+    }
+
+    private double humidite;
 	public double Humidite {
 		get {
 			return humidite;
@@ -53,13 +72,16 @@ public class Reglage {
 		}
 	}
 
+
+
     public Reglage() {
         
 	}
-	public Reglage(DateTime date, double lumiere, double temperature, double humidite, double vent) {
+	public Reglage(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, double vent) {
         this.date = date;
         this.lumiere = lumiere;
-        this.temperature = temperature;
+        this.temperatureInterieur = temperatureInterieur;
+        this.temperatureExterieur = temperatureExterieur;
         this.humidite = humidite;
         this.vent = vent;
     }
