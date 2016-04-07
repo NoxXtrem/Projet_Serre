@@ -206,6 +206,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\API_Profil.cs" />
+    <Compile Include="API\API_Reglage.cs" />
     <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Controllers\ReglageController.cs" />
     <Compile Include="Models\Actionneur.cs" />

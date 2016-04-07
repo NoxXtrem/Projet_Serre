@@ -171,9 +171,10 @@ namespace Projet_Serre.Models
                         Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
-                        Temperature = msdr.GetDouble(3),
-                        Humidite = msdr.GetDouble(4),
-                        Vent = msdr.GetDouble(5),
+                        TemperatureInterieur = msdr.GetDouble(3),
+                        TemperatureExterieur = msdr.GetDouble(4),
+                        Humidite = msdr.GetDouble(5),
+                        Vent = msdr.GetDouble(6),
 
                     };
                     reglages.Add(reglage);
@@ -204,9 +205,10 @@ namespace Projet_Serre.Models
                         Id = msdr.GetInt32(0),
                         Date = msdr.GetDateTime(1),
                         Lumiere = msdr.GetDouble(2),
-                        Temperature = msdr.GetDouble(3),
-                        Humidite = msdr.GetDouble(4),
-                        Vent = msdr.GetDouble(5),
+                        TemperatureInterieur = msdr.GetDouble(3),
+                        TemperatureExterieur = msdr.GetDouble(4),
+                        Humidite = msdr.GetDouble(5),
+                        Vent = msdr.GetDouble(6),
 
                     };
                     reglages.Add(reglage);

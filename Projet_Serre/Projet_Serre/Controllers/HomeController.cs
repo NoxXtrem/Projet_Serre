@@ -23,7 +23,7 @@ namespace Projet_Serre.Controllers
                     NomProfilActuel = p.Nom,
                     IdProfilActuel = p.Id,
                     TemperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
-                    TemperatureProfil = r.Temperature,
+                    TemperatureProfil = r.TemperatureInterieur,
                     HumiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
                     HumiditeProfil = r.Humidite,
                     LumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
