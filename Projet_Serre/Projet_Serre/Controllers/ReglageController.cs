@@ -25,7 +25,6 @@ namespace Projet_Serre.Controllers
                     IdReglage = r.Id,
                     Lumiere = r.Lumiere,
                     TemperatureInterieur = r.TemperatureInterieur,
-                    TemperatureExterieur = r.TemperatureExterieur,
                     Humidite = r.Humidite,
                 })
             );
@@ -68,7 +67,6 @@ namespace Projet_Serre.Controllers
                         Date = DateTime.Parse(model.Date),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
                     };
                     p.AjouterReglage(r);
@@ -94,7 +92,6 @@ namespace Projet_Serre.Controllers
                 Date = reglage.Date.ToShortDateString(),
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
-                TemperatureExterieur = reglage.TemperatureExterieur,
                 Humidite = reglage.Humidite,
             };
 
@@ -116,7 +113,6 @@ namespace Projet_Serre.Controllers
                         Date = DateTime.Parse(model.Date),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
                     };
                     profil.ModifierReglage(id, reglage);
@@ -142,7 +138,6 @@ namespace Projet_Serre.Controllers
                 Date = reglage.Date.ToShortDateString(),
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
-                TemperatureExterieur = reglage.TemperatureExterieur,
                 Humidite = reglage.Humidite,
             };
 

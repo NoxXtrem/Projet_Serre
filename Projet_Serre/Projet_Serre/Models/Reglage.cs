@@ -39,20 +39,6 @@ public class Reglage {
 		}
 	}
 
-    private double temperatureExterieur;
-    public double TemperatureExterieur
-    {
-        get
-        {
-            return temperatureExterieur;
-        }
-
-        set
-        {
-            temperatureExterieur = value;
-        }
-    }
-
     private double humidite;
 	public double Humidite {
 		get {
@@ -81,7 +67,6 @@ public class Reglage {
         this.date = date;
         this.lumiere = lumiere;
         this.temperatureInterieur = temperatureInterieur;
-        this.temperatureExterieur = temperatureExterieur;
         this.humidite = humidite;
         this.vent = vent;
     }

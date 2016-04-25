@@ -18,18 +18,35 @@ namespace Projet_Serre.Controllers
             {
                 Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
                 Reglage r = rs.DernierReglage ?? new Reglage();
-                viewModel = new ApercuViewModel()
+                if (p != null)
                 {
-                    NomProfilActuel = p.Nom,
-                    IdProfilActuel = p.Id,
-                    TemperatureCapteur = rs.GestionCapteur.CapteurTemperature.Valeur,
-                    TemperatureProfil = r.TemperatureInterieur,
-                    HumiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
-                    HumiditeProfil = r.Humidite,
-                    LumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
-                    VentCapteur = rs.GestionCapteur.Anemometre.Valeur,
-                    DateDerniereMaJ = rs.DateDernierReglage.ToString(),
-                };
+                    viewModel = new ApercuViewModel()
+                    {
+                        NomProfilActuel = p.Nom,
+                        IdProfilActuel = p.Id,
+                        TemperatureInterieurCapteur = rs.GestionCapteur.CapteurTemperatureInterieur.Valeur,
+                        TemperatureExterieurCapteur = rs.GestionCapteur.CapteurTemperatureExterieur.Valeur,
+                        TemperatureInterieurProfil = r.TemperatureInterieur,
+                        HumiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
+                        HumiditeProfil = r.Humidite,
+                        LumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
+                        VentCapteur = rs.GestionCapteur.Anemometre.Valeur,
+                        DateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                    };
+                }
+                else
+                {
+                    viewModel = new ApercuViewModel()
+                    {
+                        IdProfilActuel = 0,
+                        TemperatureInterieurCapteur = rs.GestionCapteur.CapteurTemperatureInterieur.Valeur,
+                        TemperatureExterieurCapteur = rs.GestionCapteur.CapteurTemperatureExterieur.Valeur,
+                        HumiditeCapteur = rs.GestionCapteur.CapteurHumidite.Valeur,
+                        LumiereCapteur = rs.GestionCapteur.CapteurEnso.Valeur,
+                        VentCapteur = rs.GestionCapteur.Anemometre.Valeur,
+                        DateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                    };
+                }
             }
             catch (Exception)
             {
