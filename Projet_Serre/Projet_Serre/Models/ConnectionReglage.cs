@@ -16,8 +16,8 @@ namespace Projet_Serre.Models
 
         public int Ajouter(Reglage reglage, int idProfil)
         {
-            string query = "INSERT INTO reglage (date,lumiere,temperatureInterieur,temperatureExterieur,humidite,vent,id_profil) VALUES('"
-                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture) + "','" + "','" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "','" + idProfil + "'); SELECT LAST_INSERT_ID();";
+            string query = "INSERT INTO reglage (date,lumiere,temperatureInterieur,humidite,vent,id_profil) VALUES('"
+                + reglage.Date.ToString("yyyy-MM-dd") + "','" + reglage.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture) +  "','" + reglage.Humidite.ToString("F", CultureInfo.InvariantCulture) + "','" + reglage.Vent.ToString("F", CultureInfo.InvariantCulture) + "','" + idProfil + "'); SELECT LAST_INSERT_ID();";
             return connection.Ajouter(query);
         }
 
