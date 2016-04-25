@@ -25,8 +25,10 @@ namespace Application_Windows_Phone_Serre
         public MainPage()
         {
             this.InitializeComponent();
-
             this.NavigationCacheMode = NavigationCacheMode.Required;
+
+            
+            Loaded += MainPage_Loaded;
         }
 
         /// <summary>
@@ -49,6 +51,51 @@ namespace Application_Windows_Phone_Serre
         {
             Frame.Navigate(typeof(GererEtatSerre));
         }
+
+        private void buttonProfil_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GererProfils));
+        }
+
+
+
+
+
+
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+
+
+
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*
         private void Page_Loaded(object sender, RoutedEventArgs e)
