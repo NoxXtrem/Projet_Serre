@@ -13,7 +13,7 @@
         <tr>
             <th>Date</th>
             <th>Lumière</th>
-            <th>Temperature</th>
+            <th>Temperature Intérieur</th>
             <th>Humidité</th>
             <th>Actions</th>
         </tr>
@@ -22,9 +22,9 @@
         @foreach (Projet_Serre.Models.ReglageViewModel r in @Model.Reglages)
         {
             <tr>
-                <th>@r.Date</th>
+                <th>@r.Date jours</th>
                 <th>@r.Lumiere lx</th>
-                <th>@r.Temperature C°</th>
+                <th>@r.TemperatureInterieur C°</th>
                 <th>@r.Humidite %</th>
                 <th>
                     <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Reglage", new { Id = r.IdReglage })">Modifier</a>

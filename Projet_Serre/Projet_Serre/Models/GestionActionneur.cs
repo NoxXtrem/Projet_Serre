@@ -31,7 +31,4 @@ public class GestionActionneur {
         chauffage = new Chauffage();
         vannes = new Vannes();
 	}
-
-	private Actionneur[] actionneur;
-
 }

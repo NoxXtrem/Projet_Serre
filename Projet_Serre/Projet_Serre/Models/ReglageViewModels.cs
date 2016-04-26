@@ -17,9 +17,9 @@ namespace Projet_Serre.Models
         [Key]
         public int IdReglage { get; set; }
         public int IdProfil { get; set; }
-        public string Date { get; set; }
+        public int Date { get; set; }
         public double Lumiere { get; set; }
-        public double Temperature { get; set; }
+        public double TemperatureInterieur { get; set; }
         public double Humidite { get; set; }
         
     }

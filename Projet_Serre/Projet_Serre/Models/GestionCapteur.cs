@@ -6,18 +6,31 @@ public class GestionCapteur {
 			return capteurEnso;
 		}
 	}
+
 	private Capteur anemometre;
 	public Capteur Anemometre {
 		get {
 			return anemometre;
 		}
 	}
-	private Capteur capteurTemperature;
-	public Capteur CapteurTemperature {
+
+	private Capteur capteurTemperatureInterieur;
+    public Capteur CapteurTemperatureInterieur
+    {
 		get {
-			return capteurTemperature;
+            return capteurTemperatureInterieur;
 		}
 	}
+
+    private Capteur capteurTemperatureExterieur;
+    public Capteur CapteurTemperatureExterieur
+    {
+        get
+        {
+            return capteurTemperatureExterieur;
+        }
+    }
+
 	private Capteur capteurHumidite;
 	public Capteur CapteurHumidite {
 		get {
@@ -28,10 +41,8 @@ public class GestionCapteur {
 	public GestionCapteur() {
         capteurEnso = new CapteurEnso();
         anemometre = new Anemometre();
-        capteurTemperature = new CapteurTemp();
+        capteurTemperatureInterieur = new CapteurTemp();
+        capteurTemperatureExterieur = new CapteurTemp();
         capteurHumidite = new CapteurHumi();
 	}
-
-	private Capteur[] capteur;
-
 }
