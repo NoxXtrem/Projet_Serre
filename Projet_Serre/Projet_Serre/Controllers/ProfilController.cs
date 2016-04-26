@@ -26,11 +26,10 @@ namespace Projet_Serre.Controllers
             );
             
 
-            Profil profilActuel = rs.GestionProfil.Selectionner(rs.IdProfil);
             ListProfilViewModel model = new ListProfilViewModel()
             {
-                NomProfilActuel = (profilActuel != null) ? profilActuel.Nom : null,
-                IdProfilActuel = (profilActuel != null) ? profilActuel.Id : 0,
+                NomProfilActuel = (rs.ProfilActuel != null) ? rs.ProfilActuel.Nom : null,
+                IdProfilActuel = (rs.ProfilActuel != null) ? rs.ProfilActuel.Id : 0,
                 Profils = liste ?? new List<ProfilViewModel>(),
             };
 
@@ -133,7 +132,7 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Select/5
         public ActionResult Select(int id)
         {
-            rs.IdProfil = id;
+            rs.ProfilActuel = rs.GestionProfil.Selectionner(id);
             return RedirectToAction("Index");
         }
     }

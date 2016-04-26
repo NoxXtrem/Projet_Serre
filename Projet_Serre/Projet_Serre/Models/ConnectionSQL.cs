@@ -169,12 +169,11 @@ namespace Projet_Serre.Models
                     Reglage reglage = new Reglage()
                     {
                         Id = msdr.GetInt32(0),
-                        Date = msdr.GetDateTime(1),
+                        Date = new TimeSpan(msdr.GetInt32(1),0,0,0,0),
                         Lumiere = msdr.GetDouble(2),
                         TemperatureInterieur = msdr.GetDouble(3),
                         Humidite = msdr.GetDouble(4),
                         Vent = msdr.GetDouble(5),
-
                     };
                     reglages.Add(reglage);
                 }
@@ -202,12 +201,11 @@ namespace Projet_Serre.Models
                     Reglage reglage = new Reglage()
                     {
                         Id = msdr.GetInt32(0),
-                        Date = msdr.GetDateTime(1),
+                        Date = new TimeSpan(msdr.GetInt32(1), 0, 0, 0, 0),
                         Lumiere = msdr.GetDouble(2),
                         TemperatureInterieur = msdr.GetDouble(3),
                         Humidite = msdr.GetDouble(4),
                         Vent = msdr.GetDouble(5),
-
                     };
                     reglages.Add(reglage);
                 }

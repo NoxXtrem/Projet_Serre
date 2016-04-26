@@ -16,14 +16,13 @@ namespace Projet_Serre.Controllers
             ApercuViewModel viewModel;
             try
             {
-                Profil p = rs.GestionProfil.Selectionner(rs.IdProfil);
-                Reglage r = rs.DernierReglage ?? new Reglage();
-                if (p != null)
+                Reglage r = rs.DernierReglage ?? rs.ProfilActuel.SelectionnerReglage(0, DateTime.Now) ?? new Reglage();
+                if (rs.ProfilActuel != null)
                 {
                     viewModel = new ApercuViewModel()
                     {
-                        NomProfilActuel = p.Nom,
-                        IdProfilActuel = p.Id,
+                        NomProfilActuel = rs.ProfilActuel.Nom,
+                        IdProfilActuel = rs.ProfilActuel.Id,
                         TemperatureInterieurCapteur = rs.GestionCapteur.CapteurTemperatureInterieur.Valeur,
                         TemperatureExterieurCapteur = rs.GestionCapteur.CapteurTemperatureExterieur.Valeur,
                         TemperatureInterieurProfil = r.TemperatureInterieur,
