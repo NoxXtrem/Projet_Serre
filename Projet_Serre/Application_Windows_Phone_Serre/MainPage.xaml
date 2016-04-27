@@ -56,6 +56,11 @@
             <Setter Property="Opacity" Value="0.85"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
+        <Style x:Key="styleOnglet" TargetType="Button">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
 
         <BitmapImage x:Key="Goutte" UriSource="Assets/GoutteEauLogo.png"/>
         <BitmapImage x:Key="Soleil" UriSource="Assets/SoleilLogo.png"/>
@@ -83,9 +88,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="buttonEtat" Grid.Column="0" HorizontalAlignment="Right" Content="Etat de la Serre" MinWidth="200" IsEnabled="False" Background="Gray"/>
-            <Button Name="buttonGestion" Grid.Column="1" HorizontalAlignment="Left" Content="Gestion de la Serre" MinWidth="200" Click="buttonGestion_Click" Background="Black"/>
+            <Button Name="buttonEtat" Grid.Column="0"  Content="Etat Serre" IsEnabled="False" Background="Gray" Style="{StaticResource styleOnglet}"/>
+            <Button Name="buttonGestion" Grid.Column="1" Content="Gestion Serre"  Click="buttonGestion_Click" Style="{StaticResource styleOnglet}"/>
+            <Button Name="buttonProfil" Grid.Column="2" Content="Gestion Profils" Click="buttonProfil_Click" Style="{StaticResource styleOnglet}"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -105,10 +112,10 @@
 
 
 
-            <Image Grid.Row="0" Grid.Column="1" Source="{StaticResource Goutte}"/>
-            <Image Grid.Row="0" Grid.Column="2" Source="{StaticResource Soleil}"/>
-            <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Vent}"/>
-            <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Temperature}"/>
+            <Image Grid.Row="0" Grid.Column="1" Source="{StaticResource Temperature}"/>
+            <Image Grid.Row="0" Grid.Column="2" Source="{StaticResource Goutte}"/>
+            <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Soleil}"/>
+            <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Vent}"/>
 
             <Ellipse Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
             <Ellipse Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
@@ -133,25 +140,27 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Rectangle Grid.Row="0" Fill="#FF5AB45A" Style="{StaticResource styleRectangle}"/>
+                <Rectangle Grid.Row="0" Fill="#FFDC5050" Style="{StaticResource styleRectangle}"/>
                 <StackPanel Grid.Row="0" Style="{StaticResource stylePanelCapteur}" >
-
-                    <TextBlock Text="Anémomètre" Style="{StaticResource styleTexteCapteur}"/>
-                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
-                </StackPanel>
-                <Rectangle Grid.Row="1" Fill="#FFDC5050" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="1" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur de Température" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
-                <Rectangle Grid.Row="2" Fill="#FF3278B9" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="2" Style="{StaticResource stylePanelCapteur}">
+                
+                <Rectangle Grid.Row="1" Fill="#FF3278B9" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="1" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur d'Humidité" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
-                <Rectangle Grid.Row="3" Fill="#FFF0A050" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="3" Style="{StaticResource stylePanelCapteur}">
+
+                <Rectangle Grid.Row="2" Fill="#FFF0A050" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="2" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Capteur d'Ensoleillement" Style="{StaticResource styleTexteCapteur}"/>
+                    <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
+                </StackPanel>
+
+                <Rectangle Grid.Row="3" Fill="#FF5AB45A" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="3" Style="{StaticResource stylePanelCapteur}">
+                    <TextBlock Text="Anémomètre" Style="{StaticResource styleTexteCapteur}"/>
                     <TextBlock Text="0" Style="{StaticResource styleValeur}"/>
                 </StackPanel>
             </Grid>

@@ -4,14 +4,14 @@
 }
 
 <div class="jumbotron text-center">
-    @if (Model.IdProfilActuel <= 0)
+    @if (Model.IdProfilActuel > 0)
     {
-        <h2>Aucun profil sélectionné.</h2>
-        <a class="btn btn-default" href="@Url.Action("Index", "Profil")">Choisir un profil</a>
+        <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
     }
     else
     {
-        <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
+        <h2>Aucun profil sélectionné.</h2>
+        <a class="btn btn-default" href="@Url.Action("Index", "Profil")">Choisir un profil</a>
     }
 </div>
 
@@ -19,14 +19,17 @@
     <div class="col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading container-fluid">
-                @if (!Model.NomProfilActuel.IsEmpty())
+                @if (Model.IdProfilActuel > 0)
                 {
                     <div class="row">
-                        <div class="col-md-6">
-                            Temperature mesurée :
+                        <div class="col-md-4">
+                            Temperature interieur mesurée :
                         </div>
-                        <div class="col-md-6">
-                            Temperature cible :
+                        <div class="col-md-4">
+                            Temperature interieur cible :
+                        </div>
+                        <div class="col-md-4">
+                            Temperature exterieur :
                         </div>
                     </div>
                 }
@@ -36,20 +39,23 @@
                 }
             </div>
             <div class="panel-body container-fluid">
-                @if (!Model.NomProfilActuel.IsEmpty())
+                @if (Model.IdProfilActuel > 0)
                 {
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="huge">@Model.TemperatureCapteur°</div>
+                        <div class="col-md-4">
+                            <div class="huge">@Model.TemperatureInterieurCapteur°</div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="huge">@Model.TemperatureProfil°</div>
+                        <div class="col-md-4">
+                            <div class="huge">@Model.TemperatureInterieurProfil°</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="huge">@Model.TemperatureExterieurCapteur°</div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <div class="huge">@Model.TemperatureCapteur°</div>
+                    <div class="huge">@Model.TemperatureInterieurCapteur°</div>
                 }
             </div>
         </div>
@@ -57,7 +63,7 @@
     <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading container-fluid">
-                @if (!Model.NomProfilActuel.IsEmpty())
+                @if (Model.IdProfilActuel > 0)
                 {
                     <div class="row">
                         <div class="col-md-6">
@@ -74,13 +80,12 @@
                 }
             </div>
             <div class="panel-body">
-                @if (!Model.NomProfilActuel.IsEmpty())
+                @if (Model.IdProfilActuel > 0)
                 {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="huge">@Model.HumiditeCapteur%</div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="huge">@Model.HumiditeProfil%</div>
                         </div>
@@ -93,6 +98,9 @@
             </div>
         </div>
     </div>
+
+    <div class="clearfix visible-lg-block visible-md-block"></div>
+
     <div class="col-md-6">
         <div class="panel panel-yellow">
             <div class="panel-heading">

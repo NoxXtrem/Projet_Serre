@@ -88,6 +88,9 @@
     <Compile Include="GererEtatSerre.xaml.cs">
       <DependentUpon>GererEtatSerre.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GererProfils.xaml.cs">
+      <DependentUpon>GererProfils.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ArrosageLogo.png" />
+    <Content Include="Assets\ChauffageLogo.png" />
+    <Content Include="Assets\ExtracteurLogo.png" />
     <Content Include="Assets\GoutteEauLogo.scale-240.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
@@ -107,6 +113,7 @@
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\TemperatureLogo.png" />
+    <Content Include="Assets\TrappeLogo.png" />
     <Content Include="Assets\VentLogo.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
@@ -116,6 +123,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="GererEtatSerre.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GererProfils.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

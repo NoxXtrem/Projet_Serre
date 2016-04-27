@@ -1,14 +1,16 @@
 using System;
 using System.Threading;
 public class RegulerSerre {
-	private int idProfil;
     private volatile bool _shouldStop;
-    public int IdProfil {
+
+    private Profil profilActuel;
+    public Profil ProfilActuel
+    {
 		get {
-			return idProfil;
+			return profilActuel;
 		}
 		set {
-			idProfil = value;
+			profilActuel = value;
 		}
 	}
     
@@ -58,12 +60,22 @@ public class RegulerSerre {
         {
             Console.WriteLine("worker thread: working...");
 
+            //TODO:
+            //Lire les capteurs
+            double lumiereMesure = gestionCapteur.CapteurEnso.Valeur;
+            //...
 
 
+            if (profilActuel != null)
+            {
+                //Choisir le bon réglage (modifier dernierReglage et dateDernierReglage)
+                Reglage r = profilActuel.SelectionnerReglage(lumiereMesure, DateTime.Now);
 
-
-
-
+                //Controller les actionneurs
+                gestionActionneur.Chauffage.Commande = r.TemperatureInterieur;
+                //...
+            }
+            
 
             Thread.Sleep(10000);
         }

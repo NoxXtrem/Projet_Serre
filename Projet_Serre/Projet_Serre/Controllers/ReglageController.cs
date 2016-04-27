@@ -21,11 +21,10 @@ namespace Projet_Serre.Controllers
             List<ReglageViewModel> liste = new List<ReglageViewModel>();
             p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
                 {
-                    Date = r.Date.ToShortDateString(),
+                    Date = r.Duree.Days,
                     IdReglage = r.Id,
                     Lumiere = r.Lumiere,
                     TemperatureInterieur = r.TemperatureInterieur,
-                    TemperatureExterieur = r.TemperatureExterieur,
                     Humidite = r.Humidite,
                 })
             );
@@ -65,10 +64,9 @@ namespace Projet_Serre.Controllers
                     Profil p = rs.GestionProfil.Selectionner(id);
                     Reglage r = new Reglage()
                     {
-                        Date = DateTime.Parse(model.Date),
+                        Duree = new TimeSpan(model.Date,0,0,0),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
                     };
                     p.AjouterReglage(r);
@@ -91,10 +89,9 @@ namespace Projet_Serre.Controllers
             {
                 IdReglage = id,
                 IdProfil = profil.Id,
-                Date = reglage.Date.ToShortDateString(),
+                Date = reglage.Duree.Days,
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
-                TemperatureExterieur = reglage.TemperatureExterieur,
                 Humidite = reglage.Humidite,
             };
 
@@ -113,10 +110,9 @@ namespace Projet_Serre.Controllers
                     Reglage reglage = new Reglage()
                     {
                         Id = model.IdReglage,
-                        Date = DateTime.Parse(model.Date),
+                        Duree = new TimeSpan(model.Date, 0, 0, 0),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        TemperatureExterieur = Math.Round(model.TemperatureExterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
                     };
                     profil.ModifierReglage(id, reglage);
@@ -139,10 +135,9 @@ namespace Projet_Serre.Controllers
             {
                 IdReglage = id,
                 IdProfil = profil.Id,
-                Date = reglage.Date.ToShortDateString(),
+                Date = reglage.Duree.Days,
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
-                TemperatureExterieur = reglage.TemperatureExterieur,
                 Humidite = reglage.Humidite,
             };
 
