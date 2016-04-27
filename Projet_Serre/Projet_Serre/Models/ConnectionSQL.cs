@@ -169,7 +169,7 @@ namespace Projet_Serre.Models
                     Reglage reglage = new Reglage()
                     {
                         Id = msdr.GetInt32(0),
-                        Date = new TimeSpan(msdr.GetInt32(1),0,0,0,0),
+                        Duree = new TimeSpan(msdr.GetInt32(1),0,0,0,0),
                         Lumiere = msdr.GetDouble(2),
                         TemperatureInterieur = msdr.GetDouble(3),
                         Humidite = msdr.GetDouble(4),
@@ -201,7 +201,7 @@ namespace Projet_Serre.Models
                     Reglage reglage = new Reglage()
                     {
                         Id = msdr.GetInt32(0),
-                        Date = new TimeSpan(msdr.GetInt32(1), 0, 0, 0, 0),
+                        Duree = new TimeSpan(msdr.GetInt32(1), 0, 0, 0, 0),
                         Lumiere = msdr.GetDouble(2),
                         TemperatureInterieur = msdr.GetDouble(3),
                         Humidite = msdr.GetDouble(4),
@@ -214,6 +214,56 @@ namespace Projet_Serre.Models
             }
 
             return reglages;
+        }
+
+        public int Profil_Actuel_Id()
+        {
+            int id_profil_actuel = 0;
+            string query = "SELECT id_profil FROM profil_actuel";
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+                id_profil_actuel = msdr.GetInt32(0);
+
+                connection.Close();
+            }
+
+
+                return id_profil_actuel;
+        }
+
+        public DateTime Profil_Actuel_Date()
+        {
+            DateTime date_profil_actuel = DateTime.Now;
+            string query = "SELECT date FROM profil_actuel";
+
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+                date_profil_actuel = msdr.GetDateTime(0);
+
+                connection.Close();
+            }
+
+                return date_profil_actuel;
+        }
+
+        public void Modifier_Profil_Actuel(int id_profil, DateTime date)
+        {
+            string query = "UPDATE profil_actuel SET id_profil='"+ id_profil +"', date='"+date.ToString("yyyy-MM-dd") +"'";
+
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+
+                connection.Close();
+            }
         }
     }
 }

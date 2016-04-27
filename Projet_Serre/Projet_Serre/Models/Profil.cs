@@ -55,7 +55,7 @@ public class Profil
     {
         Reglage temp = conditions.Single(r => r.Id == idReglage);
         temp.Humidite = reglage.Humidite;
-        temp.Date = reglage.Date;
+        temp.Duree = reglage.Duree;
         temp.Lumiere = reglage.Lumiere;
         temp.TemperatureInterieur = reglage.TemperatureInterieur;
         temp.Vent = reglage.Vent;
@@ -81,7 +81,7 @@ public class Profil
     public Reglage SelectionnerReglage(double lumiere, DateTime dateDeDebut)
     {
         //Choisir en fonction de la date puis de la lumière
-        return conditions.Where(r => r.Date >= (DateTime.Now - dateDeDebut) && r.Lumiere >= lumiere).OrderBy(r => r.Date).ThenBy(r => r.Lumiere).First();
+        return conditions.Where(r => r.Duree >= (DateTime.Now - dateDeDebut) && r.Lumiere >= lumiere).OrderBy(r => r.Duree).ThenBy(r => r.Lumiere).First();
     }
     public bool MajReglage()
     {

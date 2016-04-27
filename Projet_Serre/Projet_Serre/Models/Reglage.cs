@@ -11,14 +11,14 @@ public class Reglage {
             id = value;
         }
     }
-	private TimeSpan date;
-    public TimeSpan Date
+	private TimeSpan duree;
+    public TimeSpan Duree
     {
 		get {
-			return date;
+			return duree;
 		}
 		set {
-			date = value;
+			duree = value;
 		}
 	}
 	private double lumiere;
@@ -65,7 +65,7 @@ public class Reglage {
 	}
 
 	public Reglage(TimeSpan date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, double vent) {
-        this.date = date;
+        this.duree = date;
         this.lumiere = lumiere;
         this.temperatureInterieur = temperatureInterieur;
         this.humidite = humidite;
