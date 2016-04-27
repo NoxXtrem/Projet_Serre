@@ -42,7 +42,7 @@ namespace Projet_Serre
            // profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
 
             gestionProfil.MajProfil();
-            //profil.MajReglage();
+            regulerSerre.MajProfilActuel();
 
             Thread regulerThread = new Thread(regulerSerre.Reguler);
             regulerThread.Start();

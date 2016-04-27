@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Application_Reguler_Serre</RootNamespace>
     <AssemblyName>Application_Reguler_Serre</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,9 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\Chauffage.cs" />
+    <Compile Include="Actionneurs\Extracteurs.cs" />
+    <Compile Include="Actionneurs\GestionActionneur.cs" />
+    <Compile Include="Actionneurs\Trappe.cs" />
+    <Compile Include="Actionneurs\Vannes.cs" />
+    <Compile Include="Capteurs\Anemometre.cs" />
+    <Compile Include="Capteurs\Capteur.cs" />
+    <Compile Include="Capteurs\CapteurEnso.cs" />
+    <Compile Include="Capteurs\CapteurHumi.cs" />
+    <Compile Include="Capteurs\CapteurTemp.cs" />
+    <Compile Include="Capteurs\GestionCapteur.cs" />
     <Compile Include="ConnectionSQL.cs" />
+    <Compile Include="Profil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reglage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

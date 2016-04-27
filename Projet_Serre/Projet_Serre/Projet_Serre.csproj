@@ -207,28 +207,18 @@
     <Compile Include="API\API_Reglage.cs" />
     <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Controllers\ReglageController.cs" />
-    <Compile Include="Models\Actionneur.cs" />
-    <Compile Include="Models\Anemometre.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Models\ApercuViewModel.cs" />
-    <Compile Include="Models\Capteur.cs" />
-    <Compile Include="Models\CapteurEnso.cs" />
-    <Compile Include="Models\CapteurHumi.cs" />
-    <Compile Include="Models\CapteurTemp.cs" />
-    <Compile Include="Models\Chauffage.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\ConnectionProfil.cs" />
     <Compile Include="Models\ConnectionReglage.cs" />
     <Compile Include="Models\ConnectionSQL.cs" />
-    <Compile Include="Models\Extracteurs.cs" />
-    <Compile Include="Models\GestionActionneur.cs" />
-    <Compile Include="Models\GestionCapteur.cs" />
     <Compile Include="Models\GestionProfil.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -243,8 +233,6 @@
     <Compile Include="Models\Reglage.cs" />
     <Compile Include="Models\RegulerSerre.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Models\Trappe.cs" />
-    <Compile Include="Models\Vannes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

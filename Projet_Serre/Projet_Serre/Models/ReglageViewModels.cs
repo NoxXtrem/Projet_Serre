@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,9 +18,13 @@ namespace Projet_Serre.Models
         [Key]
         public int IdReglage { get; set; }
         public int IdProfil { get; set; }
-        public int Date { get; set; }
+        [DisplayName("Durée")]
+        public int Duree { get; set; }
+        [DisplayName("Lumière")]
         public double Lumiere { get; set; }
+        [DisplayName("Température")]
         public double TemperatureInterieur { get; set; }
+        [DisplayName("Humidité")]
         public double Humidite { get; set; }
         
     }

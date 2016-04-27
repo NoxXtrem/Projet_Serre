@@ -90,10 +90,16 @@ namespace Application_Reguler_Serre
             }
         }
 
-        public void AjoutHistorique()
+        public void AjoutHistorique(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, int idProfil)
         {
             string query = "INSERT INTO historique (date,lumiere,temperatureInterieur,temperatureExterieur,humidite,id_profil) VALUES('"
-                + p.Date.ToString("yyyy-MM-dd") + "','" + p.Lumiere.ToString("F", CultureInfo.InvariantCulture) + "','" + p.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture) + "','" + p.TemperatureExterieur.ToString("F", CultureInfo.InvariantCulture) + "','" + p.Humidite.ToString("F", CultureInfo.InvariantCulture) + "')";
+                + date + "','" 
+                + lumiere.ToString("F", CultureInfo.InvariantCulture) 
+                + "','" + temperatureInterieur.ToString("F", CultureInfo.InvariantCulture) 
+                + "','" + temperatureExterieur.ToString("F", CultureInfo.InvariantCulture) 
+                + "','" + humidite.ToString("F", CultureInfo.InvariantCulture)
+                + "','" + idProfil
+                + "')";
 
             SqlConnection connection = OuvrirConnection();
             if (connection != null)

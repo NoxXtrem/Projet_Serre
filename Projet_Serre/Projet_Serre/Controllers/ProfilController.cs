@@ -132,7 +132,7 @@ namespace Projet_Serre.Controllers
         // GET: Profil/Select/5
         public ActionResult Select(int id)
         {
-            rs.ProfilActuel = rs.GestionProfil.Selectionner(id);
+            rs.ModifierProfilActuel(id, DateTime.Now);
             return RedirectToAction("Index");
         }
     }
