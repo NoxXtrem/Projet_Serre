@@ -30,13 +30,11 @@ namespace Application_Reguler_Serre
                     DateTime dateDebut = DateTime.Now;
                     //...
 
-                    //Enregistrer les valeurs dans la BDD
-                    csql.AjoutHistorique(DateTime.Now, lumiereMesure, 0,0,0, p.Id);
-
+                    Reglage r = null;
                     if (p != null)
                     {
                         //Choisir le bon réglage
-                        Reglage r = p.SelectionnerReglage(lumiereMesure, dateDebut);
+                        r = p.SelectionnerReglage(lumiereMesure, dateDebut);
 
                         //Enregistrer le dernier réglage dans la BDD
                         //...
@@ -45,6 +43,9 @@ namespace Application_Reguler_Serre
                         ga.Chauffage.Commande = 25; //r.TemperatureInterieur;
                         //...
                     }
+
+                    //Enregistrer les valeurs dans la BDD
+                    csql.AjoutHistorique(DateTime.Now, lumiereMesure, 0, 0, 0, p != null ? p.Id : 0, r != null ? r.Id : 0);
                     
                 }
                 System.Threading.Thread.Sleep(60000);

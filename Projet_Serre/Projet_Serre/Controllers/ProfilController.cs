@@ -129,11 +129,19 @@ namespace Projet_Serre.Controllers
             }
         }
 
-        // GET: Profil/Select/5
-        public ActionResult Select(int id)
+        // POST: Profil/Select/5
+        [HttpPost]
+        public ActionResult Select(int id, string date)
         {
-            rs.ModifierProfilActuel(id, DateTime.Now);
-            return RedirectToAction("Index");
+            try
+            {
+                rs.ModifierProfilActuel(id, DateTime.Parse(date));
+                return Content(Boolean.TrueString);
+            }
+            catch (Exception)
+            {
+                return Content(Boolean.FalseString);
+            }
         }
     }
 }

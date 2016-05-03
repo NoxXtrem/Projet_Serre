@@ -16,7 +16,8 @@ namespace Projet_Serre.Controllers
             ApercuViewModel viewModel;
             try
             {
-                Reglage r = rs.DernierReglage ?? rs.ProfilActuel.SelectionnerReglage(0, DateTime.Now) ?? new Reglage();
+                //TODO: Récupérer le dernier réglage + date de début dans la BDD
+                Reglage r = rs.ProfilActuel.SelectionnerReglage(0, DateTime.Now) ?? new Reglage();
                 if (rs.ProfilActuel != null)
                 {
                     //TODO: Prendre les dernières valeurs des capteurs depuis la BDD

@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Profils";
 }
+
 <div class="jumbotron text-center">
     @if (Model.IdProfilActuel <= 0)
     {
@@ -26,7 +27,7 @@
             <tr>
                 <th><a href="@Url.Action("Details", "Profil", new { p.Id })">@p.Nom</a></th>
                 <th>
-                    <a class="btn btn-primary btn-xs" href="@Url.Action("Select", "Profil", new { p.Id })">Selectionner</a>
+                    <a class="btn btn-primary btn-xs select-link" href="@Url.Action("Select", "Profil", new { p.Id })">Selectionner</a>
                     <a class="btn btn-warning btn-xs" href="@Url.Action("Edit", "Profil", new { p.Id })">Renommer</a>
                     <a class="btn btn-danger btn-xs" href="@Url.Action("Delete", "Profil", new { p.Id })">Supprimer</a>
                 </th>
@@ -35,3 +36,43 @@
     </tbody>
 </table>
 <a class="btn btn-success" href="@Url.Action("Create", "Profil")">Ajouter un profil</a>
+
+<div id="select-dialog" title="Confirmation">
+    <p>Sélectionnez la date de semis : <input type="text" id="datepicker"></p>
+</div>		
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(function () {
+        var selectLinkObj;
+        $(".select-link").click(function () {
+            selectLinkObj = $(this);
+            $("#select-dialog").dialog('open');
+            return false;
+        });
+
+        $("#datepicker").datepicker();
+        $('#select-dialog').dialog({
+            autoOpen: false, width: 400, resizable: false, modal: true,
+            buttons: {
+                "Continuer": function () {
+                    $.post(selectLinkObj[0].href,
+                        {date:$("#datepicker").val()},
+                        function (status) {
+                        if (status == '@Boolean.TrueString') {
+                            location.reload();
+                        }
+                        else {
+                            //
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                "Annuler": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+</script>

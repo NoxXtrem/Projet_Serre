@@ -91,6 +91,7 @@
     <Compile Include="GererProfils.xaml.cs">
       <DependentUpon>GererProfils.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConnexionServeur.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
