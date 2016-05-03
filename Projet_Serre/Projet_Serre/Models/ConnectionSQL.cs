@@ -225,6 +225,7 @@ namespace Projet_Serre.Models
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
+
                 msdr.Read();
                 id_profil_actuel = msdr.GetInt32(0);
 
