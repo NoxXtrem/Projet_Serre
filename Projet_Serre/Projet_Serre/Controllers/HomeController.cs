@@ -17,7 +17,17 @@ namespace Projet_Serre.Controllers
             try
             {
                 //TODO: Récupérer le dernier réglage + date de début dans la BDD
-                Reglage r = rs.ProfilActuel.SelectionnerReglage(0, DateTime.Now) ?? new Reglage();
+                ConnectionSQL csql = new ConnectionSQL();
+                LigneHistorique data = csql.DerniereEntreeHistorique();
+
+                Reglage r = new Reglage();
+                try
+                {
+                    r = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).Select(re => re.Id == data.Id_reglage);
+                }
+                catch (Exception)
+                {
+                }
                 if (rs.ProfilActuel != null)
                 {
                     //TODO: Prendre les dernières valeurs des capteurs depuis la BDD
@@ -25,12 +35,12 @@ namespace Projet_Serre.Controllers
                     {
                         NomProfilActuel = rs.ProfilActuel.Nom,
                         IdProfilActuel = rs.ProfilActuel.Id,
-                        TemperatureInterieurCapteur = 0,
-                        TemperatureExterieurCapteur = 0,
+                        TemperatureInterieurCapteur = data.TemperatureInterieur,
+                        TemperatureExterieurCapteur = data.TemperatureExterieur,
                         TemperatureInterieurProfil = r.TemperatureInterieur,
-                        HumiditeCapteur = 0,
+                        HumiditeCapteur = data.Humidite,
                         HumiditeProfil = r.Humidite,
-                        LumiereCapteur = 0,
+                        LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
                         DateDerniereMaJ = rs.DateDernierReglage.ToString(),
                     };
@@ -40,10 +50,10 @@ namespace Projet_Serre.Controllers
                     viewModel = new ApercuViewModel()
                     {
                         IdProfilActuel = 0,
-                        TemperatureInterieurCapteur = 0,
-                        TemperatureExterieurCapteur = 0,
-                        HumiditeCapteur = 0,
-                        LumiereCapteur = 0,
+                        TemperatureInterieurCapteur = data.TemperatureInterieur,
+                        TemperatureExterieurCapteur = data.TemperatureExterieur,
+                        HumiditeCapteur = data.Humidite,
+                        LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
                         DateDerniereMaJ = rs.DateDernierReglage.ToString(),
                     };
