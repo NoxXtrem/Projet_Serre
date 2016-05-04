@@ -16,7 +16,6 @@ namespace Projet_Serre.Controllers
             ApercuViewModel viewModel;
             try
             {
-                //TODO: Récupérer le dernier réglage + date de début dans la BDD
                 ConnectionSQL csql = new ConnectionSQL();
                 LigneHistorique data = csql.DerniereEntreeHistorique();
 
@@ -26,7 +25,6 @@ namespace Projet_Serre.Controllers
                 
                 if (rs.ProfilActuel != null)
                 {
-                    //TODO: Prendre les dernières valeurs des capteurs depuis la BDD
                     viewModel = new ApercuViewModel()
                     {
                         NomProfilActuel = rs.ProfilActuel.Nom,
@@ -38,7 +36,7 @@ namespace Projet_Serre.Controllers
                         HumiditeProfil = reglage.Humidite,
                         LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
-                        DateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                        DateDerniereMaJ = data.Date.ToString(),
                     };
                 }
                 else
