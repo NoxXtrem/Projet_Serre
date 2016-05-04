@@ -20,14 +20,10 @@ namespace Projet_Serre.Controllers
                 ConnectionSQL csql = new ConnectionSQL();
                 LigneHistorique data = csql.DerniereEntreeHistorique();
 
-                Reglage r = new Reglage();
-                try
-                {
-                    r = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).Select(re => re.Id == data.Id_reglage);
-                }
-                catch (Exception)
-                {
-                }
+                Profil profil = rs.GestionProfil.Selectionner(data.Id_profil) ?? new Profil();
+                Reglage reglage = profil.SelectionnerReglage(data.Id_reglage) ?? new Reglage();
+                //Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(re => re.Id == data.Id_reglage) ?? new Reglage();
+                
                 if (rs.ProfilActuel != null)
                 {
                     //TODO: Prendre les dernières valeurs des capteurs depuis la BDD
@@ -37,9 +33,9 @@ namespace Projet_Serre.Controllers
                         IdProfilActuel = rs.ProfilActuel.Id,
                         TemperatureInterieurCapteur = data.TemperatureInterieur,
                         TemperatureExterieurCapteur = data.TemperatureExterieur,
-                        TemperatureInterieurProfil = r.TemperatureInterieur,
+                        TemperatureInterieurProfil = reglage.TemperatureInterieur,
                         HumiditeCapteur = data.Humidite,
-                        HumiditeProfil = r.Humidite,
+                        HumiditeProfil = reglage.Humidite,
                         LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
                         DateDerniereMaJ = rs.DateDernierReglage.ToString(),
