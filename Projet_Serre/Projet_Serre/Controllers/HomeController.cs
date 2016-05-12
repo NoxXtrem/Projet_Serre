@@ -29,6 +29,7 @@ namespace Projet_Serre.Controllers
                     {
                         NomProfilActuel = rs.ProfilActuel.Nom,
                         IdProfilActuel = rs.ProfilActuel.Id,
+                        NombreDeJours = (DateTime.Now - rs.DateDeDebut).Days,
                         TemperatureInterieurCapteur = data.TemperatureInterieur,
                         TemperatureExterieurCapteur = data.TemperatureExterieur,
                         TemperatureInterieurProfil = reglage.TemperatureInterieur,
