@@ -76,7 +76,7 @@ public class Profil
 	}
 	public Reglage SelectionnerReglage(int idReglage)
     {
-        return conditions.Single(r => r.Id == idReglage);
+        return conditions.SingleOrDefault(r => r.Id == idReglage);
 	}
     public Reglage SelectionnerReglage(double lumiere, DateTime dateDeDebut)
     {

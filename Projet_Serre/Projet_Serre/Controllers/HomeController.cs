@@ -16,23 +16,28 @@ namespace Projet_Serre.Controllers
             ApercuViewModel viewModel;
             try
             {
-                //TODO: Récupérer le dernier réglage + date de début dans la BDD
-                Reglage r = rs.ProfilActuel.SelectionnerReglage(0, DateTime.Now) ?? new Reglage();
+                ConnectionSQL csql = new ConnectionSQL();
+                LigneHistorique data = csql.DerniereEntreeHistorique();
+
+                Profil profil = rs.GestionProfil.Selectionner(data.Id_profil) ?? new Profil();
+                Reglage reglage = profil.SelectionnerReglage(data.Id_reglage) ?? new Reglage();
+                //Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(re => re.Id == data.Id_reglage) ?? new Reglage();
+                
                 if (rs.ProfilActuel != null)
                 {
-                    //TODO: Prendre les dernières valeurs des capteurs depuis la BDD
                     viewModel = new ApercuViewModel()
                     {
                         NomProfilActuel = rs.ProfilActuel.Nom,
                         IdProfilActuel = rs.ProfilActuel.Id,
-                        TemperatureInterieurCapteur = 0,
-                        TemperatureExterieurCapteur = 0,
-                        TemperatureInterieurProfil = r.TemperatureInterieur,
-                        HumiditeCapteur = 0,
-                        HumiditeProfil = r.Humidite,
-                        LumiereCapteur = 0,
+                        NombreDeJours = (DateTime.Now - rs.DateDeDebut).Days,
+                        TemperatureInterieurCapteur = data.TemperatureInterieur,
+                        TemperatureExterieurCapteur = data.TemperatureExterieur,
+                        TemperatureInterieurProfil = reglage.TemperatureInterieur,
+                        HumiditeCapteur = data.Humidite,
+                        HumiditeProfil = reglage.Humidite,
+                        LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
-                        DateDerniereMaJ = rs.DateDernierReglage.ToString(),
+                        DateDerniereMaJ = data.Date.ToString(),
                     };
                 }
                 else
@@ -40,10 +45,10 @@ namespace Projet_Serre.Controllers
                     viewModel = new ApercuViewModel()
                     {
                         IdProfilActuel = 0,
-                        TemperatureInterieurCapteur = 0,
-                        TemperatureExterieurCapteur = 0,
-                        HumiditeCapteur = 0,
-                        LumiereCapteur = 0,
+                        TemperatureInterieurCapteur = data.TemperatureInterieur,
+                        TemperatureExterieurCapteur = data.TemperatureExterieur,
+                        HumiditeCapteur = data.Humidite,
+                        LumiereCapteur = data.Lumiere,
                         VentCapteur = 0,
                         DateDerniereMaJ = rs.DateDernierReglage.ToString(),
                     };

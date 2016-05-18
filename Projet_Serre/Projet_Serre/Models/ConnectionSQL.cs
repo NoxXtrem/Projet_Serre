@@ -271,7 +271,7 @@ namespace Projet_Serre.Models
 
         public LigneHistorique DerniereEntreeHistorique()
         {
-            LigneHistorique temp = new LigneHistorique();
+            LigneHistorique temp = null;
             string query = "SELECT * FROM historique ORDER BY date DESC LIMIT 1";
 
             MySqlConnection connection = OuvrirConnection();
@@ -279,7 +279,18 @@ namespace Projet_Serre.Models
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
-
+                msdr.Read();
+                temp = new LigneHistorique()
+                {
+                    Id = msdr.GetInt32(0),
+                    Date = msdr.GetDateTime(1),
+                    Lumiere = msdr.GetDouble(2),
+                    TemperatureInterieur = msdr.GetDouble(3),
+                    TemperatureExterieur = msdr.GetDouble(4),
+                    Humidite = msdr.GetDouble(5),
+                    Id_profil = msdr.GetInt32(6),
+                    Id_reglage = msdr.GetInt32(7),
+                };
                 connection.Close();
             }
             return temp;
