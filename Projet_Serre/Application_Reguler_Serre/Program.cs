@@ -26,15 +26,20 @@ namespace Application_Reguler_Serre
                     //...
 
                     //Lire le profil actuel et sa date de début dans la BDD
-                    Profil p = null;
+                    Reglage r = null;
                     DateTime dateDebut = DateTime.Now;
+
+                    Profil p = null;
+                    int id_profilActuel = csql.Profil_Actuel_Id();
+                    r = csql.SelectionnerReglage(id_profilActuel, lumiereMesure, dateDebut);
+                    dateDebut = csql.Profil_Actuel_Date();
+
                     //...
 
-                    Reglage r = null;
-                    if (p != null)
+                    if (r != null)
                     {
                         //Choisir le bon réglage
-                        r = p.SelectionnerReglage(lumiereMesure, dateDebut);
+                       
 
                         //Enregistrer le dernier réglage dans la BDD
                         //...
