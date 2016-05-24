@@ -12,6 +12,8 @@ public class Capteur {
 	private double valeur;
 	public double Valeur {
 		get {
+
+            // récupération valeur phidget
 			return valeur;
 		}
 	}
