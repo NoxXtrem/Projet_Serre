@@ -18,21 +18,10 @@ namespace Projet_Serre.Controllers
         public ActionResult Index(int id)
         {
             Profil p = rs.GestionProfil.Selectionner(id);
-            List<ReglageViewModel> liste = new List<ReglageViewModel>();
-            p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
-                {
-                    Duree = r.Duree.Days,
-                    IdReglage = r.Id,
-                    Lumiere = r.Lumiere,
-                    TemperatureInterieur = r.TemperatureInterieur,
-                    Humidite = r.Humidite,
-                })
-            );
-
-            ListReglageViewModel model = new ListReglageViewModel(){
+            ListReglageViewModel model = new ListReglageViewModel(p.ListerReglage())
+            {
                 IdProfil = id,
                 NomProfil = p.Nom,
-                Reglages = liste,
             };
             return View(model);
         }

@@ -12,6 +12,14 @@ namespace Projet_Serre.Models
         public int IdProfil { get; set; }
         public string NomProfil { get; set; }
         public List<ReglageViewModel> Reglages { get; set; }
+
+        public ListReglageViewModel() { }
+        public ListReglageViewModel(List<Reglage> list)
+        {
+            Reglages = new List<ReglageViewModel>();
+            list.ForEach(r => Reglages.Add(new ReglageViewModel(r)));
+        }
+
     }
     public class ReglageViewModel
     {
@@ -27,5 +35,14 @@ namespace Projet_Serre.Models
         [DisplayName("Humidité")]
         public double Humidite { get; set; }
         
+        public ReglageViewModel() { }
+        public ReglageViewModel(Reglage r)
+        {
+            this.Duree = r.Duree.Days;
+            this.IdReglage = r.Id;
+            this.Lumiere = r.Lumiere;
+            this.TemperatureInterieur = r.TemperatureInterieur;
+            this.Humidite = r.Humidite;
+        }
     }
 }
