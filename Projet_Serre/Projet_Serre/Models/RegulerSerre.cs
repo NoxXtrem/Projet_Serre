@@ -1,7 +1,11 @@
+using Projet_Serre;
+using Projet_Serre.Models;
 using System;
 using System.Threading;
 public class RegulerSerre {
     private volatile bool _shouldStop;
+    GestionProfil gp = Startup.GestionProfil;
+    ConnectionSQL csql = new ConnectionSQL();
 
     private Profil profilActuel;
     public Profil ProfilActuel
@@ -9,10 +13,17 @@ public class RegulerSerre {
 		get {
 			return profilActuel;
 		}
-		set {
+		private set {
 			profilActuel = value;
 		}
 	}
+
+    private DateTime dateDeDebut;
+    public DateTime DateDeDebut
+    {
+        get { return dateDeDebut; }
+        private set { dateDeDebut = value; }
+    }
     
     private Reglage dernierReglage;
     public Reglage DernierReglage
@@ -28,20 +39,6 @@ public class RegulerSerre {
         private set { dateDernierReglage = value; }
     }
 
-    private GestionCapteur gestionCapteur;
-    public GestionCapteur GestionCapteur
-    {
-        get { return gestionCapteur; }
-        private set { gestionCapteur = value; }
-    }
-
-    private GestionActionneur gestionActionneur;
-    public GestionActionneur GestionActionneur
-    {
-        get { return gestionActionneur; }
-        private set { gestionActionneur = value; }
-    }
-
     private GestionProfil gestionProfil;
     public GestionProfil GestionProfil
     {
@@ -51,8 +48,6 @@ public class RegulerSerre {
 
 	public RegulerSerre(GestionProfil gestionProfil) {
         this.gestionProfil = gestionProfil;
-        this.gestionCapteur = new GestionCapteur();
-        this.gestionActionneur = new GestionActionneur();
 	}
 
 	public void Reguler() {
@@ -62,17 +57,17 @@ public class RegulerSerre {
 
             //TODO:
             //Lire les capteurs
-            double lumiereMesure = gestionCapteur.CapteurEnso.Valeur;
+            //double lumiereMesure = gestionCapteur.CapteurEnso.Valeur;
             //...
 
 
             if (profilActuel != null)
             {
                 //Choisir le bon réglage (modifier dernierReglage et dateDernierReglage)
-                Reglage r = profilActuel.SelectionnerReglage(lumiereMesure, DateTime.Now);
+                //Reglage r = profilActuel.SelectionnerReglage(lumiereMesure, DateTime.Now);
 
                 //Controller les actionneurs
-                gestionActionneur.Chauffage.Commande = r.TemperatureInterieur;
+                //gestionActionneur.Chauffage.Commande = r.TemperatureInterieur;
                 //...
             }
             
@@ -87,5 +82,16 @@ public class RegulerSerre {
         _shouldStop = true;
     }
 
+    public void MajProfilActuel()
+    {
+        profilActuel = gp.Selectionner(csql.Profil_Actuel_Id());
+        dateDeDebut = csql.Profil_Actuel_Date();
+    }
 
+    public void ModifierProfilActuel(int idProfil, DateTime DateDeDebut)
+    {
+        profilActuel = gp.Selectionner(idProfil);
+        dateDeDebut = DateDeDebut;
+        csql.Modifier_Profil_Actuel(idProfil, dateDeDebut);
+    }
 }

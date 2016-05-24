@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
-    //TODO: Un selecteur de date pour le champ Date
+    //TODO: Un selecteur de date pour le champ Duree
     //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
@@ -21,7 +21,7 @@ namespace Projet_Serre.Controllers
             List<ReglageViewModel> liste = new List<ReglageViewModel>();
             p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
                 {
-                    Date = r.Duree.Days,
+                    Duree = r.Duree.Days,
                     IdReglage = r.Id,
                     Lumiere = r.Lumiere,
                     TemperatureInterieur = r.TemperatureInterieur,
@@ -64,7 +64,7 @@ namespace Projet_Serre.Controllers
                     Profil p = rs.GestionProfil.Selectionner(id);
                     Reglage r = new Reglage()
                     {
-                        Duree = new TimeSpan(model.Date,0,0,0),
+                        Duree = new TimeSpan(model.Duree,0,0,0),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
@@ -89,7 +89,7 @@ namespace Projet_Serre.Controllers
             {
                 IdReglage = id,
                 IdProfil = profil.Id,
-                Date = reglage.Duree.Days,
+                Duree = reglage.Duree.Days,
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
                 Humidite = reglage.Humidite,
@@ -110,7 +110,7 @@ namespace Projet_Serre.Controllers
                     Reglage reglage = new Reglage()
                     {
                         Id = model.IdReglage,
-                        Duree = new TimeSpan(model.Date, 0, 0, 0),
+                        Duree = new TimeSpan(model.Duree, 0, 0, 0),
                         Lumiere = Math.Round(model.Lumiere,2),
                         TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
                         Humidite = Math.Round(model.Humidite,2),
@@ -135,7 +135,7 @@ namespace Projet_Serre.Controllers
             {
                 IdReglage = id,
                 IdProfil = profil.Id,
-                Date = reglage.Duree.Days,
+                Duree = reglage.Duree.Days,
                 Lumiere = reglage.Lumiere,
                 TemperatureInterieur = reglage.TemperatureInterieur,
                 Humidite = reglage.Humidite,
