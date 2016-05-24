@@ -13,6 +13,8 @@ namespace Projet_Serre.Models
         private string utilisateur;
         private string motDePasse;
 
+
+
         public ConnectionSQL()
         {
         }
@@ -300,7 +302,7 @@ namespace Projet_Serre.Models
         {
             List<LigneHistorique> ligneHistorique = null;
             
-            string query = "SELECT * FROM historique ORDER BY date DESC LIMIT '"+nbEntrer+"'";
+            string query = "SELECT * FROM historique ORDER BY date DESC LIMIT " + nbEntrer;
 
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)
