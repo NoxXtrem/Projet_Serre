@@ -62,7 +62,7 @@ namespace Application_Reguler_Serre
         {
 
             string query = "SELECT reponse FROM reguler ";
-            int reponse = 0;
+            int reponse = 1;
             SqlConnection connection = OuvrirConnection();
             if (connection != null)
             {

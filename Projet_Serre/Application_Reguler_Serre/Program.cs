@@ -14,10 +14,15 @@ namespace Application_Reguler_Serre
         static void Main(string[] args)
         {
             int reponse;
+            double luminosité;
+            double température;
+            double humidité;
+
             ConnectionSQL CSQL = new ConnectionSQL();
             while (true)
             {
-                reponse = CSQL.Reponse();
+                
+              reponse = CSQL.Reponse();
 
                 if (reponse == 1)
                 {
