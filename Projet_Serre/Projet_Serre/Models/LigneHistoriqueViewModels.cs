@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -53,13 +54,12 @@ namespace Projet_Serre.Models
                 return s.Append("]").ToString();
             }
         }
-
         public string HumiditeData
         {
             get
             {
                 StringBuilder s = new StringBuilder("[");
-                Historique.ForEach(lh => s.Append(lh.Humidite).Append(","));
+                Historique.ForEach(lh => s.Append(lh.Humidite.ToString("F", CultureInfo.InvariantCulture)).Append(","));
                 return s.Append("]").ToString();
             }
         }
@@ -68,11 +68,19 @@ namespace Projet_Serre.Models
             get
             {
                 StringBuilder s = new StringBuilder("[");
-                Historique.ForEach(lh => s.Append(lh.TemperatureInterieur).Append(","));
+                Historique.ForEach(lh => s.Append(lh.TemperatureInterieur.ToString("F", CultureInfo.InvariantCulture)).Append(","));
                 return s.Append("]").ToString();
             }
         }
-
-        //TODO: Retourner les data des autre champs
+        public string TemperatureExterieurData
+        {
+            get
+            {
+                StringBuilder s = new StringBuilder("[");
+                Historique.ForEach(lh => s.Append(lh.TemperatureExterieur.ToString("F", CultureInfo.InvariantCulture)).Append(","));
+                return s.Append("]").ToString();
+            }
+        }
+        
     }
 }
