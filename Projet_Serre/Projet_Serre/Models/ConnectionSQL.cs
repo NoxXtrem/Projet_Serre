@@ -22,13 +22,9 @@ namespace Projet_Serre.Models
         private MySqlConnection Initialisation()
         {
 
-            serveur = "localhost";
-            baseDeDonnée = "projet_serre";
-            utilisateur = "projet";
-            motDePasse = "serre";
+            
             string connectionString;
-            connectionString =  "SERVER=" + serveur + ";" + "DATABASE=" +
-            baseDeDonnée + ";" + "UID=" + utilisateur + ";" + "PASSWORD=" + motDePasse + ";"+ "Convert Zero Datetime = True;"; 
+            connectionString =  System.Configuration.ConfigurationManager.ConnectionStrings["serveur"].ConnectionString;
             
             MySqlConnection connection = new MySqlConnection(connectionString);
 
