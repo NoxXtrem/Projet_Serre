@@ -37,9 +37,9 @@
 </table>
 <a class="btn btn-success" href="@Url.Action("Create", "Profil")">Ajouter un profil</a>
 
-<div id="select-dialog" title="Confirmation">
+<div id="select-dialog" title="Confirmation" hidden>
     <p>Sélectionnez la date de semis : <input type="text" id="datepicker"></p>
-</div>		
+</div>
 
 @section scripts{
     <script>
@@ -70,7 +70,7 @@
                 $("#select-dialog").dialog('open');
                 return false;
             });
-
+            
             $.datepicker.setDefaults(
               $.extend(
                 { 'dateFormat': 'dd/mm/yy' },

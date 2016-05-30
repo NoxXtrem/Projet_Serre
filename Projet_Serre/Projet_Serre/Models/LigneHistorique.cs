@@ -11,101 +11,69 @@ namespace Projet_Serre.Models
         public int Id
         {
             get
-            {
-                return id;
-            }
+            { return id; }
             set
-            {
-                id = value;
-            }
+            { id = value; }
         }
         private DateTime date;
         public DateTime Date
         {
             get
-            {
-                return date;
-            }
+            { return date; }
             set
-            {
-                date = value;
-            }
+            { date = value; }
         }
         private double lumiere;
         public double Lumiere
         {
             get
-            {
-                return lumiere;
-            }
+            { return lumiere; }
             set
-            {
-                lumiere = value;
-            }
+            { lumiere = value; }
         }
         private double temperatureInterieur;
         public double TemperatureInterieur
         {
             get
-            {
-                return temperatureInterieur;
-            }
+            { return temperatureInterieur; }
             set
-            {
-                temperatureInterieur = value;
-            }
+            { temperatureInterieur = value; }
         }
 
         private double temperatureExterieur;
         public double TemperatureExterieur
         {
             get
-            {
-                return temperatureExterieur;
-            }
+            { return temperatureExterieur; }
             set
-            {
-                temperatureExterieur = value;
-            }
+            { temperatureExterieur = value; }
         }
 
         private double humidite;
         public double Humidite
         {
             get
-            {
-                return humidite;
-            }
+            { return humidite; }
             set
-            {
-                humidite = value;
-            }
+            { humidite = value; }
         }
 
         private int id_profil;
         public int Id_profil
         {
             get
-            {
-                return id_profil;
-            }
+            { return id_profil; }
             set
-            {
-                id_profil = value;
-            }
+            { id_profil = value; }
         }
 
         private int id_reglage;
         public int Id_reglage
         {
             get
-            {
-                return id_reglage;
-            }
+            { return id_reglage; }
             set
-            {
-                id_reglage = value;
-            }
+            { id_reglage = value; }
         }
     }
 }
