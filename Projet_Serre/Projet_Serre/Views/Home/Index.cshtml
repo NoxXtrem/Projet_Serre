@@ -7,6 +7,7 @@
     @if (Model.IdProfilActuel > 0)
     {
         <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
+        <h3>Jour @Model.NombreDeJours</h3>
     }
     else
     {

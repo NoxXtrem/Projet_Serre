@@ -12,27 +12,16 @@ namespace Projet_Serre.Controllers
     //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        GestionProfil gp = Startup.GestionProfil;
 
         // GET: Reglage/5
         public ActionResult Index(int id)
         {
-            Profil p = rs.GestionProfil.Selectionner(id);
-            List<ReglageViewModel> liste = new List<ReglageViewModel>();
-            p.ListerReglage().ForEach(r => liste.Add(new ReglageViewModel()
-                {
-                    Duree = r.Duree.Days,
-                    IdReglage = r.Id,
-                    Lumiere = r.Lumiere,
-                    TemperatureInterieur = r.TemperatureInterieur,
-                    Humidite = r.Humidite,
-                })
-            );
-
-            ListReglageViewModel model = new ListReglageViewModel(){
+            Profil p = gp.Selectionner(id);
+            ListReglageViewModel model = new ListReglageViewModel(p.ListerReglage())
+            {
                 IdProfil = id,
                 NomProfil = p.Nom,
-                Reglages = liste,
             };
             return View(model);
         }
@@ -61,7 +50,7 @@ namespace Projet_Serre.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Profil p = rs.GestionProfil.Selectionner(id);
+                    Profil p = gp.Selectionner(id);
                     Reglage r = new Reglage()
                     {
                         Duree = new TimeSpan(model.Duree,0,0,0),
@@ -83,16 +72,11 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Edit/5
         public ActionResult Edit(int id)
         {
-            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel()
+            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel(reglage)
             {
-                IdReglage = id,
                 IdProfil = profil.Id,
-                Duree = reglage.Duree.Days,
-                Lumiere = reglage.Lumiere,
-                TemperatureInterieur = reglage.TemperatureInterieur,
-                Humidite = reglage.Humidite,
             };
 
             return View(model);
@@ -106,7 +90,7 @@ namespace Projet_Serre.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                    Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                     Reglage reglage = new Reglage()
                     {
                         Id = model.IdReglage,
@@ -129,16 +113,11 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Delete/5
         public ActionResult Delete(int id)
         {
-            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel()
+            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel(reglage)
             {
-                IdReglage = id,
                 IdProfil = profil.Id,
-                Duree = reglage.Duree.Days,
-                Lumiere = reglage.Lumiere,
-                TemperatureInterieur = reglage.TemperatureInterieur,
-                Humidite = reglage.Humidite,
             };
 
             return View(model);
@@ -150,7 +129,7 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                 profil.SupprimerReglage(id);
                 return RedirectToAction("Index", new { profil.Id });
             }

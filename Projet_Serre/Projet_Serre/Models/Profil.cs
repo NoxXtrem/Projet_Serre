@@ -76,12 +76,12 @@ public class Profil
 	}
 	public Reglage SelectionnerReglage(int idReglage)
     {
-        return conditions.Single(r => r.Id == idReglage);
+        return conditions.SingleOrDefault(r => r.Id == idReglage);
 	}
     public Reglage SelectionnerReglage(double lumiere, DateTime dateDeDebut)
     {
         //Choisir en fonction de la date puis de la lumière
-        return conditions.Where(r => r.Duree >= (DateTime.Now - dateDeDebut) && r.Lumiere >= lumiere).OrderBy(r => r.Duree).ThenBy(r => r.Lumiere).First();
+        return conditions.Where(r => r.Duree >= (DateTime.Now - dateDeDebut) && r.Lumiere >= lumiere).OrderBy(r => r.Duree).ThenBy(r => r.Lumiere).FirstOrDefault();
     }
     public bool MajReglage()
     {

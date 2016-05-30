@@ -15,19 +15,11 @@ namespace Projet_Serre
             private set { Startup.gestionProfil = value; }
         }
 
-        private static Profil profil;
-        public static Profil Profil
+        private static GestionProfilActuel gestionProfilActuel;
+        public static GestionProfilActuel GestionProfilActuel
         {
-            get{return Startup.profil;}
-            private set{Startup.profil = value;}
-
-        }
-
-        private static RegulerSerre regulerSerre;
-        public static RegulerSerre RegulerSerre
-        {
-            get { return Startup.regulerSerre; }
-            private set { Startup.regulerSerre = value; }
+            get { return Startup.gestionProfilActuel; }
+            private set { Startup.gestionProfilActuel = value; }
         }
         
         public void Configuration(IAppBuilder app)
@@ -35,19 +27,14 @@ namespace Projet_Serre
             ConfigureAuth(app);
 
             gestionProfil = new GestionProfil();
-            regulerSerre = new RegulerSerre(gestionProfil);
+            gestionProfilActuel = new GestionProfilActuel();
 
            // profil = new Profil("Test", new System.Collections.Generic.List<Reglage>());
            // gestionProfil.Ajouter(profil);
            // profil.AjouterReglage(new Reglage(DateTime.Today, 100, 20.5, 50, 2));
 
             gestionProfil.MajProfil();
-            regulerSerre.MajProfilActuel();
-
-            Thread regulerThread = new Thread(regulerSerre.Reguler);
-            regulerThread.Start();
-            System.Console.WriteLine("main thread: Starting worker thread...");
-
+            gestionProfilActuel.MajProfilActuel();
         }
     }
 }

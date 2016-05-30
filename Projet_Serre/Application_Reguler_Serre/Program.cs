@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Phidgets;
+using Phidgets.Events;  
+
 
 namespace Application_Reguler_Serre
 {
@@ -10,46 +13,109 @@ namespace Application_Reguler_Serre
     {
         static void Main(string[] args)
         {
-            ConnectionSQL csql = new ConnectionSQL();
-            GestionCapteur gc = new GestionCapteur();
-            GestionActionneur ga = new GestionActionneur();
             int reponse;
+            double luminosité;
+            double température;
+            double humidité;
 
+            ConnectionSQL CSQL = new ConnectionSQL();
             while (true)
-            {           
-                reponse = csql.Reponse();
+            {
+                
+              reponse = CSQL.Reponse();
 
                 if (reponse == 1)
                 {
-                    //Lire les capteurs
-                    double lumiereMesure = gc.CapteurEnso.Valeur;
-                    //...
 
-                    //Lire le profil actuel et sa date de début dans la BDD
-                    Profil p = null;
-                    DateTime dateDebut = DateTime.Now;
-                    //...
+                    InterfaceKit ifKit;
 
-                    Reglage r = null;
-                    if (p != null)
+
+                    try
                     {
-                        //Choisir le bon réglage
-                        r = p.SelectionnerReglage(lumiereMesure, dateDebut);
+                        //Initialize the InterfaceKit object
+                        ifKit = new InterfaceKit();
 
-                        //Enregistrer le dernier réglage dans la BDD
-                        //...
+                        //Hook the basica event handlers
+                        ifKit.Attach += new AttachEventHandler(ifKit_Attach);
+                        ifKit.Detach += new DetachEventHandler(ifKit_Detach);
+                        ifKit.Error += new ErrorEventHandler(ifKit_Error);
 
-                        //Controller les actionneurs
-                        ga.Chauffage.Commande = 25; //r.TemperatureInterieur;
-                        //...
+                        //Hook the phidget spcific event handlers
+                        ifKit.InputChange += new InputChangeEventHandler(ifKit_InputChange);
+                        ifKit.OutputChange += new OutputChangeEventHandler(ifKit_OutputChange);
+                        ifKit.SensorChange += new SensorChangeEventHandler(ifKit_SensorChange);
+
+                        //Open the object for device connections
+                        ifKit.open();
+
+                        //Wait for an InterfaceKit phidget to be attached
+                        Console.WriteLine("Waiting for InterfaceKit to be attached...");
+                        ifKit.waitForAttachment();
+
+                        //Wait for user input so that we can wait and watch for some event data 
+                        //from the phidget
+                        Console.WriteLine("Press any key to end...");
+                        Console.Read();
+
+                        //User input was rad so we'll terminate the program, so close the object
+                        ifKit.close();
+
+                        //set the object to null to get it out of memory
+                        ifKit = null;
+
+                        //If no expcetions where thrown at this point it is safe to terminate 
+                        //the program
+                        Console.WriteLine("ok");
                     }
-
-                    //Enregistrer les valeurs dans la BDD
-                    csql.AjoutHistorique(DateTime.Now, lumiereMesure, 0, 0, 0, p != null ? p.Id : 0, r != null ? r.Id : 0);
-                    
+                    catch (PhidgetException ex)
+                    {
+                        Console.WriteLine(ex.Description);
+                    }
                 }
-                System.Threading.Thread.Sleep(60000);
             }
+        }
+
+        //Attach event handler...Display the serial number of the attached InterfaceKit 
+        //to the console
+        static void ifKit_Attach(object sender, AttachEventArgs e)
+        {
+            Console.WriteLine("InterfaceKit {0} attached!", 
+                                e.Device.SerialNumber.ToString());
+        }
+
+        //Detach event handler...Display the serial number of the detached InterfaceKit 
+        //to the console
+        static void ifKit_Detach(object sender, DetachEventArgs e)
+        {
+            Console.WriteLine("InterfaceKit {0} detached!", 
+                                e.Device.SerialNumber.ToString());
+        }
+
+        //Error event handler...Display the error description to the console
+        static void ifKit_Error(object sender, ErrorEventArgs e)
+        {
+            Console.WriteLine(e.Description);
+        }
+
+        //Input Change event handler...Display the input index and the new value to the 
+        //console
+        static void ifKit_InputChange(object sender, InputChangeEventArgs e)
+        {
+            Console.WriteLine("Input index {0} value (1)", e.Index, e.Value.ToString());
+        }
+
+        //Output change event handler...Display the output index and the new valu to 
+        //the console
+        static void ifKit_OutputChange(object sender, OutputChangeEventArgs e)
+        {
+            Console.WriteLine("Output index {0} value {0}", e.Index, e.Value.ToString());
+        }
+
+        //Sensor Change event handler...Display the sensor index and it's new value to 
+        //the console
+        static void ifKit_SensorChange(object sender, SensorChangeEventArgs e)
+        {
+            Console.WriteLine("Sensor index {0} value {1}", e.Index, e.Value);
         }
     }
 }

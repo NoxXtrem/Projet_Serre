@@ -13,6 +13,8 @@ namespace Projet_Serre.Models
         private string utilisateur;
         private string motDePasse;
 
+
+
         public ConnectionSQL()
         {
         }
@@ -20,13 +22,9 @@ namespace Projet_Serre.Models
         private MySqlConnection Initialisation()
         {
 
-            serveur = "localhost";
-            baseDeDonnée = "projet_serre";
-            utilisateur = "projet";
-            motDePasse = "serre";
+            
             string connectionString;
-            connectionString =  "SERVER=" + serveur + ";" + "DATABASE=" +
-            baseDeDonnée + ";" + "UID=" + utilisateur + ";" + "PASSWORD=" + motDePasse + ";"+ "Convert Zero Datetime = True;"; 
+            connectionString =  System.Configuration.ConfigurationManager.ConnectionStrings["serveur"].ConnectionString;
             
             MySqlConnection connection = new MySqlConnection(connectionString);
 
@@ -225,6 +223,7 @@ namespace Projet_Serre.Models
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
+
                 msdr.Read();
                 id_profil_actuel = msdr.GetInt32(0);
 
@@ -266,6 +265,68 @@ namespace Projet_Serre.Models
 
                 connection.Close();
             }
+        }
+
+        public LigneHistorique DerniereEntreeHistorique()
+        {
+            LigneHistorique temp = null;
+            string query = "SELECT * FROM historique ORDER BY date DESC LIMIT 1";
+
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+                msdr.Read();
+                temp = new LigneHistorique()
+                {
+                    Id = msdr.GetInt32(0),
+                    Date = msdr.GetDateTime(1),
+                    Lumiere = msdr.GetDouble(2),
+                    TemperatureInterieur = msdr.GetDouble(3),
+                    TemperatureExterieur = msdr.GetDouble(4),
+                    Humidite = msdr.GetDouble(5),
+                    Id_profil = msdr.GetInt32(6),
+                    Id_reglage = msdr.GetInt32(7),
+                };
+                connection.Close();
+            }
+            return temp;
+        }
+
+        public List<LigneHistorique> EntreeHistorique(int nbEntrer)
+        {
+            List<LigneHistorique> ligneHistorique = null;
+            
+            string query = "SELECT * FROM historique ORDER BY date DESC LIMIT " + nbEntrer;
+
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+
+                ligneHistorique = new List<LigneHistorique>();
+                while (msdr.Read())
+                {
+                    
+                    LigneHistorique temp = new LigneHistorique()
+                    {
+                        Id = msdr.GetInt32(0),
+                        Date = msdr.GetDateTime(1),
+                        Lumiere = msdr.GetDouble(2),
+                        TemperatureInterieur = msdr.GetDouble(3),
+                        TemperatureExterieur = msdr.GetDouble(4),
+                        Humidite = msdr.GetDouble(5),
+                        Id_profil = msdr.GetInt32(6),
+                        Id_reglage = msdr.GetInt32(7),
+                    };
+                    ligneHistorique.Add(temp);
+                }
+
+                connection.Close();
+            }
+            return ligneHistorique;
         }
     }
 }
