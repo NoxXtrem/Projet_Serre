@@ -27,7 +27,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="90*"/>
-            
+
         </Grid.RowDefinitions>
 
 
@@ -54,7 +54,12 @@
                     <ColumnDefinition Width="30*"/>
                     <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0"></ComboBox>
+                <ComboBox Grid.Column="0" Background="White" >
+                    <Button Content="Radis" Background="Black"/>
+                    <Button Background="Black" Content="Tomate"/>
+                </ComboBox>
+                
+
                 <Button Grid.Column="1" Content="Modifier" FontSize="16"/>
                 <Button Grid.Column="2" Content="Supprimer" FontSize="16"/>
             </Grid>
@@ -66,17 +71,18 @@
                     <GridViewHeaderItem Content="Supprimer" Width="85"/>
                 </GridView>
                 <x:String>26/01/2015</x:String>
-                <x:String>16/06/2016</x:String>
-                <x:String>24/05/2016</x:String>
                 <x:String>29/08/2015</x:String>
-                <x:String>21/05/2016</x:String>
                 <x:String>06/12/2015</x:String>
                 <x:String>19/03/2016</x:String>
+                <x:String>21/05/2016</x:String>
+                <x:String>24/05/2016</x:String>
+                <x:String>16/06/2016</x:String>
+                
             </ListView>
             <Button Grid.Row="2" Content="Ajouter un Profil" HorizontalAlignment="Center"/>
         </Grid>
-            
-        
+
+
 
 
 

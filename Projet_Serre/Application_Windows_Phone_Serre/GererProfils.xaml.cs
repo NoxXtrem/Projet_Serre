@@ -22,6 +22,8 @@ namespace Application_Windows_Phone_Serre
     /// </summary>
     public sealed partial class GererProfils : Page
     {
+        ConnexionServeur cs = new ConnexionServeur();
+
         public GererProfils()
         {
             this.InitializeComponent();
@@ -34,6 +36,7 @@ namespace Application_Windows_Phone_Serre
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            cs.LoadDataProfil();
         }
 
         private void buttonGestion_Click(object sender, RoutedEventArgs e)

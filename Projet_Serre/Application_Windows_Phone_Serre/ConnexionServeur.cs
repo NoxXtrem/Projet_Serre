@@ -7,6 +7,8 @@ using System.Threading;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using Windows.Networking;
+using Newtonsoft.Json;
+using Windows.Web.Http;
 
 
 
@@ -14,8 +16,81 @@ namespace Application_Windows_Phone_Serre
 {
     class ConnexionServeur
     {
+        HttpClient httpc = new HttpClient();
 
+        public async void LoadDataProfil()
+        {
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Profil"));
+            var temp = reponse.Content;
+            
+        }
+
+        public async void LoadDataReglage(int idProfil)
+        {
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Reglage"));
+            var temp = reponse.Content;
+
+        }
+
+        public async void LoadDataProfilActuel()
+        {
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/ProfilActuel"));
+            var temp = reponse.Content;
+        }
+
+        public async void LoadDataCapteur()
+        {
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Capteur"));
+            var temp = reponse.Content;
+        }
+
+        /*
+        public async void SendDataProfilActuel()
+        {
+            
+        }
+        */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+         
         StreamSocket socket;
+        String ipServeur = "192.02.01.01";
+        String portServeur = "88";
+        String message = "Je suis le Client";
+
 
         public async Task connect(string host, string port, string message)
         {
@@ -103,5 +178,6 @@ namespace Application_Windows_Phone_Serre
                 return strBuilder.ToString();
             }
         }
+    */
     }
 }
