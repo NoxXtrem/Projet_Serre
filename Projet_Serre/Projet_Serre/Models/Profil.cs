@@ -9,30 +9,19 @@ public class Profil
     ConnectionReglage connection = new ConnectionReglage();
     public int Id
     {
-		get {
-			return id;
-		}
-        set
-        {
-            id = value; 
-        }
+		get { return id; }
+        set { id = value; }
 	}
 	private List<Reglage> conditions;
     public List<Reglage> Conditions
     { 
-        set { 
-            conditions = value;
-        }
+        set { conditions = value; }
     }
 	private string nom;
 	public string Nom
     {
-		get {
-			return nom;
-		}
-		set {
-			nom = value;
-		}
+		get { return nom; }
+		set { nom = value; }
 	}
 
 	public Profil()
@@ -44,10 +33,16 @@ public class Profil
         this.nom = nom;
         this.conditions = conditions;
 	}
+
+    public Profil(ProfilViewModel pvm)
+    {
+        Id = pvm.Id;
+        Nom = pvm.Nom;
+    }
+
 	public bool AjouterReglage(Reglage reglage)
     {
         conditions.Add(reglage);
-
         reglage.Id = connection.Ajouter(reglage,id);
         return true;
 	}
@@ -66,7 +61,6 @@ public class Profil
 	public bool SupprimerReglage(int idReglage)
     {
         conditions.Remove(conditions.Single(r => r.Id == idReglage));
-
         connection.Supprimer(idReglage);
         return true;
 	}

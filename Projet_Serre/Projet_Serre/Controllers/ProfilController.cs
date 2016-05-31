@@ -45,10 +45,7 @@ namespace Projet_Serre.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Profil p = new Profil()
-                    {
-                        Nom = model.Nom,
-                    };
+                    Profil p = new Profil(model);
                     gp.Ajouter(p);
                     return RedirectToAction("Index");
                 }

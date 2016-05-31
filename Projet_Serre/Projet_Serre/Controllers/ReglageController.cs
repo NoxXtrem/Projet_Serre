@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
-    //TODO: Un selecteur de date pour le champ Duree
     //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
@@ -51,13 +50,7 @@ namespace Projet_Serre.Controllers
                 if (ModelState.IsValid)
                 {
                     Profil p = gp.Selectionner(id);
-                    Reglage r = new Reglage()
-                    {
-                        Duree = new TimeSpan(model.Duree,0,0,0),
-                        Lumiere = Math.Round(model.Lumiere,2),
-                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        Humidite = Math.Round(model.Humidite,2),
-                    };
+                    Reglage r = new Reglage(model);
                     p.AjouterReglage(r);
                     return RedirectToAction("Index",  new { id });
                 }
@@ -91,14 +84,7 @@ namespace Projet_Serre.Controllers
                 if (ModelState.IsValid)
                 {
                     Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
-                    Reglage reglage = new Reglage()
-                    {
-                        Id = model.IdReglage,
-                        Duree = new TimeSpan(model.Duree, 0, 0, 0),
-                        Lumiere = Math.Round(model.Lumiere,2),
-                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        Humidite = Math.Round(model.Humidite,2),
-                    };
+                    Reglage reglage = new Reglage(model);
                     profil.ModifierReglage(id, reglage);
                     return RedirectToAction("Index", new { profil.Id });
                 }
