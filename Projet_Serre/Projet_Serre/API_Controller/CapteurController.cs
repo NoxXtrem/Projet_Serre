@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet_Serre.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,7 +16,7 @@ namespace Projet_Serre.API_Controller
         // GET: api/Capteur
         public LigneHistorique Get()
         {
-            return new string[] { "value1", "value2" };
+            return null;
         }
 
         // GET: api/Capteur/5
