@@ -233,7 +233,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="TempProfilActuel" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="TempProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="°C" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                     
@@ -246,7 +246,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="HumiProfilActuel" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="HumiProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="%" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                 </StackPanel>
@@ -258,7 +258,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="EnsoProfilActuel" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="EnsoProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="lx" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                 </StackPanel>

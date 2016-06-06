@@ -266,8 +266,8 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
                     <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
-                    <TextBlock Name="profilActuelNom" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
-                    <TextBlock Name="profilActuelDate" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelNomEtat" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelDateEtat" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
                 </StackPanel>
                 <Rectangle Grid.Row="1" Style="{StaticResource styleRectangleProfil}"/>
                 <StackPanel Grid.Row="1" Margin="10">
@@ -277,7 +277,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="TempProfilActuel" Grid.Column="0" Text="0" 
+                        <TextBlock Name="TempProfilActuelEtat" Grid.Column="0" Text="0" 
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="°C" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
@@ -290,7 +290,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="HumiProfilActuel" Grid.Column="0" Text="0" 
+                        <TextBlock Name="HumiProfilActuelEtat" Grid.Column="0" Text="0" 
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="%" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
@@ -303,7 +303,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="EnsoProfilActuel" Grid.Column="0" Text="0" 
+                        <TextBlock Name="EnsoProfilActuelEtat" Grid.Column="0" Text="0" 
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="lx" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>

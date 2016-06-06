@@ -9,14 +9,25 @@ using Windows.Storage.Streams;
 using Windows.Networking;
 using Newtonsoft.Json;
 using Windows.Web.Http;
-
-
+using Windows.Data.Json;
+using Windows.UI.Xaml.Controls;
 
 namespace Application_Windows_Phone_Serre
 {
     class ConnexionServeur
     {
         HttpClient httpc = new HttpClient();
+
+
+
+        public async void LoadDataCapteur()
+        {
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Capteur"));
+            var temp = reponse.Content;
+
+
+
+        }
 
         public async void LoadDataProfil()
         {
@@ -31,25 +42,41 @@ namespace Application_Windows_Phone_Serre
             var temp = reponse.Content;
 
         }
-
-        public async void LoadDataProfilActuel()
+        public async void LoadDataProfilActuel(TextBlock tbNom, TextBlock tbDate)
         {
             HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/ProfilActuel"));
-            var temp = reponse.Content;
+            dynamic json = JsonConvert.DeserializeObject(reponse.Content.ToString());
+            ProfilViewModel p = JsonConvert.DeserializeObject<ProfilViewModel>(json.profil.ToString());
+            string date = json.date.ToString();
+
+            if (p == null)
+            {
+                tbNom.Text = "Aucun Profil";
+                tbDate.Text = "";
+            }
+            else
+            {
+                tbNom.Text = p.Nom;
+                tbDate.Text = date;
+            }
         }
 
-        public async void LoadDataCapteur()
+        public async void LoadDataReglageProfilActuel(int idProfil, TextBlock tbTemp, TextBlock tbHumi, TextBlock tbEnso)
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Capteur"));
+            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Reglage"));
             var temp = reponse.Content;
+
         }
 
-        /*
-        public async void SendDataProfilActuel()
+        public async void SendDataProfilActuel(int id, DateTime dt)
         {
-            
+            Dictionary<string, string> content = new Dictionary<string, string>();
+            content["id"] = id.ToString();
+            content["date"] = dt.ToString("yyyy-MM-dd");
+
+            HttpResponseMessage reponse = await httpc.PutAsync(new Uri("http://localhost:37768/api/ProfilActuel"), new HttpFormUrlEncodedContent(content));
         }
-        */
+        
 
 
 

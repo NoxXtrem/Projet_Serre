@@ -79,5 +79,9 @@ namespace Application_Windows_Phone_Serre
         {
         }
 
+        private void GererEtatSerre_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

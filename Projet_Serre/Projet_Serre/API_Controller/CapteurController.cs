@@ -12,11 +12,12 @@ namespace Projet_Serre.API_Controller
     {
 
         GestionProfil gp = Startup.GestionProfil;
+        ConnectionSQL csql = new ConnectionSQL();
 
         // GET: api/Capteur
         public LigneHistorique Get()
         {
-            return null;
+            return csql.DerniereEntreeHistorique();
         }
 
         // GET: api/Capteur/5
