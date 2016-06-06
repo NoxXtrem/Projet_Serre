@@ -8,16 +8,15 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
-    //TODO: Un selecteur de date pour le champ Duree
     //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        GestionProfil gp = Startup.GestionProfil;
 
         // GET: Reglage/5
         public ActionResult Index(int id)
         {
-            Profil p = rs.GestionProfil.Selectionner(id);
+            Profil p = gp.Selectionner(id);
             ListReglageViewModel model = new ListReglageViewModel(p.ListerReglage())
             {
                 IdProfil = id,
@@ -46,42 +45,32 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Create(int id, ReglageViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    Profil p = rs.GestionProfil.Selectionner(id);
-                    Reglage r = new Reglage()
-                    {
-                        Duree = new TimeSpan(model.Duree,0,0,0),
-                        Lumiere = Math.Round(model.Lumiere,2),
-                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        Humidite = Math.Round(model.Humidite,2),
-                    };
+                    Profil p = gp.Selectionner(id);
+                    Reglage r = new Reglage(model);
                     p.AjouterReglage(r);
-                    return RedirectToAction("Index",  new { id });
+                    return RedirectToAction("Index", new { id });
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Reglage/Edit/5
         public ActionResult Edit(int id)
         {
-            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel()
+            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel(reglage)
             {
-                IdReglage = id,
                 IdProfil = profil.Id,
-                Duree = reglage.Duree.Days,
-                Lumiere = reglage.Lumiere,
-                TemperatureInterieur = reglage.TemperatureInterieur,
-                Humidite = reglage.Humidite,
             };
 
             return View(model);
@@ -91,43 +80,34 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ReglageViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
-                    Reglage reglage = new Reglage()
-                    {
-                        Id = model.IdReglage,
-                        Duree = new TimeSpan(model.Duree, 0, 0, 0),
-                        Lumiere = Math.Round(model.Lumiere,2),
-                        TemperatureInterieur = Math.Round(model.TemperatureInterieur, 2),
-                        Humidite = Math.Round(model.Humidite,2),
-                    };
+
+                    Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                    Reglage reglage = new Reglage(model);
                     profil.ModifierReglage(id, reglage);
                     return RedirectToAction("Index", new { profil.Id });
+
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Reglage/Delete/5
         public ActionResult Delete(int id)
         {
-            Profil profil = rs.GestionProfil.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel()
+            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
+            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
+            ReglageViewModel model = new ReglageViewModel(reglage)
             {
-                IdReglage = id,
                 IdProfil = profil.Id,
-                Duree = reglage.Duree.Days,
-                Lumiere = reglage.Lumiere,
-                TemperatureInterieur = reglage.TemperatureInterieur,
-                Humidite = reglage.Humidite,
             };
 
             return View(model);
@@ -139,12 +119,13 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                Profil profil = rs.GestionProfil.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
+                Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                 profil.SupprimerReglage(id);
                 return RedirectToAction("Index", new { profil.Id });
             }
-            catch
+            catch(Exception ex)
             {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
                 return View(model);
             }
         }

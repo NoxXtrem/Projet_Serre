@@ -11,28 +11,18 @@ namespace Projet_Serre.Controllers
     //TODO: Validation coté client (jQuery)
     public class ProfilController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        GestionProfil gp = Startup.GestionProfil;
+        GestionProfilActuel gpa = Startup.GestionProfilActuel;
 
         // GET: Profil
         public ActionResult Index()
         {
-            List<ProfilViewModel> liste = new List<ProfilViewModel>();
-            rs.GestionProfil.Lister().ForEach(
-                p => liste.Add(new ProfilViewModel()
-                {
-                    Id = p.Id,
-                    Nom = p.Nom,
-                })
-            );
-            
-
-            ListProfilViewModel model = new ListProfilViewModel()
+            ListProfilViewModel model = new ListProfilViewModel(gp.Lister())
             {
-                NomProfilActuel = (rs.ProfilActuel != null) ? rs.ProfilActuel.Nom : null,
-                IdProfilActuel = (rs.ProfilActuel != null) ? rs.ProfilActuel.Id : 0,
-                Profils = liste ?? new List<ProfilViewModel>(),
+                NomProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Nom : null,
+                IdProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Id : 0,
+                NombreDeJours = (DateTime.Now - gpa.DateDeDebut).Days,
             };
-
             return View(model);
         }
 
@@ -52,34 +42,28 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Create(ProfilViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    Profil p = new Profil()
-                    {
-                        Nom = model.Nom,
-                    };
-                    rs.GestionProfil.Ajouter(p);
+                    Profil p = new Profil(model);
+                    gp.Ajouter(p);
                     return RedirectToAction("Index");
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Profil/Edit/5
         public ActionResult Edit(int id)
         {
-            Profil p = rs.GestionProfil.Selectionner(id);
-            ProfilViewModel model = new ProfilViewModel()
-            {
-                Id = id,
-                Nom = p.Nom,
-            };
+            Profil p = gp.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel(p);
             return View(model);
         }
 
@@ -87,30 +71,27 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Edit(ProfilViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    rs.GestionProfil.Renommer(model.Id, model.Nom);
+                    gp.Renommer(model.Id, model.Nom);
                     return RedirectToAction("Index");
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Profil/Delete/5
         public ActionResult Delete(int id)
         {
-            Profil p = rs.GestionProfil.Selectionner(id);
-            ProfilViewModel model = new ProfilViewModel()
-            {
-                Id = id,
-                Nom = p.Nom,
-            };
+            Profil p = gp.Selectionner(id);
+            ProfilViewModel model = new ProfilViewModel(p);
             return View(model);
         }
 
@@ -120,12 +101,13 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                rs.GestionProfil.Supprimer(id);
+                gp.Supprimer(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return View(ex.Message);
             }
         }
 
@@ -135,11 +117,28 @@ namespace Projet_Serre.Controllers
         {
             try
             {
-                rs.ModifierProfilActuel(id, DateTime.Parse(date));
+                gpa.ModifierProfilActuel(id, DateTime.Parse(date));
                 return Content(Boolean.TrueString);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return Content(Boolean.FalseString);
+            }
+        }
+
+        // POST: Profil/Stop/5
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            try
+            {
+                gpa.ModifierProfilActuel(0, new DateTime());
+                return Content(Boolean.TrueString);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
                 return Content(Boolean.FalseString);
             }
         }

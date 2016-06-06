@@ -38,7 +38,7 @@ namespace Projet_Serre.Models
 
         public HistoriqueViewModel() { }
 
-        //On suppose que list est ordonné par date (Normalement fait par la requète SQL)
+        //On suppose que list est ordonné par date (Normalement fait par la requête SQL)
         public HistoriqueViewModel(List<LigneHistorique> list)
         {
             Historique = new List<LigneHistoriqueViewModel>();

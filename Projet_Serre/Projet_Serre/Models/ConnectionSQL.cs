@@ -257,7 +257,7 @@ namespace Projet_Serre.Models
 
         public void Modifier_Profil_Actuel(int id_profil, DateTime date)
         {
-            string query = "UPDATE profil_actuel SET id_profil='"+ id_profil +"', date='"+date.ToString("yyyy-MM-dd") +"'";
+            string query = "UPDATE profil_actuel SET id_profil="+ (id_profil != 0 ? ("'" + id_profil + "'") : "NULL") +", date='"+date.ToString("yyyy-MM-dd") +"'";
 
             MySqlConnection connection = OuvrirConnection();
             if (connection != null)

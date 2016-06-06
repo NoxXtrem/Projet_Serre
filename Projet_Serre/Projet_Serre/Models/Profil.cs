@@ -9,31 +9,22 @@ public class Profil
     ConnectionReglage connection = new ConnectionReglage();
     public int Id
     {
-		get {
-			return id;
-		}
-        set
-        {
-            id = value; 
-        }
+		get { return id; }
+        set { id = value; }
 	}
+
+    private string nom;
+    public string Nom
+    {
+        get { return nom; }
+        set { nom = value; }
+    }
+
 	private List<Reglage> conditions;
     public List<Reglage> Conditions
     { 
-        set { 
-            conditions = value;
-        }
+        set { conditions = value; }
     }
-	private string nom;
-	public string Nom
-    {
-		get {
-			return nom;
-		}
-		set {
-			nom = value;
-		}
-	}
 
 	public Profil()
     {
@@ -44,14 +35,19 @@ public class Profil
         this.nom = nom;
         this.conditions = conditions;
 	}
-	public bool AjouterReglage(Reglage reglage)
+
+    public Profil(ProfilViewModel pvm)
+    {
+        Id = pvm.Id;
+        Nom = pvm.Nom;
+    }
+
+	public void AjouterReglage(Reglage reglage)
     {
         conditions.Add(reglage);
-
         reglage.Id = connection.Ajouter(reglage,id);
-        return true;
 	}
-	public bool ModifierReglage(int idReglage, Reglage reglage)
+	public void ModifierReglage(int idReglage, Reglage reglage)
     {
         Reglage temp = conditions.Single(r => r.Id == idReglage);
         temp.Humidite = reglage.Humidite;
@@ -61,14 +57,11 @@ public class Profil
         temp.Vent = reglage.Vent;
 
         connection.Modifier(idReglage, reglage);
-        return true;
 	}
-	public bool SupprimerReglage(int idReglage)
+	public void SupprimerReglage(int idReglage)
     {
         conditions.Remove(conditions.Single(r => r.Id == idReglage));
-
         connection.Supprimer(idReglage);
-        return true;
 	}
 	public List<Reglage> ListerReglage()
     {
@@ -83,9 +76,8 @@ public class Profil
         //Choisir en fonction de la date puis de la lumière
         return conditions.Where(r => r.Duree >= (DateTime.Now - dateDeDebut) && r.Lumiere >= lumiere).OrderBy(r => r.Duree).ThenBy(r => r.Lumiere).FirstOrDefault();
     }
-    public bool MajReglage()
+    public void MajReglage()
     {
         conditions = connection.ListerReglage();
-        return true;
     }
 }

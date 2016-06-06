@@ -38,8 +38,8 @@ namespace Projet_Serre.Models
         public ReglageViewModel() { }
         public ReglageViewModel(Reglage r)
         {
-            this.Duree = r.Duree.Days;
             this.IdReglage = r.Id;
+            this.Duree = r.Duree.Days;
             this.Lumiere = r.Lumiere;
             this.TemperatureInterieur = r.TemperatureInterieur;
             this.Humidite = r.Humidite;

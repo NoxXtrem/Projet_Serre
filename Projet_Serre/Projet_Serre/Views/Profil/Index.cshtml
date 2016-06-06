@@ -7,6 +7,10 @@
     @if (Model.IdProfilActuel > 0)
     {
         <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
+        <h3>
+            Jour @Model.NombreDeJours -
+            <a class="btn btn-default stop-link" href="@Url.Action("Stop", "Profil")">Arrêter la régulation</a>
+        </h3>
     }
     else
     {
@@ -37,9 +41,14 @@
 </table>
 <a class="btn btn-success" href="@Url.Action("Create", "Profil")">Ajouter un profil</a>
 
-<div id="select-dialog" title="Confirmation">
+<div id="select-dialog" title="Confirmation" hidden>
     <p>Sélectionnez la date de semis : <input type="text" id="datepicker"></p>
-</div>		
+</div>
+
+<div id="stop-dialog" title="Confirmation" hidden>
+    <p>Voulez vous vraiment arrêter la régulation automatique de la serre?</p>
+    <p>La date de semis du profil actif sera perdu!</p>
+</div>
 
 @section scripts{
     <script>
@@ -70,7 +79,7 @@
                 $("#select-dialog").dialog('open');
                 return false;
             });
-
+            
             $.datepicker.setDefaults(
               $.extend(
                 { 'dateFormat': 'dd/mm/yy' },
@@ -89,7 +98,7 @@
                                     location.reload();
                                 }
                                 else {
-                                    //
+                                    //TODO
                                 }
                             });
                         $(this).dialog("close");
@@ -101,4 +110,35 @@
             });
         });
     </script>
+    <script>
+        var linkObj;
+        $(".stop-link").click(function () {
+            linkObj = $(this);
+            $("#stop-dialog").dialog('open');
+            return false;
+        });
+
+        $('#stop-dialog').dialog({
+            autoOpen: false, width: 400, resizable: false, modal: true,
+            buttons: {
+                "Continuer": function () {
+                    $.post(linkObj[0].href,
+                        {},
+                        function (status) {
+                            if (status == '@Boolean.TrueString') {
+                                location.reload();
+                            }
+                            else {
+                                //TODO
+                            }
+                        });
+                    $(this).dialog("close");
+                },
+                "Annuler": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    </script>
+
 }

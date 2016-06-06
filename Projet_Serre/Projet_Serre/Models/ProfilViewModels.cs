@@ -11,7 +11,15 @@ namespace Projet_Serre.Models
     {
         public string NomProfilActuel { get; set; }
         public int IdProfilActuel { get; set; }
+        public int NombreDeJours { get; set; }
         public List<ProfilViewModel> Profils { get; set; }
+
+        public ListProfilViewModel() { }
+        public ListProfilViewModel(List<Profil> list)
+        {
+            Profils = new List<ProfilViewModel>();
+            list.ForEach(p => Profils.Add(new ProfilViewModel(p)));
+        }
     }
 
     public class ProfilViewModel
@@ -22,5 +30,12 @@ namespace Projet_Serre.Models
         [Display(Name = "Nom du profil")]
         [Required(ErrorMessage = "Un nom est requis")]
         public string Nom { get; set; }
+
+        public ProfilViewModel() { }
+        public ProfilViewModel(Profil p)
+        {
+            Id = p.Id;
+            Nom = p.Nom;
+        }
     }
 }

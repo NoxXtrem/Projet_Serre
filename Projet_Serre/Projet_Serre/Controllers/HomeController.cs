@@ -9,57 +9,29 @@ namespace Projet_Serre.Controllers
 {
     public class HomeController : Controller
     {
-        RegulerSerre rs = Startup.RegulerSerre;
+        GestionProfil gp = Startup.GestionProfil;
+        GestionProfilActuel gpa = Startup.GestionProfilActuel;
 
         public ActionResult Index()
         {
-            ApercuViewModel viewModel;
+            ApercuViewModel model;
             try
             {
                 ConnectionSQL csql = new ConnectionSQL();
                 LigneHistorique data = csql.DerniereEntreeHistorique();
 
-                Profil profil = rs.GestionProfil.Selectionner(data.Id_profil) ?? new Profil();
+                Profil profil = gp.Selectionner(data.Id_profil) ?? new Profil();
                 Reglage reglage = profil.SelectionnerReglage(data.Id_reglage) ?? new Reglage();
-                //Reglage reglage = rs.GestionProfil.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(re => re.Id == data.Id_reglage) ?? new Reglage();
-                
-                if (rs.ProfilActuel != null)
-                {
-                    viewModel = new ApercuViewModel()
-                    {
-                        NomProfilActuel = rs.ProfilActuel.Nom,
-                        IdProfilActuel = rs.ProfilActuel.Id,
-                        NombreDeJours = (DateTime.Now - rs.DateDeDebut).Days,
-                        TemperatureInterieurCapteur = data.TemperatureInterieur,
-                        TemperatureExterieurCapteur = data.TemperatureExterieur,
-                        TemperatureInterieurProfil = reglage.TemperatureInterieur,
-                        HumiditeCapteur = data.Humidite,
-                        HumiditeProfil = reglage.Humidite,
-                        LumiereCapteur = data.Lumiere,
-                        VentCapteur = 0,
-                        DateDerniereMaJ = data.Date.ToString(),
-                    };
-                }
-                else
-                {
-                    viewModel = new ApercuViewModel()
-                    {
-                        IdProfilActuel = 0,
-                        TemperatureInterieurCapteur = data.TemperatureInterieur,
-                        TemperatureExterieurCapteur = data.TemperatureExterieur,
-                        HumiditeCapteur = data.Humidite,
-                        LumiereCapteur = data.Lumiere,
-                        VentCapteur = 0,
-                        DateDerniereMaJ = rs.DateDernierReglage.ToString(),
-                    };
-                }
+
+                model = new ApercuViewModel(gpa, data, reglage);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                viewModel = new ApercuViewModel();
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                model = new ApercuViewModel();
             }
             
-            return View(viewModel);
+            return View(model);
         }
 
         public ActionResult About()

@@ -19,5 +19,29 @@ namespace Projet_Serre.Models
         public double LumiereCapteur { get; set; }
         public double VentCapteur { get; set; }
         public string DateDerniereMaJ { get; set; }
+
+        public ApercuViewModel() { }
+        public ApercuViewModel(GestionProfilActuel gpa, LigneHistorique lh, Reglage r)
+        {
+            if (gpa.ProfilActuel != null)
+            {
+                NomProfilActuel = gpa.ProfilActuel.Nom;
+                IdProfilActuel = gpa.ProfilActuel.Id;
+                NombreDeJours = (DateTime.Now - gpa.DateDeDebut).Days;
+                TemperatureInterieurProfil = r.TemperatureInterieur;
+                HumiditeProfil = r.Humidite;
+            }
+            else
+            {
+                IdProfilActuel = 0;
+            }
+            
+            TemperatureInterieurCapteur = lh.TemperatureInterieur;
+            TemperatureExterieurCapteur = lh.TemperatureExterieur;
+            HumiditeCapteur = lh.Humidite;
+            LumiereCapteur = lh.Lumiere;
+            VentCapteur = 0;
+            DateDerniereMaJ = lh.Date.ToString();
+        }
     }
 }
