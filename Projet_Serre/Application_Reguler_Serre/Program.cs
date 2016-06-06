@@ -81,6 +81,19 @@ namespace Application_Reguler_Serre
                         //If no expcetions where thrown at this point it is safe to terminate 
                         //the program
                         Console.WriteLine("ok");
+
+                        cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);
+
+                        if ()
+                        {
+
+                        }
+
+                        if ()
+                        {
+
+                        }
+
                     }
                     catch (PhidgetException ex)
                     {
