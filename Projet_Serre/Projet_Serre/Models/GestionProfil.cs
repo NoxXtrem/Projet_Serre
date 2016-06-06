@@ -34,7 +34,14 @@ public class GestionProfil {
 	}
 
 	public Profil Selectionner(int idProfil) {
-		return profils.SingleOrDefault(r => r.Id == idProfil);
+        if (idProfil != 0)
+        {
+            return profils.SingleOrDefault(r => r.Id == idProfil);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void MajProfil()

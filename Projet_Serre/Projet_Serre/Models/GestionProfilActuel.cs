@@ -26,10 +26,10 @@ public class GestionProfilActuel {
         dateDeDebut = csql.Profil_Actuel_Date();
     }
 
-    public void ModifierProfilActuel(int idProfil, DateTime DateDeDebut)
+    public void ModifierProfilActuel(int idProfil, DateTime date)
     {
         profilActuel = gp.Selectionner(idProfil);
-        dateDeDebut = DateDeDebut;
+        dateDeDebut = date;
         csql.Modifier_Profil_Actuel(idProfil, dateDeDebut);
     }
 }

@@ -11,6 +11,7 @@ namespace Projet_Serre.Models
     {
         public string NomProfilActuel { get; set; }
         public int IdProfilActuel { get; set; }
+        public int NombreDeJours { get; set; }
         public List<ProfilViewModel> Profils { get; set; }
 
         public ListProfilViewModel() { }

@@ -21,6 +21,7 @@ namespace Projet_Serre.Controllers
             {
                 NomProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Nom : null,
                 IdProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Id : 0,
+                NombreDeJours = (DateTime.Now - gpa.DateDeDebut).Days,
             };
             return View(model);
         }
@@ -117,6 +118,22 @@ namespace Projet_Serre.Controllers
             try
             {
                 gpa.ModifierProfilActuel(id, DateTime.Parse(date));
+                return Content(Boolean.TrueString);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return Content(Boolean.FalseString);
+            }
+        }
+
+        // POST: Profil/Stop/5
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            try
+            {
+                gpa.ModifierProfilActuel(0, new DateTime());
                 return Content(Boolean.TrueString);
             }
             catch (Exception ex)
