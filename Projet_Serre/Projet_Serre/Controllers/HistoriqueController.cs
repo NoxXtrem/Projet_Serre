@@ -14,8 +14,17 @@ namespace Projet_Serre.Controllers
         // GET: Historique
         public ActionResult Index()
         {
-            HistoriqueViewModel model = new HistoriqueViewModel(csql.EntreeHistorique(100));
-            return View(model);
+            try
+            {
+                HistoriqueViewModel model = new HistoriqueViewModel(csql.EntreeHistorique(100));
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return View(new HistoriqueViewModel());
+            }
+            
         }
     }
 }

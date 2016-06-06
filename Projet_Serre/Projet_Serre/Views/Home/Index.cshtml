@@ -7,7 +7,10 @@
     @if (Model.IdProfilActuel > 0)
     {
         <h2>Profil actuel : <a href="@Url.Action("Details", "Profil", new { Id=Model.IdProfilActuel })"><strong>@Model.NomProfilActuel</strong></a></h2>
-        <h3>Jour @Model.NombreDeJours</h3>
+        <h3>
+            Jour @Model.NombreDeJours - 
+            <a class="btn btn-default stop-link" href="@Url.Action("Stop", "Profil")">Arrêter la régulation</a>
+        </h3>
     }
     else
     {
@@ -126,3 +129,41 @@
         <em>Mesures faite à @Model.DateDerniereMaJ</em>
     </div>
 </div>
+
+<div id="stop-dialog" title="Confirmation" hidden>
+    <p>Voulez vous vraiment arrêter la régulation automatique de la serre?</p>
+    <p>La date de semis du profil actif sera perdu!</p>
+</div>
+
+@section scripts{
+    <script>
+        var linkObj;
+        $(".stop-link").click(function () {
+            linkObj = $(this);
+            $("#stop-dialog").dialog('open');
+            return false;
+        });
+        
+        $('#stop-dialog').dialog({
+            autoOpen: false, width: 400, resizable: false, modal: true,
+            buttons: {
+                "Continuer": function () {
+                    $.post(linkObj[0].href,
+                        {},
+                        function (status) {
+                            if (status == '@Boolean.TrueString') {
+                                location.reload();
+                            }
+                            else {
+                                //TODO
+                            }
+                        });
+                    $(this).dialog("close");
+                },
+                "Annuler": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    </script>
+}

@@ -45,21 +45,22 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Create(int id, ReglageViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     Profil p = gp.Selectionner(id);
                     Reglage r = new Reglage(model);
                     p.AjouterReglage(r);
-                    return RedirectToAction("Index",  new { id });
+                    return RedirectToAction("Index", new { id });
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Reglage/Edit/5
@@ -79,21 +80,24 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ReglageViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
+
                     Profil profil = gp.Lister().Single(p => p.ListerReglage().Exists(r => r.Id == id));   //TODO: Meilleur façon de faire ça?
                     Reglage reglage = new Reglage(model);
                     profil.ModifierReglage(id, reglage);
                     return RedirectToAction("Index", new { profil.Id });
+
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Reglage/Delete/5
@@ -119,8 +123,9 @@ namespace Projet_Serre.Controllers
                 profil.SupprimerReglage(id);
                 return RedirectToAction("Index", new { profil.Id });
             }
-            catch
+            catch(Exception ex)
             {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
                 return View(model);
             }
         }

@@ -21,6 +21,7 @@ namespace Projet_Serre.Controllers
             {
                 NomProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Nom : null,
                 IdProfilActuel = (gpa.ProfilActuel != null) ? gpa.ProfilActuel.Id : 0,
+                NombreDeJours = (DateTime.Now - gpa.DateDeDebut).Days,
             };
             return View(model);
         }
@@ -41,20 +42,21 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Create(ProfilViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     Profil p = new Profil(model);
                     gp.Ajouter(p);
                     return RedirectToAction("Index");
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Profil/Edit/5
@@ -69,19 +71,20 @@ namespace Projet_Serre.Controllers
         [HttpPost]
         public ActionResult Edit(ProfilViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     gp.Renommer(model.Id, model.Nom);
                     return RedirectToAction("Index");
                 }
-                return View();
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", "Erreur : " + ex.Message);
+                    return View(model);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Profil/Delete/5
@@ -101,9 +104,10 @@ namespace Projet_Serre.Controllers
                 gp.Supprimer(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return View(ex.Message);
             }
         }
 
@@ -116,8 +120,25 @@ namespace Projet_Serre.Controllers
                 gpa.ModifierProfilActuel(id, DateTime.Parse(date));
                 return Content(Boolean.TrueString);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
+                return Content(Boolean.FalseString);
+            }
+        }
+
+        // POST: Profil/Stop/5
+        [HttpPost]
+        public ActionResult Stop()
+        {
+            try
+            {
+                gpa.ModifierProfilActuel(0, new DateTime());
+                return Content(Boolean.TrueString);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Erreur : " + ex.Message);
                 return Content(Boolean.FalseString);
             }
         }

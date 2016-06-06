@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Phidgets;
-using Phidgets.Events;  
-
+using Phidgets.Events;
+using System.Threading;
+using System.Data.SqlClient;
 
 namespace Application_Reguler_Serre
 {
@@ -14,21 +15,23 @@ namespace Application_Reguler_Serre
         static void Main(string[] args)
         {
             int reponse;
-            double luminosité;
-            double température;
-            double humidité;
+            double luminosite;
+            double temperature;
+            double temperatureEx;
+            double humidite;
+            int id_profil;
+            int id_reglage;
+            DateTime date_profil;
+            ConnectionSQL cs = new ConnectionSQL();
 
-            ConnectionSQL CSQL = new ConnectionSQL();
             while (true)
             {
-                
-              reponse = CSQL.Reponse();
 
+                reponse = cs.Reponse();
                 if (reponse == 1)
                 {
 
                     InterfaceKit ifKit;
-
 
                     try
                     {
@@ -52,6 +55,17 @@ namespace Application_Reguler_Serre
                         Console.WriteLine("Waiting for InterfaceKit to be attached...");
                         ifKit.waitForAttachment();
 
+                        humidite = Math.Round((((ifKit.sensors[7].Value) * 0.1909) - 40.2), 1);
+                        temperature = Math.Round((((ifKit.sensors[6].Value) * 0.22222) - 61.11), 1);
+                        temperatureEx = Math.Round((((ifKit.sensors[4].Value) * 0.22222) - 61.11), 1);
+                        luminosite = ifKit.sensors[5].Value;
+
+
+                        id_profil = cs.Profil_Actuel_Id();
+                        date_profil = cs.Profil_Actuel_Date();
+                        id_reglage = cs.Id_Reglage(id_profil, luminosite, date_profil);
+                        cs.AjoutHistorique(DateTime.Now, luminosite, temperature, temperatureEx, humidite, id_profil, id_reglage);
+
                         //Wait for user input so that we can wait and watch for some event data 
                         //from the phidget
                         Console.WriteLine("Press any key to end...");
@@ -63,6 +77,7 @@ namespace Application_Reguler_Serre
                         //set the object to null to get it out of memory
                         ifKit = null;
 
+
                         //If no expcetions where thrown at this point it is safe to terminate 
                         //the program
                         Console.WriteLine("ok");
@@ -72,6 +87,8 @@ namespace Application_Reguler_Serre
                         Console.WriteLine(ex.Description);
                     }
                 }
+
+                Thread.Sleep(10000);
             }
         }
 
@@ -79,7 +96,7 @@ namespace Application_Reguler_Serre
         //to the console
         static void ifKit_Attach(object sender, AttachEventArgs e)
         {
-            Console.WriteLine("InterfaceKit {0} attached!", 
+            Console.WriteLine("InterfaceKit {0} attached!",
                                 e.Device.SerialNumber.ToString());
         }
 
@@ -87,7 +104,7 @@ namespace Application_Reguler_Serre
         //to the console
         static void ifKit_Detach(object sender, DetachEventArgs e)
         {
-            Console.WriteLine("InterfaceKit {0} detached!", 
+            Console.WriteLine("InterfaceKit {0} detached!",
                                 e.Device.SerialNumber.ToString());
         }
 
