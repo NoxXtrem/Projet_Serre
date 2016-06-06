@@ -22,7 +22,6 @@
     </Page.Background>
 
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>

@@ -24,9 +24,10 @@ namespace Projet_Serre.API_Controller
 
 
         // GET: api/Reglage/5
-        public string Get(int id)
+        public List<Reglage> Get(int id)
         {
-            return "value";
+            Profil p = gp.Selectionner(id);
+            return p.ListerReglage();
         }
 
         // POST: api/Reglage

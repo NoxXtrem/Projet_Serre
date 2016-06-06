@@ -88,11 +88,13 @@
     <Compile Include="GererProfils.xaml.cs">
       <DependentUpon>GererProfils.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConnexionServeur.cs" />
+    <Compile Include="Connexion\ConnexionServeur.cs" />
     <Compile Include="AfficherEtatSerre.xaml.cs">
       <DependentUpon>AfficherEtatSerre.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProfilViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReglageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

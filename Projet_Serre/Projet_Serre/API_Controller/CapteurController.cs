@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet_Serre.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,11 +12,12 @@ namespace Projet_Serre.API_Controller
     {
 
         GestionProfil gp = Startup.GestionProfil;
+        ConnectionSQL csql = new ConnectionSQL();
 
         // GET: api/Capteur
         public LigneHistorique Get()
         {
-            return new string[] { "value1", "value2" };
+            return csql.DerniereEntreeHistorique();
         }
 
         // GET: api/Capteur/5

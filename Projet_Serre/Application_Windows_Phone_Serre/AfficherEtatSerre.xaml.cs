@@ -67,7 +67,9 @@ namespace Application_Windows_Phone_Serre
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            cs.LoadDataProfilActuel(profilActuelNomEtat, profilActuelDateEtat);
+
+
         }
 
 
