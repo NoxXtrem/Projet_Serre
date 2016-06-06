@@ -217,8 +217,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\API_Profil.cs" />
-    <Compile Include="API\API_Reglage.cs" />
+    <Compile Include="API_Controller\CapteurController.cs" />
+    <Compile Include="API_Controller\ProfilActuelController.cs" />
+    <Compile Include="API_Controller\ProfilController.cs" />
+    <Compile Include="API_Controller\ReglageController.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HistoriqueController.cs" />
     <Compile Include="Controllers\ProfilController.cs" />
