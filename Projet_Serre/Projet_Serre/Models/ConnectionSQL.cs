@@ -8,12 +8,6 @@ namespace Projet_Serre.Models
 {
     public class ConnectionSQL
     {
-        private string serveur;
-        private string baseDeDonnée;
-        private string utilisateur;
-        private string motDePasse;
-
-
 
         public ConnectionSQL()
         {
@@ -225,8 +219,16 @@ namespace Projet_Serre.Models
                 MySqlDataReader msdr = cmd.ExecuteReader();
 
                 msdr.Read();
-                id_profil_actuel = msdr.GetInt32(0);
 
+                if (msdr.IsDBNull(0))
+                {
+                    id_profil_actuel = 0;
+                }else
+                {
+                    id_profil_actuel = msdr.GetInt32(0);
+                }
+                
+                
                 connection.Close();
             }
 

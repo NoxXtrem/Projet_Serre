@@ -1,48 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
+using System.Web;
 
 namespace Application_Reguler_Serre
 {
     class ConnectionSQL
     {
-        private string serveur;
-        private string baseDeDonnée;
-        private string utilisateur;
-        private string motDePasse;
-        Program p = new Program();
+       
 
         public ConnectionSQL()
         {
         }
 
-        private SqlConnection Initialisation()
+        private MySqlConnection Initialisation()
         {
-
-            serveur = "localhost";
-            baseDeDonnée = "projet_serre";
-            utilisateur = "projet";
-            motDePasse = "serre";
             string connectionString;
-            connectionString = "SERVER=" + serveur + ";" + "DATABASE=" +
-            baseDeDonnée + ";" + "UID=" + utilisateur + ";" + "PASSWORD=" + motDePasse + ";";
-
-            SqlConnection connection = new SqlConnection(connectionString);
+            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["serveur"].ConnectionString;
+            MySqlConnection connection = new MySqlConnection(connectionString);
 
             return connection;
         }
-        private SqlConnection OuvrirConnection()
+        private MySqlConnection OuvrirConnection()
         {
             try
             {
-                SqlConnection connection = Initialisation();
+                MySqlConnection connection = Initialisation();
                 connection.Open();
                 return connection;
             }
-            catch (SqlException ex)
+            catch (MySqlException ex)
             {
                 switch (ex.Number)
                 {
@@ -62,13 +51,13 @@ namespace Application_Reguler_Serre
         {
 
             string query = "SELECT reponse FROM reguler ";
-            int reponse = 1;
-            SqlConnection connection = OuvrirConnection();
+            int reponse = 0;
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlDataReader msdr = cmd.ExecuteReader();
                 msdr.Read();
                 reponse = msdr.GetInt32(0);
 
@@ -80,12 +69,12 @@ namespace Application_Reguler_Serre
         public void ModifierReponse(int reponse)
         {
             string query = "UPDATE reguler SET reponse='" + reponse + "'";
-            SqlConnection connection = OuvrirConnection();
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlDataReader msdr = cmd.ExecuteReader();
                 connection.Close();
             }
         }
@@ -93,21 +82,21 @@ namespace Application_Reguler_Serre
         public void AjoutHistorique(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, int idProfil, int idReglage)
         {
             string query = "INSERT INTO historique (date,lumiere,temperatureInterieur,temperatureExterieur,humidite,id_profil,id_reglage) VALUES('"
-                + date + "','" 
+                + date.ToString("yyyy-MM-dd") + "','" 
                 + lumiere.ToString("F", CultureInfo.InvariantCulture) 
                 + "','" + temperatureInterieur.ToString("F", CultureInfo.InvariantCulture) 
                 + "','" + temperatureExterieur.ToString("F", CultureInfo.InvariantCulture) 
                 + "','" + humidite.ToString("F", CultureInfo.InvariantCulture)
-                + "','" + idProfil
-                + "','" + idReglage
-                + "')";
+                + "'," + (idProfil == 0 ? "NULL" : ( "'" + idProfil.ToString() + "'" ))
+                + "," + (idReglage == 0 ? "NULL" : ("'" + idReglage.ToString() + "'" ))
+                + ")";
 
-            SqlConnection connection = OuvrirConnection();
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlDataReader msdr = cmd.ExecuteReader();
                 msdr.Read();
             }
 
@@ -117,14 +106,21 @@ namespace Application_Reguler_Serre
         {
             int id_profil_actuel = 0;
             string query = "SELECT id_profil FROM profil_actuel";
-            SqlConnection connection = OuvrirConnection();
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
 
                 msdr.Read();
-                id_profil_actuel = msdr.GetInt32(0);
+                if (msdr.IsDBNull(0))
+                {
+                    id_profil_actuel = 0;
+                }
+                else
+                {
+                    id_profil_actuel = msdr.GetInt32(0);
+                }
 
                 connection.Close();
             }
@@ -138,11 +134,11 @@ namespace Application_Reguler_Serre
             DateTime date_profil_actuel = DateTime.Now;
             string query = "SELECT date FROM profil_actuel";
 
-            SqlConnection connection = OuvrirConnection();
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
                 msdr.Read();
                 date_profil_actuel = msdr.GetDateTime(0);
 
@@ -156,11 +152,11 @@ namespace Application_Reguler_Serre
         {
             string query = "SELECT * FROM reglage WHERE id_profil = '" + idProfil + "' AND duree >= '"+ (DateTime.Now - dateDeDebut).Days + "' AND lumiere >='"+lumiere+"' ORDER BY duree,lumiere LIMIT 1";
             Reglage reglage = null;
-            SqlConnection connection = OuvrirConnection();
+            MySqlConnection connection = OuvrirConnection();
             if (connection != null)
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
-                SqlDataReader msdr = cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
 
 
                     reglage = new Reglage()
@@ -179,6 +175,29 @@ namespace Application_Reguler_Serre
             }
 
             return reglage;
+        }
+
+        public int Id_Reglage(int idProfil, double lumiere, DateTime dateDeDebut)
+        {
+            string query = "SELECT id FROM reglage WHERE id_profil = '" + idProfil + "' AND duree >= '" + (DateTime.Now - dateDeDebut).Days + "' AND lumiere >='" + lumiere + "' ORDER BY duree,lumiere LIMIT 1";
+            int id_reglage = 0;
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+
+                if (msdr.Read())
+                {
+                    id_reglage = msdr.GetInt32(0);
+                }
+
+                connection.Close();
+            }
+
+            return id_reglage;
+
+
         }
     }
 }
