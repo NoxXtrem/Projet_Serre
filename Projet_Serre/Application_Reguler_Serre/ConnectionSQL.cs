@@ -157,7 +157,7 @@ namespace Application_Reguler_Serre
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
-
+                msdr.Read();
 
                     reglage = new Reglage()
                     {

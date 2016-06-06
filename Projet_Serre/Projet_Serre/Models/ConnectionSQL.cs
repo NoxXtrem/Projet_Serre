@@ -288,8 +288,8 @@ namespace Projet_Serre.Models
                     TemperatureInterieur = msdr.GetDouble(3),
                     TemperatureExterieur = msdr.GetDouble(4),
                     Humidite = msdr.GetDouble(5),
-                    Id_profil = msdr.GetInt32(6),
-                    Id_reglage = msdr.GetInt32(7),
+                    Id_profil = msdr.IsDBNull(6) ? 0 : msdr.GetInt32(6),
+                    Id_reglage = msdr.IsDBNull(7) ? 0 : msdr.GetInt32(7),
                 };
                 connection.Close();
             }
@@ -320,8 +320,8 @@ namespace Projet_Serre.Models
                         TemperatureInterieur = msdr.GetDouble(3),
                         TemperatureExterieur = msdr.GetDouble(4),
                         Humidite = msdr.GetDouble(5),
-                        Id_profil = msdr.GetInt32(6),
-                        Id_reglage = msdr.GetInt32(7),
+                        Id_profil = msdr.IsDBNull(6) ? 0 : msdr.GetInt32(6),
+                        Id_reglage = msdr.IsDBNull(7) ? 0 : msdr.GetInt32(7),
                     };
                     ligneHistorique.Add(temp);
                 }

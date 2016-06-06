@@ -66,33 +66,15 @@ namespace Application_Reguler_Serre
                         id_reglage = cs.Id_Reglage(id_profil, luminosite, date_profil);
                         cs.AjoutHistorique(DateTime.Now, luminosite, temperature, temperatureEx, humidite, id_profil, id_reglage);
 
-                        //Wait for user input so that we can wait and watch for some event data 
-                        //from the phidget
-                        Console.WriteLine("Press any key to end...");
-                        Console.Read();
+
+
+                        cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);                     
 
                         //User input was rad so we'll terminate the program, so close the object
                         ifKit.close();
 
                         //set the object to null to get it out of memory
                         ifKit = null;
-
-
-                        //If no expcetions where thrown at this point it is safe to terminate 
-                        //the program
-                        Console.WriteLine("ok");
-
-                        cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);
-
-                        if ()
-                        {
-
-                        }
-
-                        if ()
-                        {
-
-                        }
 
                     }
                     catch (PhidgetException ex)
@@ -103,6 +85,8 @@ namespace Application_Reguler_Serre
 
                 Thread.Sleep(10000);
             }
+
+           
         }
 
         //Attach event handler...Display the serial number of the attached InterfaceKit 
