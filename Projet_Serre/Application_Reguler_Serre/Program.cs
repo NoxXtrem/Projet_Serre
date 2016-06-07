@@ -23,6 +23,7 @@ namespace Application_Reguler_Serre
             int id_reglage;
             DateTime date_profil;
             ConnectionSQL cs = new ConnectionSQL();
+            Reglage reglage;
 
             while (true)
             {
@@ -55,12 +56,13 @@ namespace Application_Reguler_Serre
                         Console.WriteLine("Waiting for InterfaceKit to be attached...");
                         ifKit.waitForAttachment();
 
+                        // conversion des valeurs réupérer par les capteurs pour avoir des valeurs justes
                         humidite = Math.Round((((ifKit.sensors[7].Value) * 0.1909) - 40.2), 1);
                         temperature = Math.Round((((ifKit.sensors[6].Value) * 0.22222) - 61.11), 1);
                         temperatureEx = Math.Round((((ifKit.sensors[4].Value) * 0.22222) - 61.11), 1);
                         luminosite = ifKit.sensors[5].Value;
 
-
+                        // on récupère l'id la date du profil actuel et l'id du réglage pour ajouter les valeurs recueillis par les capteurs à la table historique
                         id_profil = cs.Profil_Actuel_Id();
                         date_profil = cs.Profil_Actuel_Date();
                         id_reglage = cs.Id_Reglage(id_profil, luminosite, date_profil);
@@ -68,7 +70,28 @@ namespace Application_Reguler_Serre
 
 
 
-                        cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);                     
+                       reglage = cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now); 
+
+                        // on met plusieurs conditions pour savoir quel actionneurs allumer ou éteindre selon le réglage précédamment sélectionner
+                        if (reglage.Humidite < humidite)
+                        {
+                            //allumer ventilateur
+                            //allumer vanne d'arrosage
+                        }else
+                        {
+                            //allumer vanne d'arrosage
+                            //allumer ventilateur
+                        }
+
+                        if(reglage.TemperatureInterieur < temperature)
+                        {
+                            //allumer ventilateur
+                            //eteindre chauffage
+                        }else
+                        {
+                            //allumer chauffage
+                            //eteindre ventilateur
+                        }        
 
                         //User input was rad so we'll terminate the program, so close the object
                         ifKit.close();
@@ -82,7 +105,7 @@ namespace Application_Reguler_Serre
                         Console.WriteLine(ex.Description);
                     }
                 }
-
+                //TIMER de 10s actuellment
                 Thread.Sleep(10000);
             }
 

@@ -15,7 +15,7 @@ namespace Application_Reguler_Serre
         {
         }
 
-        private MySqlConnection Initialisation()
+        private MySqlConnection Initialisation() // on envoie la requête pour pouvoir se connecter à la Bdd
         {
             string connectionString;
             connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["serveur"].ConnectionString;
@@ -23,7 +23,7 @@ namespace Application_Reguler_Serre
 
             return connection;
         }
-        private MySqlConnection OuvrirConnection()
+        private MySqlConnection OuvrirConnection() // on fait une connection vers la Bdd
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Application_Reguler_Serre
             }
         }
 
-        public int Reponse()
+        public int Reponse() // on retourne une valeur 0 ou 1 pour savoir si on met en marche l'application
         {
 
             string query = "SELECT reponse FROM reguler ";
@@ -66,7 +66,7 @@ namespace Application_Reguler_Serre
             return reponse;
         }
 
-        public void ModifierReponse(int reponse)
+        public void ModifierReponse(int reponse) // on modifie la valeur pour allumer ou éteindre l'application
         {
             string query = "UPDATE reguler SET reponse='" + reponse + "'";
             MySqlConnection connection = OuvrirConnection();
@@ -79,10 +79,10 @@ namespace Application_Reguler_Serre
             }
         }
 
-        public void AjoutHistorique(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, int idProfil, int idReglage)
+        public void AjoutHistorique(DateTime date, double lumiere, double temperatureInterieur, double temperatureExterieur, double humidite, int idProfil, int idReglage) // on ajoute les valeurs recueillis par les capteurs à la table historique
         {
             string query = "INSERT INTO historique (date,lumiere,temperatureInterieur,temperatureExterieur,humidite,id_profil,id_reglage) VALUES('"
-                + date.ToString("yyyy-MM-dd") + "','" 
+                + date.ToString("yyyy-MM-dd HH:mm:ss") + "','" 
                 + lumiere.ToString("F", CultureInfo.InvariantCulture) 
                 + "','" + temperatureInterieur.ToString("F", CultureInfo.InvariantCulture) 
                 + "','" + temperatureExterieur.ToString("F", CultureInfo.InvariantCulture) 
@@ -102,7 +102,7 @@ namespace Application_Reguler_Serre
 
         }
 
-        public int Profil_Actuel_Id()
+        public int Profil_Actuel_Id() // on récupère l'id du profil actuel
         {
             int id_profil_actuel = 0;
             string query = "SELECT id_profil FROM profil_actuel";
@@ -129,7 +129,7 @@ namespace Application_Reguler_Serre
             return id_profil_actuel;
         }
 
-        public DateTime Profil_Actuel_Date()
+        public DateTime Profil_Actuel_Date() // on récupère la date du profil actuel
         {
             DateTime date_profil_actuel = DateTime.Now;
             string query = "SELECT date FROM profil_actuel";
@@ -148,7 +148,7 @@ namespace Application_Reguler_Serre
             return date_profil_actuel;
         }
 
-        public Reglage SelectionnerReglage(int idProfil, double lumiere, DateTime dateDeDebut)
+        public Reglage SelectionnerReglage(int idProfil, double lumiere, DateTime dateDeDebut) // on détermine avec la date et la lumiere quel réglage on sélectionne pour pouvoir mettre en marche les actionneurs
         {
             string query = "SELECT * FROM reglage WHERE id_profil = '" + idProfil + "' AND duree >= '"+ (DateTime.Now - dateDeDebut).Days + "' AND lumiere >='"+lumiere+"' ORDER BY duree,lumiere LIMIT 1";
             Reglage reglage = null;
@@ -177,7 +177,7 @@ namespace Application_Reguler_Serre
             return reglage;
         }
 
-        public int Id_Reglage(int idProfil, double lumiere, DateTime dateDeDebut)
+        public int Id_Reglage(int idProfil, double lumiere, DateTime dateDeDebut) // on détermine avec la date et la lumiere quel id de reglage on récupère
         {
             string query = "SELECT id FROM reglage WHERE id_profil = '" + idProfil + "' AND duree >= '" + (DateTime.Now - dateDeDebut).Days + "' AND lumiere >='" + lumiere + "' ORDER BY duree,lumiere LIMIT 1";
             int id_reglage = 0;
