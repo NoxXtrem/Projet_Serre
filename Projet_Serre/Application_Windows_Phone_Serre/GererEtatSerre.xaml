@@ -5,7 +5,7 @@
     xmlns:local="using:Application_Windows_Phone_Serre"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Page.Resources>
         <Style x:Key="styleVoyant" TargetType="Ellipse">
@@ -20,9 +20,9 @@
             <Setter Property="Background" Value="Black"/>
         </Style>
         <Style x:Key="styleTexteCapteur" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
         </Style>
         <Style x:Key="styleTexteProfilActuel" TargetType="TextBlock">
             <Setter Property="FontSize" Value="35"/>
@@ -101,25 +101,25 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="13*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
 
+        <Rectangle Grid.Row="0" Fill="Black" RadiusX="25" RadiusY="20" Margin="5" Opacity="0.70"/>
+        <TextBlock Text="Projet Serre Automatisé en C#" FontSize="27" TextAlignment="Center" VerticalAlignment="Center"/>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Name="buttonEtat" Grid.Column="0"  Content="Etat Serre"  Click="buttonEtat_Click" Style="{StaticResource styleOnglet}"/>
             <Button Name="buttonGestion" Grid.Column="1"  Content="Gestion Serre"  IsEnabled="False" Background="Gray" Style="{StaticResource styleOnglet}"/>
-            <Button Name="buttonProfil" Grid.Column="2" Content="Gestion Profils" Click="buttonProfil_Click" Style="{StaticResource styleOnglet}"/>
         </Grid>
 
 
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="2" >
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -144,14 +144,14 @@
 
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            
-            
+
+
 
 
             <Rectangle Grid.Column="0" Margin="5" Style="{StaticResource styleRectangleFond}"/>
@@ -162,8 +162,14 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Row="0" Fill="#FFDC5050" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="0" Background="Transparent" Style="{StaticResource stylePanelCapteur}">
+
+                <Rectangle Grid.Row="0" Fill="DarkGoldenrod" Style="{StaticResource styleRectangle}" RadiusX="0" RadiusY="0" Margin="23,25,23,25"/>
+                <Button Name="buttonRafraichir" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonRafraichir_Click">
+                    <TextBlock Text="Rafraîchir les données" 
+                               TextWrapping="Wrap" TextAlignment="Center"/>
+                </Button>
+                <Rectangle Grid.Row="1" Fill="#FFDC5050" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="1" Background="Transparent" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Température" Style="{StaticResource styleTexteCapteur}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -176,8 +182,8 @@
                         <TextBlock Grid.Column="1" FontSize="24" Margin="5,10,0,0">°C</TextBlock>
                     </Grid>
                 </StackPanel>
-                <Rectangle Grid.Row="1" Fill="#FF3278B9" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="1" Background="Transparent" Style="{StaticResource stylePanelCapteur}">
+                <Rectangle Grid.Row="2" Fill="#FF3278B9" Style="{StaticResource styleRectangle}"/>
+                <StackPanel Grid.Row="2" Background="Transparent" Style="{StaticResource stylePanelCapteur}">
                     <TextBlock Text="Humidité" Style="{StaticResource styleTexteCapteur}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -190,24 +196,11 @@
                         <TextBlock Grid.Column="1" FontSize="24" Margin="5,10,0,0">%</TextBlock>
                     </Grid>
                 </StackPanel>
-                <Rectangle Grid.Row="2" Fill="#FFF0A050" Style="{StaticResource styleRectangle}"/>
-                <StackPanel Grid.Row="2" Background="Transparent" Style="{StaticResource stylePanelCapteur}">
-                    <TextBlock Text="Ensoleillement" Style="{StaticResource styleTexteCapteur}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70*"/>
-                            <ColumnDefinition Width="30*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="EnsoProfilModif" Grid.Column="0" Margin="25,5,0,0" 
-                                 TextAlignment="Right" InputScope="Number" Text="0" 
-                                 TextChanged="EnsoProfilModif_TextChanged"></TextBox>
-                        <TextBlock Grid.Column="1" FontSize="24" Margin="5,10,0,0">lx</TextBlock>
-                    </Grid>
-                </StackPanel>
-                <Button Name="buttonEnvoyerProfilActuel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="buttonEnvoyerProfilActuel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonEnvoyerProfilActuel_Click">
                     <TextBlock Text="Envoyer le nouveau       Profil Actuel" 
-                               TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+                               TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
+
             </Grid>
 
             
@@ -222,8 +215,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Margin="10">
-                    <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}"/>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelNomGestion" Text="{Binding ProfilActuelNom, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelDateGestion" Text="{Binding ProfilActuelDate, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
                 </StackPanel>
                 <Rectangle Grid.Row="1" Style="{StaticResource styleRectangleProfil}"/>
                 <StackPanel Grid.Row="1" Margin="10">
@@ -233,7 +228,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="TempProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="TempProfilActuelGestion" Grid.Column="0" Text="{Binding ProfilActuelTemp, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="°C" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                     
@@ -246,7 +241,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="HumiProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="HumiProfilActuelGestion" Grid.Column="0" Text="{Binding ProfilActuelHumi, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="%" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                 </StackPanel>
@@ -258,7 +253,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="EnsoProfilActuelGestion" Grid.Column="0" Text="0" Style="{StaticResource styleValeurProfilActuel}"/>
+                        <TextBlock Name="EnsoProfilActuelGestion" Grid.Column="0" Text="{Binding ProfilActuelEnso, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="lx" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
                 </StackPanel>

@@ -19,7 +19,7 @@ namespace Projet_Serre.API_Controller
         public Object Get()
         {
 
-            return new { profil = (gpa.ProfilActuel != null) ? new ProfilViewModel(gpa.ProfilActuel) : null, date = gpa.DateDeDebut.ToString() };
+            return new { profil = (gpa.ProfilActuel != null) ? new ProfilViewModel(gpa.ProfilActuel) : null, date = gpa.DateDeDebut.ToShortDateString() };
         }
 
         // GET: api/ProfilActuel/5

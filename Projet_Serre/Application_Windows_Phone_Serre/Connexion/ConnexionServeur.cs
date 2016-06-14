@@ -1,210 +1,209 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Projet_Serre.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Windows.Data.Json;
+using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
-using Windows.Networking;
-using Newtonsoft.Json;
-using Windows.Web.Http;
-using Windows.Data.Json;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.Web.Http;
 
 namespace Application_Windows_Phone_Serre
 {
-    class ConnexionServeur
+    class ConnexionServeur : INotifyPropertyChanged
     {
-        HttpClient httpc = new HttpClient();
+        System.Net.Http.HttpClient httpc = new System.Net.Http.HttpClient();
+        String profilActuelNom = "Aucun Profil";
+        String profilActuelDate = "";
+        String profilActuelTemp = "0";
+        String profilActuelHumi = "0";
+        String profilActuelEnso = "0";
+        int idProfil;
+        int idReglage;
+        string ipServeur = "localhost:37768";
+        //string ipServeur = "10.0.0.164:37768";
 
 
-
-        public async void LoadDataCapteur()
+        public int IdReglage
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Capteur"));
-            var temp = reponse.Content;
+            get { return idReglage; }
+            set 
+            { 
+                idReglage = value;
+                RaisePropertyChanged("IdReglage");
+            }
+        }
 
+        public int IdProfil
+        {
+            get { return idProfil; }
+            set 
+            { 
+                idProfil = value;
+                RaisePropertyChanged("IdProfil");
+            }
+        }
+        
 
+        public String ProfilActuelNom
+        {
+            get { return profilActuelNom; }
+            set 
+            { 
+                profilActuelNom = value;
+                RaisePropertyChanged("ProfilActuelNom");
+            }
+        }
 
+        public String ProfilActuelDate
+        {
+            get { return profilActuelDate; }
+            set 
+            { 
+                profilActuelDate = value;
+                RaisePropertyChanged("ProfilActuelDate");
+            }
+        }
+        public String ProfilActuelTemp
+        {
+            get { return profilActuelTemp; }
+            set 
+            {
+                profilActuelTemp = value;
+                RaisePropertyChanged("ProfilActuelTemp");
+            }
+        }
+        public String ProfilActuelHumi
+        {
+            get { return profilActuelHumi; }
+            set 
+            { 
+                profilActuelHumi = value;
+                RaisePropertyChanged("ProfilActuelHumi");
+            }
+        }
+        public String ProfilActuelEnso
+        {
+            get { return profilActuelEnso; }
+            set 
+            { 
+                profilActuelEnso = value;
+                RaisePropertyChanged("ProfilActuelEnso");
+            }
+        }
+
+        public ConnexionServeur()
+        {
+            httpc.BaseAddress = new Uri("http://" + ipServeur);
+            httpc.DefaultRequestHeaders.Accept.Clear();
+            httpc.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public virtual void RaisePropertyChanged(string propertyName)
+        {
+            OnPropertyChanged(propertyName);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
+            }
+        }
+
+        public async void LoadDataCapteur(TextBlock tbTempInt, TextBlock tbTempExt, TextBlock tbHumi, TextBlock tbEnso, TextBlock tbVent)
+        {
+            var reponse = await httpc.GetAsync("/api/Capteur");
+            LigneHistoriqueViewModel lhvm = JsonConvert.DeserializeObject<LigneHistoriqueViewModel>(await reponse.Content.ReadAsStringAsync());
+            tbTempExt.Text = lhvm.TemperatureExterieur.ToString();
+            tbTempInt.Text = lhvm.TemperatureInterieur.ToString();
+            tbHumi.Text = lhvm.Humidite.ToString();
+            tbEnso.Text = lhvm.Lumiere.ToString();
+            tbVent.Text = "0";
         }
 
         public async void LoadDataProfil()
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Profil"));
+            var reponse = await httpc.GetAsync("/api/Profil");
             var temp = reponse.Content;
             
         }
 
         public async void LoadDataReglage(int idProfil)
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Reglage"));
+            var reponse = await httpc.GetAsync("/api/Reglage");
             var temp = reponse.Content;
 
         }
-        public async void LoadDataProfilActuel(TextBlock tbNom, TextBlock tbDate)
+        public async void LoadDataProfilActuel()
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/ProfilActuel"));
-            dynamic json = JsonConvert.DeserializeObject(reponse.Content.ToString());
+            var reponse = await httpc.GetAsync("/api/ProfilActuel");
+            dynamic json = JsonConvert.DeserializeObject(await reponse.Content.ReadAsStringAsync());
             ProfilViewModel p = JsonConvert.DeserializeObject<ProfilViewModel>(json.profil.ToString());
-            string date = json.date.ToString();
+            int dt = (DateTime.Now - DateTime.Parse(json.date.ToString())).Days;
+
+
+            var reponse2 = await httpc.GetAsync("/api/Capteur");
+            LigneHistoriqueViewModel lhvm = JsonConvert.DeserializeObject<LigneHistoriqueViewModel>(await reponse2.Content.ReadAsStringAsync());
+            var reponse3 = await httpc.GetAsync("/api/Reglage/" + lhvm.Id_profil + "/" + lhvm.Id_reglage);
+            ReglageViewModel rvm = JsonConvert.DeserializeObject<ReglageViewModel>(await reponse3.Content.ReadAsStringAsync());
+            
 
             if (p == null)
             {
-                tbNom.Text = "Aucun Profil";
-                tbDate.Text = "";
+                ProfilActuelNom = "Aucun Profil";
+                ProfilActuelDate = "";
+                ProfilActuelTemp = "0";
+                ProfilActuelHumi = "0";
+                ProfilActuelEnso = "0";
+
             }
             else
             {
-                tbNom.Text = p.Nom;
-                tbDate.Text = date;
+                IdProfil = p.Id;
+                IdReglage = rvm.IdReglage;
+                ProfilActuelNom = p.Nom;
+                ProfilActuelDate = "Jour " + dt;
+                ProfilActuelTemp = rvm.TemperatureInterieur.ToString();
+                ProfilActuelHumi = rvm.Humidite.ToString();
+                ProfilActuelEnso = rvm.Lumiere.ToString();
             }
         }
 
-        public async void LoadDataReglageProfilActuel(int idProfil, TextBlock tbTemp, TextBlock tbHumi, TextBlock tbEnso)
+        public async void SendDataReglage(int idProfil, int idReglage, String temp, String humi, String duree = "-1", String enso = "-1")
         {
-            HttpResponseMessage reponse = await httpc.GetAsync(new Uri("http://localhost:37768/api/Reglage"));
-            var temp = reponse.Content;
+            ReglageViewModel r = new ReglageViewModel()
+            {
+                TemperatureInterieur = double.Parse(temp),
+                Humidite = double.Parse(humi),
+                Duree = int.Parse(duree),
+                Lumiere = double.Parse(enso),
+            };
 
+            string content = JsonConvert.SerializeObject(r);
+
+            var reponse = await httpc.PutAsync("/api/Reglage/" + idProfil + "/" + idReglage, new StringContent(content, Encoding.UTF8, "application/json"));
+            var t = reponse;
         }
 
         public async void SendDataProfilActuel(int id, DateTime dt)
         {
-            Dictionary<string, string> content = new Dictionary<string, string>();
-            content["id"] = id.ToString();
-            content["date"] = dt.ToString("yyyy-MM-dd");
-
-            HttpResponseMessage reponse = await httpc.PutAsync(new Uri("http://localhost:37768/api/ProfilActuel"), new HttpFormUrlEncodedContent(content));
+            var content = JsonConvert.SerializeObject(new { Id = id.ToString(), Date = dt.ToString("yyyy-MM-dd")});
+            var reponse = await httpc.PutAsync("/api/ProfilActuel", new StringContent(content));
         }
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-         
-        StreamSocket socket;
-        String ipServeur = "192.02.01.01";
-        String portServeur = "88";
-        String message = "Je suis le Client";
-
-
-        public async Task connect(string host, string port, string message)
-        {
-            HostName hostName;
-
-            using (socket = new StreamSocket())
-            {
-                hostName = new HostName(host);
-
-                socket.Control.NoDelay = false;
-
-                try
-                {
-                    await socket.ConnectAsync(hostName, port);
-                    await this.send(message);
-                    await this.read();
-                }
-                catch (Exception exception)
-                {
-                    switch (SocketError.GetStatus(exception.HResult))
-                    {
-                        case SocketErrorStatus.HostNotFound:
-                            throw;
-                        default:
-                            throw;
-                    }
-                }
-            }
-        }
-
-        public async Task send(string message)
-        {
-            DataWriter writer;
-
-            using (writer = new DataWriter(socket.OutputStream))
-            {
-                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-                writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
-
-                writer.MeasureString(message);
-                writer.WriteString(message);
-
-                try
-                {
-                    await writer.StoreAsync();
-                }
-                catch (Exception exception)
-                {
-                    switch (SocketError.GetStatus(exception.HResult))
-                    {
-                        case SocketErrorStatus.HostNotFound:
-                            throw;
-                        default:
-                            throw;
-                    }
-                }
-
-                await writer.FlushAsync();
-                writer.DetachStream();
-            }
-        }
-
-        public async Task<String> read() 
-        {
-            DataReader reader;
-            StringBuilder strBuilder;
-
-            using (reader = new DataReader(socket.InputStream))
-            {
-                strBuilder = new StringBuilder();
-
-                reader.InputStreamOptions = Windows.Storage.Streams.InputStreamOptions.Partial;
-                reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-                reader.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
-
-                await reader.LoadAsync(256);
-
-                while (reader.UnconsumedBufferLength > 0)
-                {
-                    strBuilder.Append(reader.ReadString(reader.UnconsumedBufferLength));
-                    await reader.LoadAsync(256);
-                }
-
-                reader.DetachStream();
-                return strBuilder.ToString();
-            }
-        }
-    */
     }
 }

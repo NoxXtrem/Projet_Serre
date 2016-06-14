@@ -96,14 +96,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="15*"/>
             <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
 
+        <Rectangle Grid.Row="0" Fill="Black" RadiusX="25" RadiusY="20" Margin="5" Opacity="0.70"/>
+        <TextBlock Text="Projet Serre Automatisé en C#" FontSize="27" TextAlignment="Center" VerticalAlignment="Center"/>
         
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -111,8 +113,6 @@
                     IsEnabled="False" Background="Gray" Style="{StaticResource styleOnglet}"/>
             <Button Name="buttonGestion" Grid.Column="1" Content="Gestion Serre"  
                     Click="buttonGestion_Click" Style="{StaticResource styleOnglet}"/>
-            <Button Name="buttonProfil" Grid.Column="2" Content="Gestion Profils"
-                    Click="buttonProfil_Click" Style="{StaticResource styleOnglet}"/>
         </Grid>
 
         
@@ -120,7 +120,7 @@
         
         
         
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -139,17 +139,17 @@
             <Image Grid.Row="0" Grid.Column="3" Source="{StaticResource Soleil}"/>
             <Image Grid.Row="0" Grid.Column="4" Source="{StaticResource Vent}"/>
 
-            <Ellipse Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
-            <Ellipse Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Name="VoyantEtatTemp" Grid.Row="1" Grid.Column="1" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Name="VoyantEtatHumi" Grid.Row="1" Grid.Column="2" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Name="VoyantEtatEnso" Grid.Row="1" Grid.Column="3" Style="{StaticResource styleVoyant}"/>
+            <Ellipse Name="VoyantEtatVent" Grid.Row="1" Grid.Column="4" Style="{StaticResource styleVoyant}"/>
 
         </Grid>
         
         
         
 
-        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -266,8 +266,8 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
                     <TextBlock Text="Profil ACTUEL :" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
-                    <TextBlock Name="profilActuelNomEtat" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
-                    <TextBlock Name="profilActuelDateEtat" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelNomEtat" Text="{Binding ProfilActuelNom, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
+                    <TextBlock Name="profilActuelDateEtat" Text="{Binding ProfilActuelDate, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styleTexteCapteur}" FontSize="18"/>
                 </StackPanel>
                 <Rectangle Grid.Row="1" Style="{StaticResource styleRectangleProfil}"/>
                 <StackPanel Grid.Row="1" Margin="10">
@@ -277,7 +277,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="TempProfilActuelEtat" Grid.Column="0" Text="0" 
+                        <TextBlock Name="TempProfilActuelEtat" Grid.Column="0" Text="{Binding ProfilActuelTemp,UpdateSourceTrigger=PropertyChanged}" 
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="°C" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
@@ -290,7 +290,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="HumiProfilActuelEtat" Grid.Column="0" Text="0" 
+                        <TextBlock Name="HumiProfilActuelEtat" Grid.Column="0" Text="{Binding ProfilActuelHumi}"
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="%" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
@@ -303,7 +303,7 @@
                             <ColumnDefinition Width="60*"/>
                             <ColumnDefinition Width="40*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="EnsoProfilActuelEtat" Grid.Column="0" Text="0" 
+                        <TextBlock Name="EnsoProfilActuelEtat" Grid.Column="0" Text="{Binding ProfilActuelEnso}" 
                                    Style="{StaticResource styleValeurProfilActuel}"/>
                         <TextBlock Grid.Column="1" Text="lx" Style="{StaticResource styleTexteProfilActuel}"/>
                     </Grid>
