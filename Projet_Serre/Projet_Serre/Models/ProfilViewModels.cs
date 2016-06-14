@@ -28,7 +28,7 @@ namespace Projet_Serre.Models
         public int Id { get; set; }
 
         [Display(Name = "Nom du profil")]
-        [Required(ErrorMessage = "Un nom est requis")]
+        [Required]
         public string Nom { get; set; }
 
         public ProfilViewModel() { }

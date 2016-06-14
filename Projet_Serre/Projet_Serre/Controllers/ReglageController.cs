@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace Projet_Serre.Controllers
 {
-    //TODO: Définir des limites pour les champs de type double? (positif, maximum, etc)
     public class ReglageController : Controller
     {
         GestionProfil gp = Startup.GestionProfil;
@@ -17,12 +16,18 @@ namespace Projet_Serre.Controllers
         public ActionResult Index(int id)
         {
             Profil p = gp.Selectionner(id);
-            ListReglageViewModel model = new ListReglageViewModel(p.ListerReglage())
+            if (p != null)
             {
-                IdProfil = id,
-                NomProfil = p.Nom,
-            };
-            return View(model);
+                ListReglageViewModel model = new ListReglageViewModel(p.ListerReglage(), id)
+                {
+                    NomProfil = p.Nom,
+                };
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         // GET: Reglage/Details/5
@@ -34,11 +39,18 @@ namespace Projet_Serre.Controllers
         // GET: Reglage/Create/5
         public ActionResult Create(int id)
         {
-            ReglageViewModel model = new ReglageViewModel()
+            if (gp.Selectionner(id) != null)
             {
-                IdProfil = id,
-            };
-            return View(model);
+                ReglageViewModel model = new ReglageViewModel()
+                {
+                    IdProfil = id,
+                };
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         // POST: Reglage/Create/5
@@ -64,16 +76,19 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int idProfil)
         {
-            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel(reglage)
+            Profil profil;
+            Reglage reglage;
+            if ((profil = gp.Selectionner(idProfil)) != null && (reglage = profil.SelectionnerReglage(id)) != null)
             {
-                IdProfil = profil.Id,
-            };
-
-            return View(model);
+                ReglageViewModel model = new ReglageViewModel(reglage, idProfil);
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         // POST: Reglage/Edit/5
@@ -101,16 +116,19 @@ namespace Projet_Serre.Controllers
         }
 
         // GET: Reglage/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int idProfil)
         {
-            Profil profil = gp.Lister().SingleOrDefault(p => p.ListerReglage().Exists(r => r.Id == id));
-            Reglage reglage = gp.Lister().SelectMany(p => p.ListerReglage()).SingleOrDefault(r => r.Id == id);    //TODO: Meilleur façon de faire ça?
-            ReglageViewModel model = new ReglageViewModel(reglage)
+            Profil profil;
+            Reglage reglage;
+            if ((profil = gp.Selectionner(idProfil)) != null && (reglage = profil.SelectionnerReglage(id)) != null)
             {
-                IdProfil = profil.Id,
-            };
-
-            return View(model);
+                ReglageViewModel model = new ReglageViewModel(reglage, idProfil);
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         // POST: Reglage/Delete/5

@@ -102,12 +102,16 @@ namespace Projet_Serre.Controllers
             try
             {
                 gp.Supprimer(id);
+                if (gpa.ProfilActuel != null && gpa.ProfilActuel.Id == id)
+                {
+                    gpa.ModifierProfilActuel(0, new DateTime());
+                }
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
             {
                 ModelState.AddModelError("", "Erreur : " + ex.Message);
-                return View(ex.Message);
+                return View(model);
             }
         }
 
