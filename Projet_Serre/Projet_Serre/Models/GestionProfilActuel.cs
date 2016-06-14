@@ -10,7 +10,18 @@ public class GestionProfilActuel {
     public Profil ProfilActuel
     {
 		get { return profilActuel; }
-		private set { profilActuel = value; }
+		private set
+        {
+            profilActuel = value;
+            if (value == null || value.Id == 0)
+	        {
+                csql.ChangerRegulation(0);
+	        }
+            else
+            {
+                csql.ChangerRegulation(1);
+            }
+        }
 	}
 
     private DateTime dateDeDebut;
@@ -22,13 +33,13 @@ public class GestionProfilActuel {
 
     public void MajProfilActuel()
     {
-        profilActuel = gp.Selectionner(csql.Profil_Actuel_Id());
+        ProfilActuel = gp.Selectionner(csql.Profil_Actuel_Id());
         dateDeDebut = csql.Profil_Actuel_Date();
     }
 
     public void ModifierProfilActuel(int idProfil, DateTime date)
     {
-        profilActuel = gp.Selectionner(idProfil);
+        ProfilActuel = gp.Selectionner(idProfil);
         dateDeDebut = date;
         csql.Modifier_Profil_Actuel(idProfil, dateDeDebut);
     }
