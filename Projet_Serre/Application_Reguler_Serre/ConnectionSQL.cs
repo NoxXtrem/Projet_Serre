@@ -157,7 +157,9 @@ namespace Application_Reguler_Serre
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader msdr = cmd.ExecuteReader();
-                msdr.Read();
+
+                if (msdr.Read())
+                {
 
                     reglage = new Reglage()
                     {
@@ -168,7 +170,7 @@ namespace Application_Reguler_Serre
                         Humidite = msdr.GetDouble(4),
                         Vent = msdr.GetDouble(5),
                     };
-                   
+                }
                 
 
                 connection.Close();
