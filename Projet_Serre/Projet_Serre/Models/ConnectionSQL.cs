@@ -330,5 +330,19 @@ namespace Projet_Serre.Models
             }
             return ligneHistorique;
         }
+
+        public void ChangerRegulation(int reguler)
+        {
+            string query = "UPDATE reguler SET reponse=" +reguler + "";
+
+            MySqlConnection connection = OuvrirConnection();
+            if (connection != null)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader msdr = cmd.ExecuteReader();
+
+                connection.Close();
+            }
+        }
     }
 }
