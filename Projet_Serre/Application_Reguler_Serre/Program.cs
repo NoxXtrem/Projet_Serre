@@ -23,6 +23,7 @@ namespace Application_Reguler_Serre
             int id_reglage;
             DateTime date_profil;
             ConnectionSQL cs = new ConnectionSQL();
+            Reglage reglage;
 
             while (true)
             {
@@ -32,11 +33,13 @@ namespace Application_Reguler_Serre
                 {
 
                     InterfaceKit ifKit;
+                    InterfaceKit ifKitRelay;
 
                     try
                     {
                         //Initialize the InterfaceKit object
                         ifKit = new InterfaceKit();
+                        ifKitRelay = new InterfaceKit();
 
                         //Hook the basica event handlers
                         ifKit.Attach += new AttachEventHandler(ifKit_Attach);
@@ -49,18 +52,23 @@ namespace Application_Reguler_Serre
                         ifKit.SensorChange += new SensorChangeEventHandler(ifKit_SensorChange);
 
                         //Open the object for device connections
-                        ifKit.open();
+                        ifKit.open(174971);
+                        ifKitRelay.open(87522);
 
                         //Wait for an InterfaceKit phidget to be attached
                         Console.WriteLine("Waiting for InterfaceKit to be attached...");
                         ifKit.waitForAttachment();
 
+                        // conversion des valeurs réupérer par les capteurs pour avoir des valeurs justes
                         humidite = Math.Round((((ifKit.sensors[7].Value) * 0.1909) - 40.2), 1);
                         temperature = Math.Round((((ifKit.sensors[6].Value) * 0.22222) - 61.11), 1);
                         temperatureEx = Math.Round((((ifKit.sensors[4].Value) * 0.22222) - 61.11), 1);
                         luminosite = ifKit.sensors[5].Value;
 
+                        Console.WriteLine("humidite :"+humidite);
+                        Console.WriteLine("temperature :"+temperature);
 
+                        // on récupère l'id la date du profil actuel et l'id du réglage pour ajouter les valeurs recueillis par les capteurs à la table historique
                         id_profil = cs.Profil_Actuel_Id();
                         date_profil = cs.Profil_Actuel_Date();
                         id_reglage = cs.Id_Reglage(id_profil, luminosite, date_profil);
@@ -68,13 +76,57 @@ namespace Application_Reguler_Serre
 
 
 
-                        cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);                     
+                       reglage = cs.SelectionnerReglage(id_profil, luminosite, DateTime.Now);
+                        if (reglage != null)
+                        {
+                            // on met plusieurs conditions pour savoir quel actionneurs allumer ou éteindre selon le réglage précédamment sélectionner
+                            //inversement des true et false
+                            if (reglage.Humidite < humidite)
+                            {
+                                ifKitRelay.outputs[0] = false;
+                                ifKitRelay.outputs[1] = true;
+                                //allumer ventilateur
+                                //allumer vanne d'arrosage
+                            }
+                            else
+                            {
+                                ifKitRelay.outputs[0] = true;
+                                ifKitRelay.outputs[1] = false;
+                                //allumer vanne d'arrosage
+                                //allumer ventilateur
+                            }
 
+                            if (reglage.TemperatureInterieur < temperature)
+                            {
+                                ifKitRelay.outputs[0] = false;
+                                ifKitRelay.outputs[2] = true;
+                                //allumer ventilateur
+                                //eteindre chauffage
+                            }
+                            else
+                            {
+                                ifKitRelay.outputs[0] = true;
+                                ifKitRelay.outputs[2] = false;
+                                //allumer chauffage
+                                //eteindre ventilateur
+                            }
+
+                            if (luminosite <= 20)
+                            {
+                                ifKitRelay.outputs[3] = false;
+                            }
+                            else
+                            {
+                                ifKitRelay.outputs[3] = true;
+                            }
+                        }
                         //User input was rad so we'll terminate the program, so close the object
                         ifKit.close();
+                        ifKitRelay.close();
 
                         //set the object to null to get it out of memory
                         ifKit = null;
+                        ifKitRelay = null;
 
                     }
                     catch (PhidgetException ex)
@@ -82,7 +134,7 @@ namespace Application_Reguler_Serre
                         Console.WriteLine(ex.Description);
                     }
                 }
-
+                //TIMER de 10s actuellment
                 Thread.Sleep(10000);
             }
 
