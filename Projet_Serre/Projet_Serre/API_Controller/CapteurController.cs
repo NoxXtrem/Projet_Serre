@@ -15,9 +15,9 @@ namespace Projet_Serre.API_Controller
         ConnectionSQL csql = new ConnectionSQL();
 
         // GET: api/Capteur
-        public LigneHistorique Get()
+        public LigneHistoriqueViewModel Get()
         {
-            return csql.DerniereEntreeHistorique();
+            return new LigneHistoriqueViewModel(csql.DerniereEntreeHistorique());
         }
 
         // GET: api/Capteur/5

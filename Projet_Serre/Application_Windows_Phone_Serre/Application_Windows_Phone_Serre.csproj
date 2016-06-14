@@ -87,13 +87,11 @@
     <Compile Include="GererEtatSerre.xaml.cs">
       <DependentUpon>GererEtatSerre.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GererProfils.xaml.cs">
-      <DependentUpon>GererProfils.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Connexion\ConnexionServeur.cs" />
     <Compile Include="AfficherEtatSerre.xaml.cs">
       <DependentUpon>AfficherEtatSerre.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LigneHistoriqueViewModels.cs" />
     <Compile Include="ProfilViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReglageViewModels.cs" />
@@ -125,10 +123,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="GererEtatSerre.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GererProfils.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
