@@ -30,13 +30,13 @@ public class Profil
     {
         conditions = new List<Reglage>();
 	}
-	public Profil(string nom, List<Reglage> conditions)
+	public Profil(string nom, List<Reglage> conditions) : this()
     {
         this.nom = nom;
         this.conditions = conditions;
 	}
 
-    public Profil(ProfilViewModel pvm)
+    public Profil(ProfilViewModel pvm) : this()
     {
         Id = pvm.Id;
         Nom = pvm.Nom;
