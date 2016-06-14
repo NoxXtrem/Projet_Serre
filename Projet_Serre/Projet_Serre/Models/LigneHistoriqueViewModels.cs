@@ -38,11 +38,12 @@ namespace Projet_Serre.Models
 
         public HistoriqueViewModel() { }
 
-        //On suppose que list est ordonné par date (Normalement fait par la requête SQL)
         public HistoriqueViewModel(List<LigneHistorique> list)
         {
             Historique = new List<LigneHistoriqueViewModel>();
-            list.ForEach(lh => Historique.Add(new LigneHistoriqueViewModel(lh)));
+            //On suppose que list est ordonné par date du plus récent au plus vieux (Normalement fait par la requête SQL)
+            //Donc on l'inverse.
+            list.ForEach(lh => Historique.Insert(0, new LigneHistoriqueViewModel(lh)));
         }
 
         public string Labels
@@ -54,6 +55,17 @@ namespace Projet_Serre.Models
                 return s.Append("]").ToString();
             }
         }
+
+        public string LumiereData
+        {
+            get
+            {
+                StringBuilder s = new StringBuilder("[");
+                Historique.ForEach(lh => s.Append(lh.Lumiere.ToString("F", CultureInfo.InvariantCulture)).Append(","));
+                return s.Append("]").ToString();
+            }
+        }
+
         public string HumiditeData
         {
             get
@@ -63,6 +75,7 @@ namespace Projet_Serre.Models
                 return s.Append("]").ToString();
             }
         }
+
         public string TemperatureInterieurData
         {
             get
@@ -72,6 +85,7 @@ namespace Projet_Serre.Models
                 return s.Append("]").ToString();
             }
         }
+
         public string TemperatureExterieurData
         {
             get
@@ -81,6 +95,5 @@ namespace Projet_Serre.Models
                 return s.Append("]").ToString();
             }
         }
-        
     }
 }

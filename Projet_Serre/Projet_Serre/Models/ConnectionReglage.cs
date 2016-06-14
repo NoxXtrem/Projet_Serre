@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Projet_Serre.Models
 {
-    public class ConnectionReglage
+    public class ConnectionReglage // classe associée à ConnexionSQL
     {
         ConnectionSQL connection;
         public ConnectionReglage()

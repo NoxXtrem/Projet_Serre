@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Projet_Serre.Models
 {
-    public class ConnectionProfil
+    public class ConnectionProfil // classe associée à ConnexionSQL
     {
         ConnectionSQL connection;
         public ConnectionProfil()
